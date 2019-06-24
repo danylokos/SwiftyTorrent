@@ -1,0 +1,544 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7703512222DA513B00A9CC84 /* TorrentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7703512122DA513B00A9CC84 /* TorrentRow.swift */; };
+		7703512522DB3CD000A9CC84 /* NSData+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 7703512422DB3CD000A9CC84 /* NSData+Hex.m */; };
+		771B700622DA205D00132B5E /* uTorrent-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 771B700522DA205D00132B5E /* uTorrent-320.png */; };
+		771B701122DA247F00132B5E /* ubuntu-18.04.2-live-server-amd64.iso.torrent in Resources */ = {isa = PBXBuildFile; fileRef = 771B700E22DA247F00132B5E /* ubuntu-18.04.2-live-server-amd64.iso.torrent */; };
+		771B701222DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent in Resources */ = {isa = PBXBuildFile; fileRef = 771B700F22DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent */; };
+		771B701322DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent in Resources */ = {isa = PBXBuildFile; fileRef = 771B701022DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent */; };
+		7729BDB122D8B34D00D02566 /* TorrentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */; };
+		7729BDB322D8B38300D02566 /* TorrentRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB222D8B38300D02566 /* TorrentRowModel.swift */; };
+		773FF94E22C10278008D58E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773FF94D22C10278008D58E4 /* AppDelegate.swift */; };
+		773FF95022C10278008D58E4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773FF94F22C10278008D58E4 /* SceneDelegate.swift */; };
+		773FF95422C10279008D58E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 773FF95322C10279008D58E4 /* Assets.xcassets */; };
+		773FF95A22C10279008D58E4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 773FF95822C10279008D58E4 /* LaunchScreen.storyboard */; };
+		773FF96A22C105D8008D58E4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773FF96922C105D8008D58E4 /* CoreFoundation.framework */; };
+		773FF96C22C105DE008D58E4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773FF96B22C105DE008D58E4 /* SystemConfiguration.framework */; };
+		773FF98522C10EB0008D58E4 /* libtorrent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 773FF97E22C10D06008D58E4 /* libtorrent.a */; };
+		775584DF22C22A9100696787 /* STTorrentManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 775584DD22C22A9100696787 /* STTorrentManager.mm */; };
+		7755850A22C2386300696787 /* STTorrent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7755850922C2386300696787 /* STTorrent.m */; };
+		77CE942122C754E5004BC8C5 /* STTorrentFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77CE942022C754E5004BC8C5 /* STTorrentFile.mm */; };
+		77CE942422C754F7004BC8C5 /* STMagnetURI.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77CE942322C754F7004BC8C5 /* STMagnetURI.mm */; };
+		77D8122522CA336A001CA13E /* TorrentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D8122422CA336A001CA13E /* TorrentsView.swift */; };
+		77F6B7EB22C3814600D5F841 /* TorrentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77F6B7EA22C3814600D5F841 /* TorrentState.swift */; };
+		77FC2AF422D896F100A544AA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC2AF322D896F100A544AA /* AppCoordinator.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		773FF97D22C10D06008D58E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 773FF97922C10D06008D58E4 /* libtorrent.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 77000C2E22C0CD470037DABD;
+			remoteInfo = libtorrent;
+		};
+		773FF98622C10EB9008D58E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 773FF97922C10D06008D58E4 /* libtorrent.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 77000C2D22C0CD470037DABD;
+			remoteInfo = libtorrent;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7703512122DA513B00A9CC84 /* TorrentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentRow.swift; sourceTree = "<group>"; };
+		7703512322DB3C8E00A9CC84 /* NSData+Hex.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Hex.h"; sourceTree = "<group>"; };
+		7703512422DB3CD000A9CC84 /* NSData+Hex.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Hex.m"; sourceTree = "<group>"; };
+		771B700522DA205D00132B5E /* uTorrent-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uTorrent-320.png"; sourceTree = "<group>"; };
+		771B700E22DA247F00132B5E /* ubuntu-18.04.2-live-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-18.04.2-live-server-amd64.iso.torrent"; sourceTree = "<group>"; };
+		771B700F22DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-16.04.6-server-amd64.iso.torrent"; sourceTree = "<group>"; };
+		771B701022DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-19.04-live-server-amd64.iso.torrent"; sourceTree = "<group>"; };
+		7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentsViewModel.swift; sourceTree = "<group>"; };
+		7729BDB222D8B38300D02566 /* TorrentRowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentRowModel.swift; sourceTree = "<group>"; };
+		773FF94A22C10278008D58E4 /* SwiftyTorrent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyTorrent.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		773FF94D22C10278008D58E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		773FF94F22C10278008D58E4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		773FF95322C10279008D58E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		773FF95922C10279008D58E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		773FF95B22C10279008D58E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		773FF96922C105D8008D58E4 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		773FF96B22C105DE008D58E4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		773FF97322C10C1A008D58E4 /* SwiftyTorrent-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftyTorrent-Bridging-Header.h"; sourceTree = "<group>"; };
+		773FF97922C10D06008D58E4 /* libtorrent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libtorrent.xcodeproj; path = Thirdparties/libtorrent/Xcode/libtorrent.xcodeproj; sourceTree = "<group>"; };
+		775584DD22C22A9100696787 /* STTorrentManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STTorrentManager.mm; sourceTree = "<group>"; };
+		775584DE22C22A9100696787 /* STTorrentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTorrentManager.h; sourceTree = "<group>"; };
+		7755850822C2386300696787 /* STTorrent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STTorrent.h; sourceTree = "<group>"; };
+		7755850922C2386300696787 /* STTorrent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STTorrent.m; sourceTree = "<group>"; };
+		775BB01D22DA2D3A00957F38 /* STTorrentState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTorrentState.h; sourceTree = "<group>"; };
+		776FD9F622C3B43800CD7CEB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		77CE941F22C754E5004BC8C5 /* STTorrentFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STTorrentFile.h; sourceTree = "<group>"; };
+		77CE942022C754E5004BC8C5 /* STTorrentFile.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = STTorrentFile.mm; sourceTree = "<group>"; };
+		77CE942222C754F7004BC8C5 /* STMagnetURI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STMagnetURI.h; sourceTree = "<group>"; };
+		77CE942322C754F7004BC8C5 /* STMagnetURI.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = STMagnetURI.mm; sourceTree = "<group>"; };
+		77CE942522C75526004BC8C5 /* STDownloadable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STDownloadable.h; sourceTree = "<group>"; };
+		77D8122422CA336A001CA13E /* TorrentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentsView.swift; sourceTree = "<group>"; };
+		77F6B7EA22C3814600D5F841 /* TorrentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentState.swift; sourceTree = "<group>"; };
+		77FC2AF322D896F100A544AA /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		773FF94722C10278008D58E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				773FF98522C10EB0008D58E4 /* libtorrent.a in Frameworks */,
+				773FF96A22C105D8008D58E4 /* CoreFoundation.framework in Frameworks */,
+				773FF96C22C105DE008D58E4 /* SystemConfiguration.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		771B700722DA23BA00132B5E /* torrents */ = {
+			isa = PBXGroup;
+			children = (
+				771B700F22DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent */,
+				771B700E22DA247F00132B5E /* ubuntu-18.04.2-live-server-amd64.iso.torrent */,
+				771B701022DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent */,
+			);
+			path = torrents;
+			sourceTree = "<group>";
+		};
+		7723376322DB9331008ECD5F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				773FF94D22C10278008D58E4 /* AppDelegate.swift */,
+				773FF94F22C10278008D58E4 /* SceneDelegate.swift */,
+				77FC2AF322D896F100A544AA /* AppCoordinator.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		773FF94122C10278008D58E4 = {
+			isa = PBXGroup;
+			children = (
+				776FD9F622C3B43800CD7CEB /* README.md */,
+				773FF97922C10D06008D58E4 /* libtorrent.xcodeproj */,
+				773FF94C22C10278008D58E4 /* SwiftyTorrent */,
+				773FF94B22C10278008D58E4 /* Products */,
+				773FF96722C105CE008D58E4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		773FF94B22C10278008D58E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				773FF94A22C10278008D58E4 /* SwiftyTorrent.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		773FF94C22C10278008D58E4 /* SwiftyTorrent */ = {
+			isa = PBXGroup;
+			children = (
+				77F6B7E522C36E3100D5F841 /* Utils */,
+				773FF97722C10C23008D58E4 /* Torrent */,
+				7723376322DB9331008ECD5F /* Core */,
+				77D8122322CA336A001CA13E /* UI */,
+				773FF97222C10B22008D58E4 /* Resources */,
+				773FF95B22C10279008D58E4 /* Info.plist */,
+				773FF97322C10C1A008D58E4 /* SwiftyTorrent-Bridging-Header.h */,
+			);
+			path = SwiftyTorrent;
+			sourceTree = "<group>";
+		};
+		773FF96722C105CE008D58E4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				773FF96B22C105DE008D58E4 /* SystemConfiguration.framework */,
+				773FF96922C105D8008D58E4 /* CoreFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		773FF97222C10B22008D58E4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				771B700722DA23BA00132B5E /* torrents */,
+				773FF95322C10279008D58E4 /* Assets.xcassets */,
+				771B700522DA205D00132B5E /* uTorrent-320.png */,
+				773FF95822C10279008D58E4 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		773FF97722C10C23008D58E4 /* Torrent */ = {
+			isa = PBXGroup;
+			children = (
+				775584DE22C22A9100696787 /* STTorrentManager.h */,
+				775584DD22C22A9100696787 /* STTorrentManager.mm */,
+				77CE942522C75526004BC8C5 /* STDownloadable.h */,
+				77CE941F22C754E5004BC8C5 /* STTorrentFile.h */,
+				77CE942022C754E5004BC8C5 /* STTorrentFile.mm */,
+				77CE942222C754F7004BC8C5 /* STMagnetURI.h */,
+				77CE942322C754F7004BC8C5 /* STMagnetURI.mm */,
+				775BB01D22DA2D3A00957F38 /* STTorrentState.h */,
+				7755850822C2386300696787 /* STTorrent.h */,
+				7755850922C2386300696787 /* STTorrent.m */,
+				77F6B7EA22C3814600D5F841 /* TorrentState.swift */,
+			);
+			path = Torrent;
+			sourceTree = "<group>";
+		};
+		773FF97A22C10D06008D58E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				773FF97E22C10D06008D58E4 /* libtorrent.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		77D8122322CA336A001CA13E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				77D8122422CA336A001CA13E /* TorrentsView.swift */,
+				7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */,
+				7703512122DA513B00A9CC84 /* TorrentRow.swift */,
+				7729BDB222D8B38300D02566 /* TorrentRowModel.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		77F6B7E522C36E3100D5F841 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7703512322DB3C8E00A9CC84 /* NSData+Hex.h */,
+				7703512422DB3CD000A9CC84 /* NSData+Hex.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		773FF94922C10278008D58E4 /* SwiftyTorrent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 773FF95E22C10279008D58E4 /* Build configuration list for PBXNativeTarget "SwiftyTorrent" */;
+			buildPhases = (
+				773FF94622C10278008D58E4 /* Sources */,
+				773FF94722C10278008D58E4 /* Frameworks */,
+				773FF94822C10278008D58E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				773FF98722C10EB9008D58E4 /* PBXTargetDependency */,
+			);
+			name = SwiftyTorrent;
+			packageProductDependencies = (
+			);
+			productName = SwiftyTorrent;
+			productReference = 773FF94A22C10278008D58E4 /* SwiftyTorrent.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		773FF94222C10278008D58E4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = ST;
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = "Danylo Kostyshyn";
+				TargetAttributes = {
+					773FF94922C10278008D58E4 = {
+						CreatedOnToolsVersion = 11.0;
+						LastSwiftMigration = 1100;
+					};
+				};
+			};
+			buildConfigurationList = 773FF94522C10278008D58E4 /* Build configuration list for PBXProject "SwiftyTorrent" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 773FF94122C10278008D58E4;
+			packageReferences = (
+			);
+			productRefGroup = 773FF94B22C10278008D58E4 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 773FF97A22C10D06008D58E4 /* Products */;
+					ProjectRef = 773FF97922C10D06008D58E4 /* libtorrent.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				773FF94922C10278008D58E4 /* SwiftyTorrent */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		773FF97E22C10D06008D58E4 /* libtorrent.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libtorrent.a;
+			remoteRef = 773FF97D22C10D06008D58E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		773FF94822C10278008D58E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				771B700622DA205D00132B5E /* uTorrent-320.png in Resources */,
+				773FF95A22C10279008D58E4 /* LaunchScreen.storyboard in Resources */,
+				771B701122DA247F00132B5E /* ubuntu-18.04.2-live-server-amd64.iso.torrent in Resources */,
+				771B701322DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent in Resources */,
+				773FF95422C10279008D58E4 /* Assets.xcassets in Resources */,
+				771B701222DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		773FF94622C10278008D58E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				773FF94E22C10278008D58E4 /* AppDelegate.swift in Sources */,
+				7729BDB122D8B34D00D02566 /* TorrentsViewModel.swift in Sources */,
+				7755850A22C2386300696787 /* STTorrent.m in Sources */,
+				7729BDB322D8B38300D02566 /* TorrentRowModel.swift in Sources */,
+				773FF95022C10278008D58E4 /* SceneDelegate.swift in Sources */,
+				77CE942422C754F7004BC8C5 /* STMagnetURI.mm in Sources */,
+				775584DF22C22A9100696787 /* STTorrentManager.mm in Sources */,
+				7703512522DB3CD000A9CC84 /* NSData+Hex.m in Sources */,
+				7703512222DA513B00A9CC84 /* TorrentRow.swift in Sources */,
+				77CE942122C754E5004BC8C5 /* STTorrentFile.mm in Sources */,
+				77FC2AF422D896F100A544AA /* AppCoordinator.swift in Sources */,
+				77F6B7EB22C3814600D5F841 /* TorrentState.swift in Sources */,
+				77D8122522CA336A001CA13E /* TorrentsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		773FF98722C10EB9008D58E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = libtorrent;
+			targetProxy = 773FF98622C10EB9008D58E4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		773FF95822C10279008D58E4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				773FF95922C10279008D58E4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		773FF95C22C10279008D58E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		773FF95D22C10279008D58E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		773FF95F22C10279008D58E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DBR2MMCRF5;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Thirdparties/libtorrent/src/include",
+					"$(SRCROOT)/Thirdparties/boost/src",
+				);
+				INFOPLIST_FILE = SwiftyTorrent/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.kostyshyn.SwiftyTorrent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftyTorrent/SwiftyTorrent-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		773FF96022C10279008D58E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = DBR2MMCRF5;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/Thirdparties/libtorrent/src/include",
+					"$(SRCROOT)/Thirdparties/boost/src",
+				);
+				INFOPLIST_FILE = SwiftyTorrent/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.kostyshyn.SwiftyTorrent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftyTorrent/SwiftyTorrent-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		773FF94522C10278008D58E4 /* Build configuration list for PBXProject "SwiftyTorrent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				773FF95C22C10279008D58E4 /* Debug */,
+				773FF95D22C10279008D58E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		773FF95E22C10279008D58E4 /* Build configuration list for PBXNativeTarget "SwiftyTorrent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				773FF95F22C10279008D58E4 /* Debug */,
+				773FF96022C10279008D58E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 773FF94222C10278008D58E4 /* Project object */;
+}
