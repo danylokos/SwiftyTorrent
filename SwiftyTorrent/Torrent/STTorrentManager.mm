@@ -11,6 +11,7 @@
 #import "STTorrent.h"
 #import "STTorrentFile.h"
 #import "STMagnetURI.h"
+#import "STFile.h"
 
 #import "NSData+Hex.h"
 
@@ -36,6 +37,10 @@
 @property (readwrite, nonatomic) NSUInteger numberOfSeeds;
 @property (readwrite, nonatomic) NSUInteger downloadRate;
 @property (readwrite, nonatomic) NSUInteger uploadRate;
+@end
+
+@interface STFile ()
+@property (readwrite, strong, nonatomic) NSString *name;
 @end
 
 #pragma mark -
@@ -427,6 +432,32 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
         [torrents addObject:torrent];
     }
     return [torrents copy];
+}
+
+- (NSArray<STFile *> *)filesForTorrentWithHash:(NSData *)infoHash {
+    lt::sha1_hash ih = lt::sha1_hash((const char *)infoHash.bytes);
+    auto th = _session->find_torrent(ih);
+    if (!th.is_valid()) {
+        NSLog(@"No a valid torrent with hash: %@", infoHash.hexString);
+        return nil;
+    }
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    auto ti = th.torrent_file();
+    if (ti == nullptr) {
+        NSLog(@"No metadata for torrent with name: %s", th.name().c_str());
+        return nil;
+    }
+    auto files = ti.get()->files();
+    for (auto it = files.begin(); it != files.end(); ++it) {
+        auto file = (*it);
+        auto filename = std::string(file.filename());
+        if (filename.length() > 0) {
+            STFile *fileObj = [[STFile alloc] init];
+            fileObj.name = [NSString stringWithUTF8String:filename.c_str()];
+            [results addObject:fileObj];
+        }
+    }
+    return [results copy];
 }
 
 @end

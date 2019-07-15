@@ -15,7 +15,7 @@ class TorrentsViewModel : NSObject, BindableObject, TorrentManagerDelegate {
     
     let didChange: AnyPublisher<Void, Never>
     
-    var torrents: [Torrent]! {
+    var torrents = [Torrent]() {
         didSet {
             updateSubject.send()
         }

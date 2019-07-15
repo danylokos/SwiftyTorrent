@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class STTorrentManager, STTorrent;
+@class STTorrentManager, STTorrent, STFile;
 
 NS_SWIFT_NAME(TorrentManagerDelegate)
 @protocol STTorrentManagerDelegate <NSObject>
@@ -50,6 +50,8 @@ NS_SWIFT_NAME(remove(_:));
 - (NSArray<STTorrent *> *)torrents;
 
 - (void)openURL:(NSURL *)URL;
+
+- (NSArray<STFile *> *)filesForTorrentWithHash:(NSData *)infoHash;
 
 @end
 

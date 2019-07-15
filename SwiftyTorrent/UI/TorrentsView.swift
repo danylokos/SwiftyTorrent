@@ -9,20 +9,55 @@
 import SwiftUI
 import Combine
 
+struct FilesViewModel {
+    
+    var torrent: Torrent
+
+    var title: String {
+        get {
+            return torrent.name
+        }
+    }
+    
+    var files: [File] {
+        get {
+            TorrentManager.shared().filesForTorrent(withHash: torrent.infoHash)
+        }
+    }
+    
+}
+
+struct FilesView : View {
+    
+    var model: FilesViewModel
+
+    var body: some View {
+        List {
+            ForEach(model.files.identified(by: \.self)) { file in
+                Text(file.name)
+            }.truncationMode(.middle)
+        }.navigationBarTitle(Text("Files"), displayMode: .inline)
+    }
+    
+}
+
 struct TorrentsView : View {
     
     @ObjectBinding var model: TorrentsViewModel
     
+    private let buttonTintColor = Color.blue
+    
     var body: some View {
-        let buttonTintColor = Color.blue
-        return NavigationView {
+        NavigationView {
             List {
                 Section(header: Text("Downloads")) {
-                    ForEach(model.torrents.identified(by: \.infoHash)) { torrent in
-                        TorrentRow(model: torrent)
+                    ForEach(model.torrents) { torrent in
+                        NavigationLink(destination: FilesView(model: FilesViewModel(torrent: torrent))) {
+                            TorrentRow(model: torrent)
+                        }
                     }.onDelete { (indexSet) in
                         for index in indexSet {
-                            guard let torrent = self.model.torrents?[index] else { return }
+                            let torrent = self.model.torrents[index]
                             self.model.remove(torrent)
                         }
                     }
@@ -38,7 +73,7 @@ struct TorrentsView : View {
                         self.model.addTestTorrents()
                     }.foregroundColor(buttonTintColor)
                 }
-            }.navigationBarTitle("Torrents")
+            }.navigationBarTitle(Text("Torrents"))
         }
     }
     
