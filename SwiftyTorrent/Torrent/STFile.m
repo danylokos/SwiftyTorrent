@@ -10,6 +10,8 @@
 
 @interface STFile ()
 @property (readwrite, strong, nonatomic) NSString *name;
+@property (readwrite, strong, nonatomic) NSString *path;
+@property (readwrite, nonatomic) NSUInteger size;
 @end
 
 @implementation STFile

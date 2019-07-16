@@ -41,6 +41,8 @@
 
 @interface STFile ()
 @property (readwrite, strong, nonatomic) NSString *name;
+@property (readwrite, strong, nonatomic) NSString *path;
+@property (readwrite, nonatomic) NSUInteger size;
 @end
 
 #pragma mark -
@@ -448,14 +450,16 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
         return nil;
     }
     auto files = ti.get()->files();
-    for (auto it = files.begin(); it != files.end(); ++it) {
-        auto file = (*it);
-        auto filename = std::string(file.filename());
-        if (filename.length() > 0) {
-            STFile *fileObj = [[STFile alloc] init];
-            fileObj.name = [NSString stringWithUTF8String:filename.c_str()];
-            [results addObject:fileObj];
-        }
+    for (int i=0; i<files.num_files(); i++) {
+        auto name = std::string(files.file_name(i));
+        auto path = files.file_path(i);
+        auto size = files.file_size(i);
+        
+        STFile *fileObj = [[STFile alloc] init];
+        fileObj.name = [NSString stringWithUTF8String:name.c_str()];
+        fileObj.path = [NSString stringWithUTF8String:path.c_str()];
+        fileObj.size = size;
+        [results addObject:fileObj];
     }
     return [results copy];
 }

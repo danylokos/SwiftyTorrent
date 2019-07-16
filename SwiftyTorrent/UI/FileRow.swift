@@ -1,16 +1,16 @@
 //
-//  TorrentRow.swift
+//  FileRow.swift
 //  SwiftyTorrent
 //
-//  Created by Danylo Kostyshyn on 7/13/19.
+//  Created by Danylo Kostyshyn on 7/16/19.
 //  Copyright © 2019 Danylo Kostyshyn. All rights reserved.
 //
 
 import SwiftUI
 
-struct TorrentRow : View {
+struct FileRow : View {
     
-    var model: TorrentRowModel
+    var model: FileRowModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,11 +18,11 @@ struct TorrentRow : View {
                 .font(Font.system(size: 16))
                 .bold()
             Spacer(minLength: 5)
-            Text(model.statusDetails)
-                .font(Font.system(size: 14))
-                .bold()
+            Text(model.pathDetails)
+                .font(Font.system(size: 10))
+                .foregroundColor(.gray)
             Spacer(minLength: 5)
-            Text(model.connectionDetails)
+            Text(model.sizeDetails)
                 .font(Font.system(size: 14))
         }
     }

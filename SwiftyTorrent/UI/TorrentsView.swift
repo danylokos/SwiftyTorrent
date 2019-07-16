@@ -9,38 +9,6 @@
 import SwiftUI
 import Combine
 
-struct FilesViewModel {
-    
-    var torrent: Torrent
-
-    var title: String {
-        get {
-            return torrent.name
-        }
-    }
-    
-    var files: [File] {
-        get {
-            TorrentManager.shared().filesForTorrent(withHash: torrent.infoHash)
-        }
-    }
-    
-}
-
-struct FilesView : View {
-    
-    var model: FilesViewModel
-
-    var body: some View {
-        List {
-            ForEach(model.files.identified(by: \.self)) { file in
-                Text(file.name)
-            }.truncationMode(.middle)
-        }.navigationBarTitle(Text("Files"), displayMode: .inline)
-    }
-    
-}
-
 struct TorrentsView : View {
     
     @ObjectBinding var model: TorrentsViewModel

@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 NS_SWIFT_NAME(File)
 @interface STFile : NSObject
 @property (readonly, strong, nonatomic) NSString *name;
+@property (readonly, strong, nonatomic) NSString *path;
+@property (readonly, nonatomic) NSUInteger size;
 @end
 
 NS_ASSUME_NONNULL_END
