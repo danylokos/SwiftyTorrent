@@ -18,7 +18,7 @@ struct TorrentsView : View {
         return NavigationView {
             List {
                 Section(header: Text("Downloads")) {
-                    ForEach(model.torrents.identified(by: \.infoHash)) { torrent in
+                    ForEach(model.torrents, id: \.infoHash) { torrent in
                         TorrentRow(model: torrent)
                     }.onDelete { (indexSet) in
                         for index in indexSet {

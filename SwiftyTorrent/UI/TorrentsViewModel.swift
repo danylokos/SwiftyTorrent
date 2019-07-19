@@ -9,20 +9,22 @@
 import Combine
 import SwiftUI
 
-class TorrentsViewModel : NSObject, BindableObject, TorrentManagerDelegate {
+final class TorrentsViewModel : NSObject, BindableObject, TorrentManagerDelegate {
     
     private let updateSubject = PassthroughSubject<Void, Never>()
     
-    let didChange: AnyPublisher<Void, Never>
+    typealias PublisherType = AnyPublisher<Void, Never>
     
+    let willChange: PublisherType
+
     var torrents: [Torrent]! {
-        didSet {
+        willSet {
             updateSubject.send()
         }
     }
     
     override init() {
-        didChange = updateSubject
+        willChange = updateSubject
             .throttle(for: .milliseconds(100), scheduler: RunLoop.main, latest: true)
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
@@ -43,7 +45,7 @@ class TorrentsViewModel : NSObject, BindableObject, TorrentManagerDelegate {
         addTestTorrentFiles()
         addTestMagnetLinks()
     }
-
+    
     func remove(_ torrent: Torrent) {
         TorrentManager.shared().remove(torrent.infoHash)
     }
