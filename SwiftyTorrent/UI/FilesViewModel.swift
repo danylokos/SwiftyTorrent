@@ -8,14 +8,22 @@
 
 import Foundation
 
-struct FilesViewModel {
+protocol FilesViewModel {
     
-    var directory: Direcctory
+    var title: String { get }
+    
+    var directory: Direcctory { get }
+
+}
+
+extension Direcctory : FilesViewModel {
     
     var title: String {
-        get {
-            return directory.name
-        }
+        return name
     }
-
+    
+    var directory: Direcctory {
+        return self
+    }
+    
 }

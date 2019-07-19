@@ -15,7 +15,7 @@ struct FilesView : View {
     var body: some View {
         List {
             ForEach(model.directory.allSubDirectories, id: \.path) { subDir in
-                NavigationLink(destination: FilesView(model: FilesViewModel(directory: subDir))) {
+                NavigationLink(destination: FilesView(model: subDir)) {
                     FileRow(model: subDir)
                 }
             }
