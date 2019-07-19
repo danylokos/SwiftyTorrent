@@ -12,6 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class STFileEntry;
+
 NS_SWIFT_NAME(Torrent)
 @interface STTorrent : NSObject
 @property (readonly, strong, nonatomic) NSData *infoHash;

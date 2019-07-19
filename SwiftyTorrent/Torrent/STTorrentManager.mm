@@ -11,7 +11,7 @@
 #import "STTorrent.h"
 #import "STTorrentFile.h"
 #import "STMagnetURI.h"
-#import "STFile.h"
+#import "STFileEntry.h"
 
 #import "NSData+Hex.h"
 
@@ -39,7 +39,7 @@
 @property (readwrite, nonatomic) NSUInteger uploadRate;
 @end
 
-@interface STFile ()
+@interface STFileEntry ()
 @property (readwrite, strong, nonatomic) NSString *name;
 @property (readwrite, strong, nonatomic) NSString *path;
 @property (readwrite, nonatomic) NSUInteger size;
@@ -48,7 +48,7 @@
 #pragma mark -
 
 static char const * const STEventsQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.events.queue";
-static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.files.queue";
+static char const * const STFileEntrysQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.files.queue";
 
 @interface STTorrentManager () {
     lt::session *_session;
@@ -78,7 +78,7 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
         _session = new lt::session();
         _session->set_alert_mask(lt::alert::all_categories);
         _eventsQueue = dispatch_queue_create(STEventsQueueIdentifier, DISPATCH_QUEUE_SERIAL);
-        _filesQueue = dispatch_queue_create(STFilesQueueIdentifier, DISPATCH_QUEUE_SERIAL);
+        _filesQueue = dispatch_queue_create(STFileEntrysQueueIdentifier, DISPATCH_QUEUE_SERIAL);
         _delegates = [NSHashTable weakObjectsHashTable];
         
         // resore session
@@ -436,7 +436,7 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
     return [torrents copy];
 }
 
-- (NSArray<STFile *> *)filesForTorrentWithHash:(NSData *)infoHash {
+- (NSArray<STFileEntry *> *)filesForTorrentWithHash:(NSData *)infoHash {
     lt::sha1_hash ih = lt::sha1_hash((const char *)infoHash.bytes);
     auto th = _session->find_torrent(ih);
     if (!th.is_valid()) {
@@ -455,11 +455,11 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
         auto path = files.file_path(i);
         auto size = files.file_size(i);
         
-        STFile *fileObj = [[STFile alloc] init];
-        fileObj.name = [NSString stringWithUTF8String:name.c_str()];
-        fileObj.path = [NSString stringWithUTF8String:path.c_str()];
-        fileObj.size = size;
-        [results addObject:fileObj];
+        STFileEntry *fileEntry = [[STFileEntry alloc] init];
+        fileEntry.name = [NSString stringWithUTF8String:name.c_str()];
+        fileEntry.path = [NSString stringWithUTF8String:path.c_str()];
+        fileEntry.size = size;
+        [results addObject:fileEntry];
     }
     return [results copy];
 }

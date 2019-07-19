@@ -1,5 +1,5 @@
 //
-//  STFile.h
+//  STFileEntry.h
 //  SwiftyTorrent
 //
 //  Created by Danylo Kostyshyn on 7/15/19.
@@ -10,8 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NS_SWIFT_NAME(File)
-@interface STFile : NSObject
+NS_SWIFT_NAME(FileEntry)
+@interface STFileEntry : NSObject
 @property (readonly, strong, nonatomic) NSString *name;
 @property (readonly, strong, nonatomic) NSString *path;
 @property (readonly, nonatomic) NSUInteger size;

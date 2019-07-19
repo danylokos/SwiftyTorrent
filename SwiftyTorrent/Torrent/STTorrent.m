@@ -8,6 +8,9 @@
 
 #import "STTorrent.h"
 
+#import "STFileEntry.h"
+#import "STTorrentManager.h"
+
 @interface STTorrent ()
 @property (readwrite, strong, nonatomic) NSData *infoHash;
 @property (readwrite, strong, nonatomic) NSString *name;

@@ -10,18 +10,12 @@ import Foundation
 
 struct FilesViewModel {
     
-    var torrent: Torrent
+    var directory: Direcctory
     
     var title: String {
         get {
-            return torrent.name
+            return directory.name
         }
     }
-    
-    var files: [File] {
-        get {
-            TorrentManager.shared().filesForTorrent(withHash: torrent.infoHash)
-        }
-    }
-    
+
 }

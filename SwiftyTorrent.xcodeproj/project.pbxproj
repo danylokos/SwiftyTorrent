@@ -14,7 +14,7 @@
 		771B701222DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent in Resources */ = {isa = PBXBuildFile; fileRef = 771B700F22DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent */; };
 		771B701322DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent in Resources */ = {isa = PBXBuildFile; fileRef = 771B701022DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent */; };
 		7729B55B22DC8CAC006BEF5D /* Torrent+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729B55A22DC8CAC006BEF5D /* Torrent+SwiftUI.swift */; };
-		7729B55E22DCC254006BEF5D /* STFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7729B55D22DCC254006BEF5D /* STFile.m */; };
+		7729B55E22DCC254006BEF5D /* STFileEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7729B55D22DCC254006BEF5D /* STFileEntry.m */; };
 		7729BDB122D8B34D00D02566 /* TorrentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */; };
 		7729BDB322D8B38300D02566 /* TorrentRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB222D8B38300D02566 /* TorrentRowModel.swift */; };
 		772CEA0622DDFC38000CD2BD /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0522DDFC38000CD2BD /* FilesView.swift */; };
@@ -28,6 +28,7 @@
 		773FF96A22C105D8008D58E4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773FF96922C105D8008D58E4 /* CoreFoundation.framework */; };
 		773FF96C22C105DE008D58E4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773FF96B22C105DE008D58E4 /* SystemConfiguration.framework */; };
 		773FF98522C10EB0008D58E4 /* libtorrent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 773FF97E22C10D06008D58E4 /* libtorrent.a */; };
+		774CC0F522DF53E2002F3345 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774CC0F422DF53E2002F3345 /* File.swift */; };
 		775584DF22C22A9100696787 /* STTorrentManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 775584DD22C22A9100696787 /* STTorrentManager.mm */; };
 		7755850A22C2386300696787 /* STTorrent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7755850922C2386300696787 /* STTorrent.m */; };
 		77CE942122C754E5004BC8C5 /* STTorrentFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 77CE942022C754E5004BC8C5 /* STTorrentFile.mm */; };
@@ -63,8 +64,8 @@
 		771B700F22DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-16.04.6-server-amd64.iso.torrent"; sourceTree = "<group>"; };
 		771B701022DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-19.04-live-server-amd64.iso.torrent"; sourceTree = "<group>"; };
 		7729B55A22DC8CAC006BEF5D /* Torrent+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Torrent+SwiftUI.swift"; sourceTree = "<group>"; };
-		7729B55C22DCC254006BEF5D /* STFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STFile.h; sourceTree = "<group>"; };
-		7729B55D22DCC254006BEF5D /* STFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STFile.m; sourceTree = "<group>"; };
+		7729B55C22DCC254006BEF5D /* STFileEntry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STFileEntry.h; sourceTree = "<group>"; };
+		7729B55D22DCC254006BEF5D /* STFileEntry.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STFileEntry.m; sourceTree = "<group>"; };
 		7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentsViewModel.swift; sourceTree = "<group>"; };
 		7729BDB222D8B38300D02566 /* TorrentRowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentRowModel.swift; sourceTree = "<group>"; };
 		772CEA0522DDFC38000CD2BD /* FilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesView.swift; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 		773FF96B22C105DE008D58E4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		773FF97322C10C1A008D58E4 /* SwiftyTorrent-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftyTorrent-Bridging-Header.h"; sourceTree = "<group>"; };
 		773FF97922C10D06008D58E4 /* libtorrent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libtorrent.xcodeproj; path = Thirdparties/libtorrent/Xcode/libtorrent.xcodeproj; sourceTree = "<group>"; };
+		774CC0F422DF53E2002F3345 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		775584DD22C22A9100696787 /* STTorrentManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STTorrentManager.mm; sourceTree = "<group>"; };
 		775584DE22C22A9100696787 /* STTorrentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTorrentManager.h; sourceTree = "<group>"; };
 		7755850822C2386300696787 /* STTorrent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STTorrent.h; sourceTree = "<group>"; };
@@ -197,10 +199,11 @@
 				775BB01D22DA2D3A00957F38 /* STTorrentState.h */,
 				7755850822C2386300696787 /* STTorrent.h */,
 				7755850922C2386300696787 /* STTorrent.m */,
-				7729B55C22DCC254006BEF5D /* STFile.h */,
-				7729B55D22DCC254006BEF5D /* STFile.m */,
+				7729B55C22DCC254006BEF5D /* STFileEntry.h */,
+				7729B55D22DCC254006BEF5D /* STFileEntry.m */,
 				77F6B7EA22C3814600D5F841 /* TorrentState.swift */,
 				7729B55A22DC8CAC006BEF5D /* Torrent+SwiftUI.swift */,
+				774CC0F422DF53E2002F3345 /* File.swift */,
 			);
 			path = Torrent;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 				7729B55B22DC8CAC006BEF5D /* Torrent+SwiftUI.swift in Sources */,
 				7755850A22C2386300696787 /* STTorrent.m in Sources */,
 				772CEA0A22DDFC47000CD2BD /* FileRow.swift in Sources */,
+				774CC0F522DF53E2002F3345 /* File.swift in Sources */,
 				7729BDB322D8B38300D02566 /* TorrentRowModel.swift in Sources */,
 				773FF95022C10278008D58E4 /* SceneDelegate.swift in Sources */,
 				77CE942422C754F7004BC8C5 /* STMagnetURI.mm in Sources */,
@@ -350,7 +354,7 @@
 				7703512222DA513B00A9CC84 /* TorrentRow.swift in Sources */,
 				77CE942122C754E5004BC8C5 /* STTorrentFile.mm in Sources */,
 				77FC2AF422D896F100A544AA /* AppCoordinator.swift in Sources */,
-				7729B55E22DCC254006BEF5D /* STFile.m in Sources */,
+				7729B55E22DCC254006BEF5D /* STFileEntry.m in Sources */,
 				77F6B7EB22C3814600D5F841 /* TorrentState.swift in Sources */,
 				77D8122522CA336A001CA13E /* TorrentsView.swift in Sources */,
 			);

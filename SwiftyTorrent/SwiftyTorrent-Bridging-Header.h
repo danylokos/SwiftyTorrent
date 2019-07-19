@@ -7,4 +7,4 @@
 #import "STTorrent.h"
 #import "STTorrentFile.h"
 #import "STMagnetURI.h"
-#import "STFile.h"
+#import "STFileEntry.h"

@@ -20,7 +20,7 @@ struct TorrentsView : View {
             List {
                 Section(header: Text("Downloads")) {
                     ForEach(model.torrents) { torrent in
-                        NavigationLink(destination: FilesView(model: FilesViewModel(torrent: torrent))) {
+                        NavigationLink(destination: FilesView(model: FilesViewModel(directory: torrent.directory))) {
                             TorrentRow(model: torrent)
                         }
                     }.onDelete { (indexSet) in

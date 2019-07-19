@@ -12,13 +12,13 @@ protocol FileRowModel {
     
     var title: String { get }
     
-    var pathDetails: String { get }
-    
-    var sizeDetails: String { get }
+//    var pathDetails: String { get }
+//
+//    var sizeDetails: String { get }
     
 }
 
-extension File : FileRowModel {
+extension FileEntry : FileRowModel {
     
     var title: String {
         return name
@@ -35,7 +35,7 @@ extension File : FileRowModel {
     }()
     
     var sizeDetails: String {
-        return File.byteCountFromatter.string(fromByteCount: Int64(size))
+        return FileEntry.byteCountFromatter.string(fromByteCount: Int64(size))
     }
     
 }

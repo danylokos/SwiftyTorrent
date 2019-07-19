@@ -17,13 +17,13 @@ struct FileRow : View {
             Text(model.title)
                 .font(Font.system(size: 16))
                 .bold()
-            Spacer(minLength: 5)
-            Text(model.pathDetails)
-                .font(Font.system(size: 10))
-                .foregroundColor(.gray)
-            Spacer(minLength: 5)
-            Text(model.sizeDetails)
-                .font(Font.system(size: 14))
+//            Spacer(minLength: 5)
+//            Text(model.pathDetails)
+//                .font(Font.system(size: 10))
+//                .foregroundColor(.gray)
+//            Spacer(minLength: 5)
+//            Text(model.sizeDetails)
+//                .font(Font.system(size: 14))
         }
     }
     
