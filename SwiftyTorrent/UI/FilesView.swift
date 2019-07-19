@@ -14,12 +14,12 @@ struct FilesView : View {
     
     var body: some View {
         List {
-            ForEach(model.directory.allSubDirectories.identified(by: \.path)) { subDir in
+            ForEach(model.directory.allSubDirectories, id: \.path) { subDir in
                 NavigationLink(destination: FilesView(model: FilesViewModel(directory: subDir))) {
                     FileRow(model: subDir)
                 }
             }
-            ForEach(model.directory.allFiles.identified(by: \.path)) { file in
+            ForEach(model.directory.allFiles, id: \.path) { file in
                 FileRow(model: file)
             }
         }.truncationMode(.middle)
