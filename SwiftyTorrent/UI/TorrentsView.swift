@@ -11,7 +11,7 @@ import Combine
 
 struct TorrentsView : View {
     
-    @ObjectBinding var model: TorrentsViewModel
+    @ObservedObject var model: TorrentsViewModel
     
     private let buttonTintColor = Color.blue
     
