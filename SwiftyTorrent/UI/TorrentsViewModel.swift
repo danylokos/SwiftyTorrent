@@ -9,22 +9,22 @@
 import Combine
 import SwiftUI
 
-final class TorrentsViewModel : NSObject, BindableObject, TorrentManagerDelegate {
+final class TorrentsViewModel : NSObject, ObservableObject, TorrentManagerDelegate {
     
     private let updateSubject = PassthroughSubject<Void, Never>()
     
     typealias PublisherType = AnyPublisher<Void, Never>
     
-    let willChange: PublisherType
+    let objectWillChange: PublisherType
 
-    var torrents: [Torrent]! {
+    @Published var torrents: [Torrent]! {
         willSet {
             updateSubject.send()
         }
     }
     
     override init() {
-        willChange = updateSubject
+        objectWillChange = updateSubject
             .throttle(for: .milliseconds(100), scheduler: RunLoop.main, latest: true)
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
