@@ -39,7 +39,7 @@ struct TorrentsView : View {
                     }.foregroundColor(buttonTintColor)
                 }
             }.navigationBarTitle("Torrents")
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
     
 }
