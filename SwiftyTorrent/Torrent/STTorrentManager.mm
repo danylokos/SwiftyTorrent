@@ -49,6 +49,7 @@
 
 static char const * const STEventsQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.events.queue";
 static char const * const STFileEntrysQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.files.queue";
+static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentManager.error";
 
 @interface STTorrentManager () {
     lt::session *_session;
@@ -100,6 +101,20 @@ static char const * const STFileEntrysQueueIdentifier = "org.kostyshyn.SwiftyTor
 
 - (BOOL)isSessionActive {
     return YES;
+}
+
+#pragma mark -
+
+- (void)notifyDelegatesAboutError:(NSError *)error {
+    for (id<STTorrentManagerDelegate>delegate in self.delegates) {
+        [delegate torrentManager:self didErrorOccure:error];
+    }
+}
+
+- (NSError *)errorWithCode:(STErrorCode)code message:(NSString *)message {
+    return [NSError errorWithDomain:STErrorDomain
+                               code:code
+                           userInfo:@{NSLocalizedDescriptionKey: message}];
 }
 
 #pragma mark - Alerts Loop
@@ -374,7 +389,14 @@ static char const * const STFileEntrysQueueIdentifier = "org.kostyshyn.SwiftyTor
 - (BOOL)addTorrent:(id<STDownloadable>)torrent {
     lt::add_torrent_params params;
     params.save_path = [[self downloadsDirPath] UTF8String];
-    [torrent configureAddTorrentParams:(void *)&params];
+    try {
+        [torrent configureAddTorrentParams:(void *)&params];
+    } catch (...) {
+        NSError *error = [self errorWithCode:STErrorCodeBadFile message:@"Failed to add torrent"];
+        NSLog(@"%@", error);
+        [self notifyDelegatesAboutError:error];
+        return NO;
+    }
     auto th = _session->add_torrent(params);
     return YES;
 }

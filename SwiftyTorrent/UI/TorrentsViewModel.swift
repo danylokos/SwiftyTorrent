@@ -16,11 +16,22 @@ final class TorrentsViewModel : NSObject, ObservableObject, TorrentManagerDelega
     typealias PublisherType = AnyPublisher<Void, Never>
     
     let objectWillChange: PublisherType
-
+    
     @Published var torrents: [Torrent]! {
         willSet {
             updateSubject.send()
         }
+    }
+    
+    @Published private(set) var activeError: Error?
+    
+    var isPresentingAlert: Binding<Bool> {
+        return Binding<Bool>(get: {
+            return self.activeError != nil
+        }, set: { newValue in
+            guard !newValue else { return }
+            self.activeError = nil
+        })
     }
     
     override init() {
@@ -55,4 +66,9 @@ final class TorrentsViewModel : NSObject, ObservableObject, TorrentManagerDelega
     func torrentManagerDidReceiveUpdate(_ manager: TorrentManager) {
         torrents = manager.torrents().sorted(by: { $0.name < $1.name })
     }
+    
+    func torrentManager(_ manager: TorrentManager, didErrorOccure error: Error) {
+        activeError = error
+    }
+    
 }

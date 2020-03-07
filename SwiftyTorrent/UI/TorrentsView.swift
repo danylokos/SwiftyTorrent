@@ -42,9 +42,19 @@ struct TorrentsView : View {
                     }.foregroundColor(buttonTintColor)
                 }
             }.navigationBarTitle(Text("Torrents"))
+        }.alert(isPresented: model.isPresentingAlert) { () -> Alert in
+            Alert(error: model.activeError!)
         }
     }
     
+}
+
+extension Alert {
+    init(error: Error) {
+        self = Alert(title: Text("Error"),
+                     message: Text(error.localizedDescription),
+                     dismissButton: .default(Text("OK")))
+    }
 }
 
 #if DEBUG

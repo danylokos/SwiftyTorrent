@@ -12,12 +12,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, STErrorCode) {
+    STErrorCodeBadFile,
+    STErrorCodeUndefined
+} NS_SWIFT_NAME(STError.Code);
+
 @class STTorrentManager, STTorrent, STFileEntry;
 
 NS_SWIFT_NAME(TorrentManagerDelegate)
 @protocol STTorrentManagerDelegate <NSObject>
 
 - (void)torrentManagerDidReceiveUpdate:(STTorrentManager *)manager;
+
+- (void)torrentManager:(STTorrentManager *)manager didErrorOccure:(NSError *)error;
 
 @end
 
