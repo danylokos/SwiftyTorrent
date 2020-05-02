@@ -18,7 +18,7 @@ protocol TorrentRowModel {
     
 }
 
-extension Torrent : TorrentRowModel {
+extension Torrent: TorrentRowModel {
 
     var title: String {
         return name

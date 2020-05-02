@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct TorrentRow : View {
+struct TorrentRow: View {
     
     var model: TorrentRowModel
     

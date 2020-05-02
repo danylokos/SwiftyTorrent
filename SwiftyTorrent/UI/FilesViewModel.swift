@@ -16,7 +16,7 @@ protocol FilesViewModel {
 
 }
 
-extension Direcctory : FilesViewModel {
+extension Direcctory: FilesViewModel {
     
     var title: String {
         return name

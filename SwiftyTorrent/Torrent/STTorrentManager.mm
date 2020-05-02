@@ -146,7 +146,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
                 case lt::block_finished_alert::alert_type: {
                 } break;
 
-                case lt::torrent_added_alert::alert_type: {
+                case lt::add_torrent_alert::alert_type: {
                     [self torrentAddedAlert:(lt::torrent_alert *)alert];
                 } break;
                     
@@ -190,7 +190,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
         return;
     }
 
-    bool has_metadata = th.has_metadata();
+    bool has_metadata = th.status().has_metadata;
     auto torrent_info = th.torrent_file();
     auto margnet_uri = lt::make_magnet_uri(th);
     dispatch_async(self.filesQueue, ^{
@@ -468,7 +468,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     NSMutableArray *results = [[NSMutableArray alloc] init];
     auto ti = th.torrent_file();
     if (ti == nullptr) {
-        NSLog(@"No metadata for torrent with name: %s", th.name().c_str());
+        NSLog(@"No metadata for torrent with name: %s", th.status().name.c_str());
         return nil;
     }
     auto files = ti.get()->files();

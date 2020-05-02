@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct FilesView : View {
+struct FilesView: View {
     
     var model: FilesViewModel
     

@@ -18,7 +18,7 @@ protocol FileRowModel {
     
 }
 
-extension FileEntry : FileRowModel {
+extension FileEntry: FileRowModel {
     
     var title: String {
         return name

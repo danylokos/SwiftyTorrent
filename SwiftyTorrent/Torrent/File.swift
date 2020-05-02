@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-protocol FileProtocol : FileRowModel {
+protocol FileProtocol: FileRowModel {
 
     var name: String { get }
     
@@ -27,7 +27,7 @@ extension FileProtocol {
 
 }
 
-class File : FileProtocol, CustomStringConvertible {
+class File: FileProtocol, CustomStringConvertible {
     
 //    var id: String {
 //        return path
@@ -52,7 +52,7 @@ class File : FileProtocol, CustomStringConvertible {
     }
 }
 
-class Direcctory : FileProtocol, CustomStringConvertible {
+class Direcctory: FileProtocol, CustomStringConvertible {
     
 //    var id: String {
 //        return path
@@ -65,15 +65,13 @@ class Direcctory : FileProtocol, CustomStringConvertible {
     var files: [FileProtocol]
     
     var allSubDirectories: [Direcctory] {
-        get {
-            return files.filter({ type(of: $0) == Direcctory.self }) as! [Direcctory]
-        }
+        //swiftlint:disable:next force_cast
+        return files.filter({ type(of: $0) == Direcctory.self }) as! [Direcctory]
     }
     
     var allFiles: [File] {
-        get {
-            return files.filter({ type(of: $0) == File.self }) as! [File]
-        }
+        //swiftlint:disable:next force_cast
+        return files.filter({ type(of: $0) == File.self }) as! [File]
     }
     
     init(name: String, path: String, files: [FileProtocol]? = nil) {
@@ -118,7 +116,7 @@ class Direcctory : FileProtocol, CustomStringConvertible {
                     lastDir.files.append(file)
                 } else {
                     var dir: Direcctory! = lastDir.files.first(where: { $0.name == component }) as? Direcctory
-                    if (dir == nil) {
+                    if dir == nil {
                         dir = Direcctory(name: component, path: path)
                         lastDir.files.append(dir)
                     }

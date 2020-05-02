@@ -41,10 +41,15 @@ struct TorrentsView: View {
                         self.model.addTestTorrents()
                     }.foregroundColor(buttonTintColor)
                 }
+<<<<<<< HEAD
             }.navigationBarTitle(Text("Torrents"))
         }.alert(isPresented: model.isPresentingAlert) { () -> Alert in
             Alert(error: model.activeError!)
         }
+=======
+            }.navigationBarTitle("Torrents")
+        }.navigationViewStyle(StackNavigationViewStyle())
+>>>>>>> master
     }
     
 }

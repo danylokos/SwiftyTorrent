@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct FileRow : View {
+struct FileRow: View {
     
     var model: FileRowModel
     
