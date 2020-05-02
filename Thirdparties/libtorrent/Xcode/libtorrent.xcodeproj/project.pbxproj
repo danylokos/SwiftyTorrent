@@ -18,7 +18,6 @@
 		77F5045E22C0D2A400CF042B /* magnet_uri.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F503C822C0D2A400CF042B /* magnet_uri.cpp */; };
 		77F5045F22C0D2A400CF042B /* http_stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F503C922C0D2A400CF042B /* http_stream.cpp */; };
 		77F5046022C0D2A400CF042B /* platform_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F503CA22C0D2A400CF042B /* platform_util.cpp */; };
-		77F5046122C0D2A400CF042B /* session_udp_sockets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F503CB22C0D2A400CF042B /* session_udp_sockets.cpp */; };
 		77F5046222C0D2A400CF042B /* add_torrent_params.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F503CC22C0D2A400CF042B /* add_torrent_params.cpp */; };
 		77F5046322C0D2A400CF042B /* piece_picker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F503CD22C0D2A400CF042B /* piece_picker.cpp */; };
 		77F5046422C0D2A400CF042B /* session_handle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F503CE22C0D2A400CF042B /* session_handle.cpp */; };
@@ -189,7 +188,6 @@
 		77F503C822C0D2A400CF042B /* magnet_uri.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = magnet_uri.cpp; sourceTree = "<group>"; };
 		77F503C922C0D2A400CF042B /* http_stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = http_stream.cpp; sourceTree = "<group>"; };
 		77F503CA22C0D2A400CF042B /* platform_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform_util.cpp; sourceTree = "<group>"; };
-		77F503CB22C0D2A400CF042B /* session_udp_sockets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = session_udp_sockets.cpp; sourceTree = "<group>"; };
 		77F503CC22C0D2A400CF042B /* add_torrent_params.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = add_torrent_params.cpp; sourceTree = "<group>"; };
 		77F503CD22C0D2A400CF042B /* piece_picker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = piece_picker.cpp; sourceTree = "<group>"; };
 		77F503CE22C0D2A400CF042B /* session_handle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = session_handle.cpp; sourceTree = "<group>"; };
@@ -459,7 +457,6 @@
 				77F5042B22C0D2A400CF042B /* session_impl.cpp */,
 				77F5041022C0D2A400CF042B /* session_settings.cpp */,
 				77F5040E22C0D2A400CF042B /* session_stats.cpp */,
-				77F503CB22C0D2A400CF042B /* session_udp_sockets.cpp */,
 				77F5042522C0D2A400CF042B /* session.cpp */,
 				77F503D322C0D2A400CF042B /* settings_pack.cpp */,
 				77F503D922C0D2A400CF042B /* sha1_hash.cpp */,
@@ -729,7 +726,6 @@
 				77F5046922C0D2A400CF042B /* settings_pack.cpp in Sources */,
 				77F504B022C0D2A400CF042B /* alert.cpp in Sources */,
 				77F5047D22C0D2A400CF042B /* parse_url.cpp in Sources */,
-				77F5046122C0D2A400CF042B /* session_udp_sockets.cpp in Sources */,
 				77F5048022C0D2A400CF042B /* merkle.cpp in Sources */,
 				77F504DB22C0D2A400CF042B /* bandwidth_queue_entry.cpp in Sources */,
 				77F5045D22C0D2A400CF042B /* string_util.cpp in Sources */,

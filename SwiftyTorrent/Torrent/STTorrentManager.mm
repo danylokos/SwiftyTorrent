@@ -124,7 +124,7 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
                 case lt::block_finished_alert::alert_type: {
                 } break;
 
-                case lt::torrent_added_alert::alert_type: {
+                case lt::add_torrent_alert::alert_type: {
                     [self torrentAddedAlert:(lt::torrent_alert *)alert];
                 } break;
                     
@@ -168,7 +168,7 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
         return;
     }
 
-    bool has_metadata = th.has_metadata();
+    bool has_metadata = th.status().has_metadata;
     auto torrent_info = th.torrent_file();
     auto margnet_uri = lt::make_magnet_uri(th);
     dispatch_async(self.filesQueue, ^{
