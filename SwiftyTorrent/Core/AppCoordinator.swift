@@ -16,7 +16,7 @@ protocol ApplicationCoordinator {
     
 }
 
-final class AppCoordinator : ApplicationCoordinator {
+final class AppCoordinator: ApplicationCoordinator {
     
     private var window: UIWindow!
     private var cancellers = [Cancellable]()
@@ -26,7 +26,7 @@ final class AppCoordinator : ApplicationCoordinator {
         
         cancellers.append(contentsOf: [
             NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
-                .sink { [unowned self] notification in
+                .sink { [unowned self] _ in
                     self.registerBackgroundTask()
             }]
         )
@@ -57,7 +57,7 @@ final class AppCoordinator : ApplicationCoordinator {
     // MARK: -
     
     private func requestUserNotifications() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (success, error) in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (_, error) in
             if let error = error {
                 print("\(error.localizedDescription)")
             }
@@ -89,7 +89,7 @@ final class AppCoordinator : ApplicationCoordinator {
         content.sound = UNNotificationSound.default
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: "SuspendingSession", content: content, trigger: trigger)
-        UNUserNotificationCenter.current().add(request) { (error : Error?) in
+        UNUserNotificationCenter.current().add(request) { (error: Error?) in
             if let error = error {
                 print("\(error.localizedDescription)")
             }

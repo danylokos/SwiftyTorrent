@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Torrent.State : CustomStringConvertible {
+extension Torrent.State: CustomStringConvertible {
     
     public var description: String {
         switch self {
@@ -31,5 +31,4 @@ extension Torrent.State : CustomStringConvertible {
         }
     }
 
-    
 }

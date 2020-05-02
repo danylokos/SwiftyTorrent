@@ -9,7 +9,7 @@
 import SwiftUI
 import Combine
 
-struct TorrentsView : View {
+struct TorrentsView: View {
     
     @ObservedObject var model: TorrentsViewModel
     
@@ -45,7 +45,7 @@ struct TorrentsView : View {
 }
 
 #if DEBUG
-struct TorrentsView_Previews : PreviewProvider {
+struct TorrentsView_Previews: PreviewProvider {
     static var previews: some View {
         let model = TorrentsViewModel()
         return TorrentsView(model: model).environment(\.colorScheme, .dark)

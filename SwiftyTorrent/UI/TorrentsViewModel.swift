@@ -9,7 +9,7 @@
 import Combine
 import SwiftUI
 
-final class TorrentsViewModel : NSObject, ObservableObject, TorrentManagerDelegate {
+final class TorrentsViewModel: NSObject, ObservableObject, TorrentManagerDelegate {
     
     private let updateSubject = PassthroughSubject<Void, Never>()
     
