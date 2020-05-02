@@ -24,7 +24,7 @@ NS_SWIFT_NAME(TorrentManagerDelegate)
 
 - (void)torrentManagerDidReceiveUpdate:(STTorrentManager *)manager;
 
-- (void)torrentManager:(STTorrentManager *)manager didErrorOccure:(NSError *)error;
+- (void)torrentManager:(STTorrentManager *)manager didErrorOccur:(NSError *)error;
 
 @end
 

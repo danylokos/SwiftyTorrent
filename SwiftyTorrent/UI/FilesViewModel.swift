@@ -12,17 +12,17 @@ protocol FilesViewModel {
     
     var title: String { get }
     
-    var directory: Direcctory { get }
+    var directory: Directory { get }
 
 }
 
-extension Direcctory: FilesViewModel {
+extension Directory: FilesViewModel {
     
     var title: String {
         return name
     }
     
-    var directory: Direcctory {
+    var directory: Directory {
         return self
     }
     

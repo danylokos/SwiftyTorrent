@@ -48,7 +48,7 @@
 #pragma mark -
 
 static char const * const STEventsQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.events.queue";
-static char const * const STFileEntrysQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.files.queue";
+static char const * const STFileEntriesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.files.queue";
 static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentManager.error";
 
 @interface STTorrentManager () {
@@ -79,10 +79,10 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
         _session = new lt::session();
         _session->set_alert_mask(lt::alert::all_categories);
         _eventsQueue = dispatch_queue_create(STEventsQueueIdentifier, DISPATCH_QUEUE_SERIAL);
-        _filesQueue = dispatch_queue_create(STFileEntrysQueueIdentifier, DISPATCH_QUEUE_SERIAL);
+        _filesQueue = dispatch_queue_create(STFileEntriesQueueIdentifier, DISPATCH_QUEUE_SERIAL);
         _delegates = [NSHashTable weakObjectsHashTable];
         
-        // resore session
+        // restore session
         [self restoreSession];
         
         // start alerts loop
@@ -107,7 +107,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
 
 - (void)notifyDelegatesAboutError:(NSError *)error {
     for (id<STTorrentManagerDelegate>delegate in self.delegates) {
-        [delegate torrentManager:self didErrorOccure:error];
+        [delegate torrentManager:self didErrorOccur:error];
     }
 }
 
@@ -412,7 +412,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     if (URL.isFileURL) {
         BOOL success = [URL startAccessingSecurityScopedResource];
         if (success) {
-           STTorrentFile *torrent = [[STTorrentFile alloc] initWithFileAtURL:URL];
+            STTorrentFile *torrent = [[STTorrentFile alloc] initWithFileAtURL:URL];
             [self addTorrent:torrent];
             [URL stopAccessingSecurityScopedResource];
         }

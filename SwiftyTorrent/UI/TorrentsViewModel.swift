@@ -67,7 +67,7 @@ final class TorrentsViewModel: NSObject, ObservableObject, TorrentManagerDelegat
         torrents = manager.torrents().sorted(by: { $0.name < $1.name })
     }
     
-    func torrentManager(_ manager: TorrentManager, didErrorOccure error: Error) {
+    func torrentManager(_ manager: TorrentManager, didErrorOccur error: Error) {
         activeError = error
     }
     

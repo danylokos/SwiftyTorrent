@@ -28,14 +28,14 @@ extension FileEntry: FileRowModel {
         return path
     }
     
-    private static var byteCountFromatter: ByteCountFormatter = {
+    private static var byteCountFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()
         formatter.countStyle = .file
         return formatter
     }()
     
     var sizeDetails: String {
-        return FileEntry.byteCountFromatter.string(fromByteCount: Int64(size))
+        return FileEntry.byteCountFormatter.string(fromByteCount: Int64(size))
     }
     
 }

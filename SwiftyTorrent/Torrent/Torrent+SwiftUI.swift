@@ -11,7 +11,7 @@ import SwiftUI
 extension Torrent: Identifiable {
     
     private static var filesCache = [Data: [FileEntry]]()
-    private static var dirsCache = [Data: Direcctory]()
+    private static var dirsCache = [Data: Directory]()
     
     public var id: Data {
         return infoHash
@@ -24,10 +24,10 @@ extension Torrent: Identifiable {
         return Torrent.filesCache[infoHash]!
     }
 
-    var directory: Direcctory {
+    var directory: Directory {
         if Torrent.dirsCache[infoHash] == nil {
             let paths = fileEntries.map({ $0.path })
-            let dir = Direcctory.directory(from: paths)
+            let dir = Directory.directory(from: paths)
            Torrent.dirsCache[infoHash] = dir
         }
         return Torrent.dirsCache[infoHash]!

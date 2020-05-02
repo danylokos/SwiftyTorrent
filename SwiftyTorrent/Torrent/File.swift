@@ -52,7 +52,7 @@ class File: FileProtocol, CustomStringConvertible {
     }
 }
 
-class Direcctory: FileProtocol, CustomStringConvertible {
+class Directory: FileProtocol, CustomStringConvertible {
     
 //    var id: String {
 //        return path
@@ -64,9 +64,9 @@ class Direcctory: FileProtocol, CustomStringConvertible {
     
     var files: [FileProtocol]
     
-    var allSubDirectories: [Direcctory] {
+    var allSubDirectories: [Directory] {
         //swiftlint:disable:next force_cast
-        return files.filter({ type(of: $0) == Direcctory.self }) as! [Direcctory]
+        return files.filter({ type(of: $0) == Directory.self }) as! [Directory]
     }
     
     var allFiles: [File] {
@@ -103,8 +103,8 @@ class Direcctory: FileProtocol, CustomStringConvertible {
         }
     }
     
-    class func directory(from filePaths: [String]) -> Direcctory {
-        let rootDir = Direcctory(name: "/", path: "")
+    class func directory(from filePaths: [String]) -> Directory {
+        let rootDir = Directory(name: "/", path: "")
         for filePath in filePaths {
             var lastDir = rootDir
             let components = filePath.components(separatedBy: "/")
@@ -115,9 +115,9 @@ class Direcctory: FileProtocol, CustomStringConvertible {
                     let file = File(name: component, path: path)
                     lastDir.files.append(file)
                 } else {
-                    var dir: Direcctory! = lastDir.files.first(where: { $0.name == component }) as? Direcctory
+                    var dir: Directory! = lastDir.files.first(where: { $0.name == component }) as? Directory
                     if dir == nil {
-                        dir = Direcctory(name: component, path: path)
+                        dir = Directory(name: component, path: path)
                         lastDir.files.append(dir)
                     }
                     lastDir = dir
