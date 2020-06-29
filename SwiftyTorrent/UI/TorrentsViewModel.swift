@@ -8,6 +8,7 @@
 
 import Combine
 import SwiftUI
+import TorrentKit
 
 final class TorrentsViewModel: NSObject, ObservableObject, TorrentManagerDelegate {
     

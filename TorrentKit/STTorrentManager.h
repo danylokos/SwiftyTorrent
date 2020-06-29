@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, STErrorCode) {
     STErrorCodeBadFile,
     STErrorCodeUndefined
-} NS_SWIFT_NAME(STError.Code);
+} NS_SWIFT_NAME(STErrorCode);
 
 @class STTorrentManager, STTorrent, STFileEntry;
 
@@ -43,8 +43,6 @@ NS_SWIFT_NAME(addDelegate(_:));
 
 - (void)removeDelegate:(id<STTorrentManagerDelegate>)delegate
 NS_SWIFT_NAME(removeDelegate(_:));
-
-- (void)test;
 
 - (void)restoreSession;
 

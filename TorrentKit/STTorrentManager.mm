@@ -346,10 +346,6 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
 
 #pragma mark - Public Methods
 
-- (void)test {
-    
-}
-
 - (void)restoreSession {
     NSString *torrentsDirPath = [self torrentsDirPath];
     NSString *marngetURIsFilePath = [self magnetURIsFilePath];

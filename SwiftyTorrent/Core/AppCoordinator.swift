@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import TorrentKit
 
 protocol ApplicationCoordinator {
 
@@ -19,12 +20,12 @@ protocol ApplicationCoordinator {
 final class AppCoordinator: ApplicationCoordinator {
     
     private var window: UIWindow!
-    private var cancellers = [Cancellable]()
+    private var cancellables = [Cancellable]()
     
     init(window: UIWindow) {
         self.window = window
         
-        cancellers.append(contentsOf: [
+        cancellables.append(contentsOf: [
             NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
                 .sink { [unowned self] _ in
                     self.registerBackgroundTask()
@@ -33,7 +34,7 @@ final class AppCoordinator: ApplicationCoordinator {
     }
     
     deinit {
-        cancellers.forEach({ $0.cancel() })
+        cancellables.forEach({ $0.cancel() })
     }
 
     func handleOpenURLContexts(_ URLContexts: Set<UIOpenURLContext>) {

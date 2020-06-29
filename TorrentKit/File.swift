@@ -27,7 +27,7 @@ extension FileProtocol {
 
 }
 
-class File: FileProtocol, CustomStringConvertible {
+public class File: FileProtocol, CustomStringConvertible {
     
 //    var id: String {
 //        return path
@@ -42,7 +42,7 @@ class File: FileProtocol, CustomStringConvertible {
         self.path = path
     }
     
-    var description: String {
+    public var description: String {
         return name //+ " (\(path))"
     }
     
@@ -52,7 +52,7 @@ class File: FileProtocol, CustomStringConvertible {
     }
 }
 
-class Directory: FileProtocol, CustomStringConvertible {
+public class Directory: FileProtocol, CustomStringConvertible {
     
 //    var id: String {
 //        return path
@@ -80,7 +80,7 @@ class Directory: FileProtocol, CustomStringConvertible {
         self.files = files ?? []
     }
     
-    var description: String {
+    public var description: String {
         return name
     }
     

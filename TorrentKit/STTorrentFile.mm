@@ -41,13 +41,17 @@
 
 #pragma mark - Test torrents
 
++ (NSBundle *)currentBundle {
+    return [NSBundle bundleForClass:self];
+}
+
 + (STTorrentFile *)test_1 {
-    NSURL *fileURL = [[NSBundle mainBundle] URLForResource:@"ubuntu-18.04.2-live-server-amd64.iso" withExtension:@"torrent"];
+    NSURL *fileURL = [[self currentBundle] URLForResource:@"ubuntu-18.04.2-live-server-amd64.iso" withExtension:@"torrent"];
     return [[STTorrentFile alloc] initWithFileAtURL:fileURL];
 }
 
 + (STTorrentFile *)test_2 {
-    NSURL *fileURL = [[NSBundle mainBundle] URLForResource:@"ubuntu-19.04-live-server-amd64.iso" withExtension:@"torrent"];
+    NSURL *fileURL = [[self currentBundle] URLForResource:@"ubuntu-19.04-live-server-amd64.iso" withExtension:@"torrent"];
     return [[STTorrentFile alloc] initWithFileAtURL:fileURL];
 }
 

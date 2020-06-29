@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import TorrentKit
 
 extension Torrent: Identifiable {
     
