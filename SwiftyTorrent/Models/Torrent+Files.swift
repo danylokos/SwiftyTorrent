@@ -6,18 +6,13 @@
 //  Copyright © 2019 Danylo Kostyshyn. All rights reserved.
 //
 
-import SwiftUI
 import TorrentKit
 
-extension Torrent: Identifiable {
+extension Torrent {
     
     private static var filesCache = [Data: [FileEntry]]()
     private static var dirsCache = [Data: Directory]()
     
-    public var id: Data {
-        return infoHash
-    }
-
     var fileEntries: [FileEntry] {
         if Torrent.filesCache[infoHash] == nil {
             Torrent.filesCache[infoHash] = TorrentManager.shared().filesForTorrent(withHash: infoHash)

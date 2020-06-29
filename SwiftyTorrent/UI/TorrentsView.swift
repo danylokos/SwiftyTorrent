@@ -19,7 +19,7 @@ struct TorrentsView: View {
         NavigationView {
             List {
                 Section(header: Text("Downloads")) {
-                    ForEach(model.torrents) { torrent in
+                    ForEach(model.torrents, id: \.infoHash) { torrent in
                         NavigationLink(destination: FilesView(model: torrent.directory)) {
                             TorrentRow(model: torrent)
                         }

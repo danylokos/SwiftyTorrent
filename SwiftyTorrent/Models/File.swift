@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 protocol FileProtocol: FileRowModel {
 

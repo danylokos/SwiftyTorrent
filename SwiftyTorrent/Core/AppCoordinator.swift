@@ -20,6 +20,7 @@ protocol ApplicationCoordinator {
 final class AppCoordinator: ApplicationCoordinator {
     
     private var window: UIWindow!
+    private var torrentManager = TorrentManager.shared()
     private var cancellables = [Cancellable]()
     
     init(window: UIWindow) {
@@ -39,15 +40,14 @@ final class AppCoordinator: ApplicationCoordinator {
 
     func handleOpenURLContexts(_ URLContexts: Set<UIOpenURLContext>) {
         guard let URLContext = URLContexts.first else { return }
-        TorrentManager.shared().open(URLContext.url)
+        torrentManager.open(URLContext.url)
     }
 
     // MARK: - ApplicationCoordinator
     
     func start() {
-        let model = TorrentsViewModel()
-        self.window.rootViewController = UIHostingController(rootView: TorrentsView(model: model))
-        self.window.makeKeyAndVisible()
+        window.rootViewController = UIHostingController(rootView: MainView())
+        window.makeKeyAndVisible()
         
         requestUserNotifications()
         
