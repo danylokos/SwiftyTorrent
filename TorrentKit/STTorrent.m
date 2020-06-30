@@ -20,6 +20,7 @@
 @property (readwrite, nonatomic) NSUInteger numberOfSeeds;
 @property (readwrite, nonatomic) NSUInteger downloadRate;
 @property (readwrite, nonatomic) NSUInteger uploadRate;
+@property (readwrite, nonatomic) BOOL hasMetadata;
 @end
 
 @implementation STTorrent

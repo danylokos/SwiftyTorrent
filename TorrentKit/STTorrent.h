@@ -24,6 +24,7 @@ NS_SWIFT_NAME(Torrent)
 @property (readonly, nonatomic) NSUInteger numberOfSeeds;
 @property (readonly, nonatomic) NSUInteger downloadRate;
 @property (readonly, nonatomic) NSUInteger uploadRate;
+@property (readonly, nonatomic) BOOL hasMetadata;
 @end
 
 NS_ASSUME_NONNULL_END

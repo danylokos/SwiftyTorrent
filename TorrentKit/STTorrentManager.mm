@@ -37,6 +37,7 @@
 @property (readwrite, nonatomic) NSUInteger numberOfSeeds;
 @property (readwrite, nonatomic) NSUInteger downloadRate;
 @property (readwrite, nonatomic) NSUInteger uploadRate;
+@property (readwrite, nonatomic) BOOL hasMetadata;
 @end
 
 @interface STFileEntry ()
@@ -168,14 +169,36 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
                 
                 default: break;
             }
+            
+            if (dynamic_cast<lt::torrent_alert *>(alert) != nullptr) {
+                auto th = ((lt::torrent_alert *)alert)->handle;
+                if (!th.is_valid()) { break; }
+                [self notifyDelegatesWithUpdate:th];
+            }
         }
         
         alerts_queue.clear();
-        
-        // Notify delegates
-        for (id<STTorrentManagerDelegate>delegate in self.delegates) {
-            [delegate torrentManagerDidReceiveUpdate:self];
-        }
+    }
+}
+
+- (void)notifyDelegatesWithAdd:(lt::torrent_handle)th {
+    STTorrent *torrent = [self torrentFromHandle:th];
+    for (id<STTorrentManagerDelegate>delegate in self.delegates) {
+        [delegate torrentManager:self didAddTorrent:torrent];
+    }
+}
+
+- (void)notifyDelegatesWithRemove:(lt::torrent_handle)th {
+    NSData *hashData = [self hashDataFromInfoHash:th.info_hash()];
+    for (id<STTorrentManagerDelegate>delegate in self.delegates) {
+        [delegate torrentManager:self didRemoveTorrentWithHash:hashData];
+    }
+}
+
+- (void)notifyDelegatesWithUpdate:(lt::torrent_handle)th {
+    STTorrent *torrent = [self torrentFromHandle:th];
+    for (id<STTorrentManagerDelegate>delegate in self.delegates) {
+        [delegate torrentManager:self didReceiveUpdateForTorrent:torrent];
     }
 }
 
@@ -185,6 +208,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
 
 - (void)torrentAddedAlert:(lt::torrent_alert *)alert {
     auto th = alert->handle;
+    [self notifyDelegatesWithAdd:th];
     if (!th.is_valid()) {
         NSLog(@"%s: torrent_handle is invalid!", __FUNCTION__);
         return;
@@ -204,6 +228,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
 
 - (void)torrentRemovedAlert:(lt::torrent_alert *)alert {
     auto th = alert->handle;
+    [self notifyDelegatesWithRemove:th];
     if (!th.is_valid()) {
         NSLog(@"%s: torrent_handle is invalid!", __FUNCTION__);
         return;
@@ -306,9 +331,14 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     if (error) { NSLog(@"success: %d, %@", success, error); }
 }
 
+- (NSData *)hashDataFromInfoHash:(lt::sha1_hash)info_hash {
+    return [NSData dataWithBytes:info_hash.data()
+                          length:info_hash.size()];
+}
+
 - (void)removeMagnetURIWithHash:(lt::sha1_hash)info_hash {
-    NSData *data = [NSData dataWithBytes:info_hash.data() length:info_hash.size()];
-    [self removeFromFileStoreMagnetURIWithHash:data.hexString];
+    NSData *hashData = [self hashDataFromInfoHash:info_hash];
+    [self removeFromFileStoreMagnetURIWithHash:hashData.hexString];
 }
 
 - (void)removeFromFileStoreMagnetURIWithHash:(NSString *)hashString {
@@ -400,6 +430,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
 - (BOOL)removeTorrentWithInfoHash:(NSData *)infoHash {
     lt::sha1_hash hash((const char *)infoHash.bytes);
     auto th = _session->find_torrent(hash);
+    if (!th.is_valid()) { return NO; }
     _session->remove_torrent(th);
     return YES;
 }
@@ -432,24 +463,28 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     }
 }
 
+- (STTorrent *)torrentFromHandle:(lt::torrent_handle)th {
+    STTorrent *torrent = [[STTorrent alloc] init];
+    auto ih = th.info_hash();
+    torrent.infoHash = [NSData dataWithBytes:ih.data() length:ih.size()];
+    auto ts = th.status();
+    torrent.state = [self stateFromTorrentSatus:ts];
+    torrent.name = [NSString stringWithUTF8String:ts.name.c_str()];
+    torrent.progress = ts.progress;
+    torrent.numberOfPeers = ts.num_peers;
+    torrent.numberOfSeeds = ts.num_seeds;
+    torrent.uploadRate = ts.upload_payload_rate;
+    torrent.downloadRate = ts.download_payload_rate;
+    torrent.hasMetadata = ts.has_metadata;
+    return torrent;
+}
+
 - (NSArray<STTorrent *> *)torrents {
     auto handles = _session->get_torrents();
     NSMutableArray *torrents = [[NSMutableArray alloc] init];
     for (auto it = handles.begin(); it != handles.end(); ++it) {
         auto th = (*it);
-        auto ts = th.status();
-        auto ih = th.info_hash();
-
-        STTorrent *torrent = [[STTorrent alloc] init];
-        torrent.infoHash = [NSData dataWithBytes:ih.data() length:ih.size()];
-        torrent.state = [self stateFromTorrentSatus:ts];;
-        torrent.name = [NSString stringWithUTF8String:ts.name.c_str()];
-        torrent.progress = ts.progress;
-        torrent.numberOfPeers = ts.num_peers;
-        torrent.numberOfSeeds = ts.num_seeds;
-        torrent.uploadRate = ts.upload_payload_rate;
-        torrent.downloadRate = ts.download_payload_rate;
-        [torrents addObject:torrent];
+        [torrents addObject:[self torrentFromHandle:th]];
     }
     return [torrents copy];
 }

@@ -24,7 +24,7 @@ final class SearchViewModel: ObservableObject {
     
     init() {
         $searchText
-            .debounce(for: 0.5, scheduler: RunLoop.main)
+            .debounce(for: 0.5, scheduler: DispatchQueue.main)
             .removeDuplicates()
             .filter({ !$0.isEmpty })
             .sink(receiveValue: { value in
@@ -44,7 +44,7 @@ final class SearchViewModel: ObservableObject {
             .flatMap({ (value) -> AnyPublisher<[SearchDataItem], Error> in
                 self.eztbProvider.fetchTorrents(imdbId: value)
             })
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:

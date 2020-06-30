@@ -9,6 +9,17 @@
 import SwiftUI
 import Combine
 
+// https://medium.com/better-programming/swiftui-navigation-links-and-the-common-pitfalls-faced-505cbfd8029b
+struct LazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+    var body: Content {
+        build()
+    }
+}
+
 struct TorrentsView: View {
     
     @ObservedObject var model: TorrentsViewModel
@@ -20,7 +31,7 @@ struct TorrentsView: View {
             List {
                 Section(header: Text("Downloads")) {
                     ForEach(model.torrents, id: \.infoHash) { torrent in
-                        NavigationLink(destination: FilesView(model: torrent.directory)) {
+                        NavigationLink(destination: LazyView(FilesView(model: torrent.directory))) {
                             TorrentRow(model: torrent)
                         }
                     }.onDelete { (indexSet) in
@@ -30,6 +41,7 @@ struct TorrentsView: View {
                         }
                     }
                 }
+                #if DEBUG
                 Section(header: Text("Debug")) {
                     Button("Add test torrent files") {
                         self.model.addTestTorrentFiles()
@@ -41,6 +53,7 @@ struct TorrentsView: View {
                         self.model.addTestTorrents()
                     }.foregroundColor(buttonTintColor)
                 }
+                #endif
             }.navigationBarTitle(Text("Torrents"))
         }.alert(isPresented: model.isPresentingAlert) { () -> Alert in
             Alert(error: model.activeError!)

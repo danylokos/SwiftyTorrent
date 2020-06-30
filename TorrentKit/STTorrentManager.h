@@ -22,7 +22,11 @@ typedef NS_ENUM(NSUInteger, STErrorCode) {
 NS_SWIFT_NAME(TorrentManagerDelegate)
 @protocol STTorrentManagerDelegate <NSObject>
 
-- (void)torrentManagerDidReceiveUpdate:(STTorrentManager *)manager;
+- (void)torrentManager:(STTorrentManager *)manager didAddTorrent:(STTorrent *)torrent;
+
+- (void)torrentManager:(STTorrentManager *)manager didRemoveTorrentWithHash:(NSData *)hashData;
+
+- (void)torrentManager:(STTorrentManager *)manager didReceiveUpdateForTorrent:(STTorrent *)torrent;
 
 - (void)torrentManager:(STTorrentManager *)manager didErrorOccur:(NSError *)error;
 
