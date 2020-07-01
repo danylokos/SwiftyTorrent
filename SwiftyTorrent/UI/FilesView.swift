@@ -20,7 +20,9 @@ struct FilesView: View {
                 }
             }
             ForEach(model.directory.allFiles, id: \.path) { file in
-                FileRow(model: file)
+                NavigationLink(destination: FilePreviewHost(previewItem: file)) {
+                    FileRow(model: file)
+                }
             }
         }.truncationMode(.middle)
             .navigationBarTitle(Text(model.title), displayMode: .inline)

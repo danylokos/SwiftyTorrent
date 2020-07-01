@@ -26,7 +26,7 @@ extension FileProtocol {
 
 }
 
-public class File: FileProtocol, CustomStringConvertible {
+public class File: NSObject, FileProtocol {
     
 //    var id: String {
 //        return path
@@ -41,7 +41,7 @@ public class File: FileProtocol, CustomStringConvertible {
         self.path = path
     }
     
-    public var description: String {
+    public override var description: String {
         return name //+ " (\(path))"
     }
     

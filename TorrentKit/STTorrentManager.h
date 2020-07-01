@@ -62,6 +62,8 @@ NS_SWIFT_NAME(remove(_:));
 
 - (NSArray<STFileEntry *> *)filesForTorrentWithHash:(NSData *)infoHash;
 
+- (NSURL *)downloadsDirectoryURL;
+
 @end
 
 NS_ASSUME_NONNULL_END

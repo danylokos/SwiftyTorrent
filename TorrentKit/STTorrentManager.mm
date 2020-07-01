@@ -244,6 +244,10 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
 
 #pragma mark -
 
+- (NSURL *)downloadsDirectoryURL {
+    return [NSURL fileURLWithPath:[self downloadsDirPath] isDirectory:YES];
+}
+
 - (NSString *)downloadsDirPath {
     NSString *documentsDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSString *downloadsDirPath = [documentsDirPath stringByAppendingPathComponent:@"Downloads"];
