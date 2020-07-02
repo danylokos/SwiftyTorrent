@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import MediaKit
 
 struct FilesView: View {
     
@@ -20,7 +21,15 @@ struct FilesView: View {
                 }
             }
             ForEach(model.directory.allFiles, id: \.path) { file in
-                NavigationLink(destination: FilePreviewHost(previewItem: file)) {
+                NavigationLink(destination: {
+                    Group {
+                        if file.isVideo() {
+                            VLCViewHost(previewItem: file)
+                        } else {
+                            QLViewHost(previewItem: file)
+                        }
+                    }
+                }()) {
                     FileRow(model: file)
                 }
             }
