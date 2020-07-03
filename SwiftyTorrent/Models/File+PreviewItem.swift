@@ -1,5 +1,5 @@
 //
-//  File+QuickLook.swift
+//  File+PreviewItem.swift
 //  SwiftyTorrent
 //
 //  Created by Danylo Kostyshyn on 02.07.2020.
@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import QuickLook
+import MediaKit
 import TorrentKit
 
-extension File: QLPreviewItem {
+extension File: PreviewItem {
     
     public var previewItemURL: URL? {
         return TorrentManager.shared().downloadsDirectoryURL()

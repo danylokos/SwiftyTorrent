@@ -7,13 +7,29 @@
 //
 
 import SwiftUI
+#if canImport(QuickLook)
 import QuickLook
+
+class QLPreviewItemWrapper: NSObject, QLPreviewItem {
+
+    var previewItemURL: URL? { _previewItemURL }
+    var previewItemTitle: String? { _previewItemTitle }
+    
+    private var _previewItemURL: URL?
+    private var _previewItemTitle: String?
+    
+    init(previewItem: PreviewItem) {
+        _previewItemURL = previewItem.previewItemURL
+        _previewItemTitle = previewItem.previewItemTitle
+    }
+
+}
 
 public struct QLViewHost: UIViewControllerRepresentable {
     
-    public var previewItem: QLPreviewItem
+    public var previewItem: PreviewItem
     
-    public init(previewItem: QLPreviewItem) {
+    public init(previewItem: PreviewItem) {
         self.previewItem = previewItem
     }
 
@@ -37,9 +53,9 @@ public struct QLViewHost: UIViewControllerRepresentable {
 
     public class Coordinator: NSObject, QLPreviewControllerDataSource, QLPreviewControllerDelegate {
         
-        var previewItem: QLPreviewItem
+        var previewItem: PreviewItem
         
-        init(previewItem: QLPreviewItem) {
+        init(previewItem: PreviewItem) {
             self.previewItem = previewItem
             super.init()
         }
@@ -49,8 +65,9 @@ public struct QLViewHost: UIViewControllerRepresentable {
         }
         
         public func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
-            return previewItem
+            return QLPreviewItemWrapper(previewItem: previewItem)
         }
         
     }
 }
+#endif

@@ -12,6 +12,40 @@ import MediaKit
 struct FilesView: View {
     
     var model: FilesViewModel
+    @State var showModal: Bool = false
+    @State var selectedItem: File!
+
+    #if os(iOS)
+    var body: some View {
+        List {
+            ForEach(model.directory.allSubDirectories, id: \.path) { subDir in
+                NavigationLink(destination: FilesView(model: subDir)) {
+                    FileRow(model: subDir)
+                }
+            }
+            ForEach(model.directory.allFiles, id: \.path) { file in
+                Button(action: {
+                    self.selectedItem = file
+                    self.showModal.toggle()
+                }) {
+                    FileRow(model: file)
+                }
+            }
+        }.truncationMode(.middle)
+        .navigationBarTitle(Text(model.title), displayMode: .inline) // no tvOS
+        .sheet(isPresented: $showModal) {
+            NavigationView {
+                Group {
+                    if self.selectedItem.isVideo() {
+                        VLCViewHost(previewItem: self.selectedItem)
+                    } else {
+                        QLViewHost(previewItem: self.selectedItem)
+                    }
+                }
+            }
+        }
+    }
+    #elseif os(tvOS)
     
     var body: some View {
         List {
@@ -21,20 +55,20 @@ struct FilesView: View {
                 }
             }
             ForEach(model.directory.allFiles, id: \.path) { file in
-                NavigationLink(destination: {
-                    Group {
-                        if file.isVideo() {
-                            VLCViewHost(previewItem: file)
-                        } else {
-                            QLViewHost(previewItem: file)
-                        }
-                    }
-                }()) {
+                Button(action: {
+                    self.selectedItem = file
+                    self.showModal.toggle()
+                }) {
                     FileRow(model: file)
                 }
             }
         }.truncationMode(.middle)
-            .navigationBarTitle(Text(model.title), displayMode: .inline)
+        .sheet(isPresented: $showModal) {
+            NavigationView {
+                VLCViewHost(previewItem: self.selectedItem)
+            }
+        }
     }
+    #endif
     
 }
