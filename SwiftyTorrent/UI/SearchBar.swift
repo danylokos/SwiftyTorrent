@@ -13,7 +13,9 @@ struct SearchBar: UIViewRepresentable {
     @Binding var text: String
     let placeholder: String?
     
-    func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
+    typealias Context = UIViewRepresentableContext<SearchBar>
+    
+    func makeUIView(context: Context) -> UISearchBar {
         let searchBar = UISearchBar(frame: .zero)
         searchBar.delegate = context.coordinator
         searchBar.placeholder = placeholder
@@ -24,7 +26,7 @@ struct SearchBar: UIViewRepresentable {
         return Coordinator(text: $text)
     }
     
-    func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
+    func updateUIView(_ uiView: UISearchBar, context: Context) {
         uiView.text = text
     }
     

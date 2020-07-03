@@ -84,6 +84,7 @@ final class AppCoordinator: ApplicationCoordinator {
     }
     
     private func showLocalNotification() {
+        #if os(iOS)
         let content = UNMutableNotificationContent()
         content.title = "SwiftyTorrent"
         content.body = "Suspending session..."
@@ -95,6 +96,7 @@ final class AppCoordinator: ApplicationCoordinator {
                 print("\(error.localizedDescription)")
             }
         }
+        #endif
     }
 
 }

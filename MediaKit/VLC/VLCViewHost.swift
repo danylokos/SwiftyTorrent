@@ -7,14 +7,17 @@
 //
 
 import SwiftUI
-import QuickLook
+#if os(iOS)
 import MobileVLCKit
+#elseif os(tvOS)
+import TVVLCKit
+#endif
 
 public struct VLCViewHost: UIViewControllerRepresentable {
     
-    public var previewItem: QLPreviewItem
+    public var previewItem: PreviewItem
     
-    public init(previewItem: QLPreviewItem) {
+    public init(previewItem: PreviewItem) {
         self.previewItem = previewItem
     }
 
@@ -27,7 +30,6 @@ public struct VLCViewHost: UIViewControllerRepresentable {
     public func makeUIViewController(context: Context) -> UIViewController {
         let controller = UIViewController()
         let player = context.coordinator.player
-        player.delegate = context.coordinator
         player.drawable = controller.view
         player.play()
         return controller
@@ -40,12 +42,12 @@ public struct VLCViewHost: UIViewControllerRepresentable {
         coordinator.player.stop()
     }
 
-    public class Coordinator: NSObject, VLCMediaPlayerDelegate {
+    public class Coordinator: NSObject {
         
-        var previewItem: QLPreviewItem
+        var previewItem: PreviewItem
         var player: VLCMediaPlayer
         
-        init(previewItem: QLPreviewItem) {
+        init(previewItem: PreviewItem) {
             self.previewItem = previewItem
             self.player = VLCMediaPlayer()
             if let url = previewItem.previewItemURL {

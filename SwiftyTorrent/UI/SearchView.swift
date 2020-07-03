@@ -12,6 +12,7 @@ struct SearchView: View {
     
     @ObservedObject var model: SearchViewModel
     
+    #if os(iOS)
     var body: some View {
         NavigationView {
             VStack {
@@ -27,6 +28,23 @@ struct SearchView: View {
             }.navigationBarTitle(Text("Search"))
         }
     }
+    #elseif os(tvOS)
+    var body: some View {
+        NavigationView {
+            VStack {
+                SearchBarTV(text: $model.searchText, placeholder: "Seach EZTV...")
+                List {
+                    ForEach(model.data, id: \.title) { item in
+                        SearchRow(model: item) {
+                            print("select: \(item.title)")
+                            self.model.select(item)
+                        }
+                    }
+                }
+            }.navigationBarTitle(Text("Search"))
+        }
+    }
+    #endif
 
 }
 
