@@ -427,7 +427,9 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
         [self notifyDelegatesAboutError:error];
         return NO;
     }
-    auto th = _session->add_torrent(params);
+    auto th = _session->find_torrent(params.info_hash);
+    if (th.is_valid()) { return NO; } // torrent_handle alredsy exists
+    th = _session->add_torrent(params);
     return YES;
 }
 
@@ -490,6 +492,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
         auto th = (*it);
         [torrents addObject:[self torrentFromHandle:th]];
     }
+    [torrents sortUsingSelector:@selector(name)];
     return [torrents copy];
 }
 

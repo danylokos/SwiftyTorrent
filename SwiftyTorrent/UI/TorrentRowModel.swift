@@ -9,7 +9,7 @@
 import Foundation
 import TorrentKit
 
-protocol TorrentRowModel {
+protocol TorrentRowModel: Identifiable {
     
     var title: String { get }
     
@@ -20,6 +20,10 @@ protocol TorrentRowModel {
 }
 
 extension Torrent: TorrentRowModel {
+    
+    public var id: Data {
+        return infoHash
+    }
 
     var title: String {
         return name

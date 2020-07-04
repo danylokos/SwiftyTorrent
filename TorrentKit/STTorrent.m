@@ -11,6 +11,8 @@
 #import "STFileEntry.h"
 #import "STTorrentManager.h"
 
+#import "NSData+Hex.h"
+
 @interface STTorrent ()
 @property (readwrite, strong, nonatomic) NSData *infoHash;
 @property (readwrite, strong, nonatomic) NSString *name;
@@ -24,5 +26,9 @@
 @end
 
 @implementation STTorrent
+
+- (NSString *)infoHashString {
+    return [self.infoHash hexString];
+}
 
 @end

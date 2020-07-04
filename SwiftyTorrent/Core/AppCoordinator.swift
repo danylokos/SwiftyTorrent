@@ -45,8 +45,19 @@ final class AppCoordinator: ApplicationCoordinator {
 
     // MARK: - ApplicationCoordinator
     
+    private func wrapInNavController(_ viewController: UIViewController) -> UINavigationController {
+        let navController = UINavigationController(rootViewController: viewController)
+        navController.navigationBar.prefersLargeTitles = true
+        return navController
+    }
+    
     func start() {
-        window.rootViewController = UIHostingController(rootView: MainView())
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [
+            wrapInNavController(ListViewController(viewModel: TorrentsViewModel())),
+            UIHostingController(rootView: SearchView(model: SearchViewModel()))
+        ]
+        window.rootViewController = tabBarController
         window.makeKeyAndVisible()
         
         requestUserNotifications()
