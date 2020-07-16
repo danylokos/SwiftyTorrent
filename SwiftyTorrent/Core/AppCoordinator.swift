@@ -53,8 +53,13 @@ final class AppCoordinator: ApplicationCoordinator {
     
     func start() {
         let tabBarController = UITabBarController()
+        
+        let torrentsVM = TorrentsViewModel()
+        let torrentstVC = ListViewController(viewModel: torrentsVM)
+        torrentsVM.viewController = torrentstVC
+        
         tabBarController.viewControllers = [
-            wrapInNavController(ListViewController(viewModel: TorrentsViewModel())),
+            wrapInNavController(torrentstVC),
             UIHostingController(rootView: SearchView(model: SearchViewModel()))
         ]
         window.rootViewController = tabBarController

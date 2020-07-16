@@ -12,6 +12,8 @@ import TorrentKit
 
 final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDelegate {
     
+    weak var viewController: UIViewController?
+    
     var title: String { "Downloads" }
     var icon: UIImage? { UIImage(systemName: "arrow.up.arrow.down") }
 
@@ -29,8 +31,11 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
 
     private var torrentManager = TorrentManager.shared()
     private var torrents = [Torrent]()
-    
+
     var activeError: Error?
+    
+//    private let filesModelSubject = PassthroughSubject<FilesViewModel, Never>()
+//    var filesModelPublisher: AnyPublisher<FilesViewModel, Never>?
 
     override init() {
         sectionsPublisher = sectionsSubject
@@ -42,6 +47,10 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
             .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
+        
+//        filesModelPublisher = filesModelSubject
+//            .receive(on: DispatchQueue.main)
+//            .eraseToAnyPublisher()
 
         super.init()
     }
@@ -109,7 +118,12 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
     private func createSections(from torrents: [Torrent]) -> [ListViewModel.Section] {
         var sections = [ListViewModel.Section]()
         sections.append(
-            ListViewModel.Section(id: "sec0", title: "Torrents", rows: torrents.map { ListViewModel.Row(torrent: $0) })
+            ListViewModel.Section(id: "sec0", title: "Torrents", rows: torrents.map { torrent in
+                ListViewModel.Row(torrent: torrent, action: {
+                    let controller = UIHostingController(rootView: FilesView(model: torrent.directory))
+                    self.viewController?.navigationController?.pushViewController(controller, animated: true)
+                })
+            })
         )
         #if DEBUG
         sections.append(
@@ -156,7 +170,7 @@ extension ListViewModel.Row {
         return formatter
     }()
 
-    init(torrent: Torrent) {
+    init(torrent: Torrent, action: RowAction? = nil) {
         self.id = torrent.infoHashString()
         self.title = torrent.name
     
@@ -169,6 +183,9 @@ extension ListViewModel.Row {
         let connectionDetails = "↓ \(downloadRateString), ↑ \(uploadRateString)"
         
         self.subtitle = statusDetails + "\n" + connectionDetails
+        if let action = action {
+            self.rowType = .navigation(action)
+        }
     }
     
 }
