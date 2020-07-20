@@ -27,7 +27,7 @@ final class ListViewController: UIViewController {
         title = viewModel.title
         tabBarItem.title = viewModel.title
         tabBarItem.image = viewModel.icon
-        navigationItem.largeTitleDisplayMode = .automatic
+//        navigationItem.largeTitleDisplayMode = viewModel.largeTitleDisplayMode
     }
     
     private var isInitialReload = true
@@ -173,11 +173,11 @@ extension ListViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func tableView(_ tableView: UITableView,
-                   contextMenuConfigurationForRowAt indexPath: IndexPath,
-                   point: CGPoint) -> UIContextMenuConfiguration? {
-        return viewModel.contextMenuConfig(at: indexPath)
-    }
+//    func tableView(_ tableView: UITableView,
+//                   contextMenuConfigurationForRowAt indexPath: IndexPath,
+//                   point: CGPoint) -> UIContextMenuConfiguration? {
+//        return viewModel.contextMenuConfig(at: indexPath)
+//    }
 
 }
 

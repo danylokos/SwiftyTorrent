@@ -16,6 +16,7 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
     
     var title: String { "Downloads" }
     var icon: UIImage? { UIImage(systemName: "arrow.up.arrow.down") }
+    var largeTitleDisplayMode: UINavigationItem.LargeTitleDisplayMode { .automatic }
 
     var sections = [SectionProtocol]() {
         didSet {
@@ -69,25 +70,25 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
         let torrent = torrents[indexPath.row]
         remove(torrent)
     }
-    
-    func contextMenuConfig(at indexPath: IndexPath) -> UIContextMenuConfiguration? {
-        if sections[indexPath.section].id == "sec0" {
-            let delete = UIAction(
-                title: "Delete", image: UIImage(systemName: "trash"),
-                attributes: [.destructive]) { _ in
-                    self.removeItem(at: indexPath)
-            }
-            let deleteData = UIAction(
-                title: "Delete All Data", image: UIImage(systemName: "trash"),
-                attributes: [.destructive]) { _ in
-                    self.removeItem(at: indexPath)
-            }
-            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-                UIMenu(title: "Actions", children: [delete, deleteData])
-            }
-        }
-        return nil
-    }
+
+//    func contextMenuConfig(at indexPath: IndexPath) -> UIContextMenuConfiguration? {
+//        if sections[indexPath.section].id == "sec0" {
+//            let delete = UIAction(
+//                title: "Delete", image: UIImage(systemName: "trash"),
+//                attributes: [.destructive]) { _ in
+//                    self.removeItem(at: indexPath)
+//            }
+//            let deleteData = UIAction(
+//                title: "Delete All Data", image: UIImage(systemName: "trash"),
+//                attributes: [.destructive]) { _ in
+//                    self.removeItem(at: indexPath)
+//            }
+//            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+//                UIMenu(title: "Actions", children: [delete, deleteData])
+//            }
+//        }
+//        return nil
+//    }
 
     // MARK: - TorrentManagerDelegate
     
@@ -120,7 +121,9 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
         sections.append(
             ListViewModel.Section(id: "sec0", title: "Torrents", rows: torrents.map { torrent in
                 ListViewModel.Row(torrent: torrent, action: {
-                    let controller = UIHostingController(rootView: FilesView(model: torrent.directory))
+                    let filesVM = FilesViewModel(directory: torrent.directory)
+                    filesVM.viewController = self.viewController
+                    let controller = ListViewController(viewModel: filesVM)
                     self.viewController?.navigationController?.pushViewController(controller, animated: true)
                 })
             })

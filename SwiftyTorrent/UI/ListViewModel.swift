@@ -12,13 +12,14 @@ import Combine
 protocol ListViewModelProtocol {
     var title: String { get }
     var icon: UIImage? { get }
+//    var largeTitleDisplayMode: UINavigationItem.LargeTitleDisplayMode { get }
     
     var sections: [SectionProtocol] { get }
     var sectionsPublisher: AnyPublisher<[SectionProtocol], Never>? { get }
     var rowPublisher: AnyPublisher<(RowProtocol, IndexPath), Never>? { get }
     
     func removeItem(at indexPath: IndexPath)
-    func contextMenuConfig(at indexPath: IndexPath) -> UIContextMenuConfiguration?
+//    func contextMenuConfig(at indexPath: IndexPath) -> UIContextMenuConfiguration?
     
     func start()
 }
@@ -59,6 +60,7 @@ final class ListViewModel: ListViewModelProtocol {
     
     var title: String { "List" }
     var icon: UIImage? { UIImage(systemName: "list.dash") }
+//    var largeTitleDisplayMode: UINavigationItem.LargeTitleDisplayMode { .automatic }
     
     struct Section: SectionProtocol {
         var id: String
@@ -94,7 +96,7 @@ final class ListViewModel: ListViewModelProtocol {
     
     func removeItem(at indexPath: IndexPath) { }
     
-    func contextMenuConfig(at indexPath: IndexPath) -> UIContextMenuConfiguration? { return nil }
+//    func contextMenuConfig(at indexPath: IndexPath) -> UIContextMenuConfiguration? { return nil }
 
 }
 

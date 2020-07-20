@@ -58,3 +58,30 @@ public struct VLCViewHost: UIViewControllerRepresentable {
         
     }
 }
+
+public final class VLCPlayerViewController: UIViewController {
+    
+     private var previewItem: PreviewItem
+     private var player: VLCMediaPlayer
+     
+    public init(previewItem: PreviewItem) {
+        self.previewItem = previewItem
+        self.player = VLCMediaPlayer()
+        super.init(nibName: nil, bundle: nil)
+        if let url = previewItem.previewItemURL {
+            player.media = VLCMedia(url: url)
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        player.drawable = view
+        player.play()
+    }
+    
+}

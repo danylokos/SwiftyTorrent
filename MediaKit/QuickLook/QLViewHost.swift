@@ -70,4 +70,37 @@ public struct QLViewHost: UIViewControllerRepresentable {
         
     }
 }
+
+public final class QuickLookViewController: QLPreviewController {
+    
+    private var previewItem: PreviewItem
+    
+    public init(previewItem: PreviewItem) {
+        self.previewItem = previewItem
+        super.init(nibName: nil, bundle: nil)
+        self.dataSource = self
+        self.delegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+}
+
+extension QuickLookViewController: QLPreviewControllerDataSource {
+    
+    public func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
+        return 1
+    }
+    
+    public func previewController(_ controller: QLPreviewController, previewItemAt index: Int) -> QLPreviewItem {
+        return QLPreviewItemWrapper(previewItem: previewItem)
+    }
+    
+}
+
+extension QuickLookViewController: QLPreviewControllerDelegate {
+    
+}
 #endif

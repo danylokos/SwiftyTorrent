@@ -9,9 +9,12 @@
 /* Begin PBXBuildFile section */
 		771B700622DA205D00132B5E /* uTorrent-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 771B700522DA205D00132B5E /* uTorrent-320.png */; };
 		7723A22624AF8F1B007629A0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7723A22424AF8F1B007629A0 /* SystemConfiguration.framework */; };
+		772771C824C3814A00263BDF /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773A411924B38087002E75CD /* ListViewModel.swift */; };
+		772771C924C3814A00263BDF /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773A411724B3805C002E75CD /* ListCell.swift */; };
+		772771CA24C381DF00263BDF /* ViewModelConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773A411B24B381B1002E75CD /* ViewModelConfigurable.swift */; };
+		772771CB24C3822400263BDF /* UITableView+TypeSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773A411524B37EED002E75CD /* UITableView+TypeSafe.swift */; };
 		7729BDB122D8B34D00D02566 /* TorrentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */; };
 		7729BDB322D8B38300D02566 /* TorrentRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB222D8B38300D02566 /* TorrentRowModel.swift */; };
-		772CEA0622DDFC38000CD2BD /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0522DDFC38000CD2BD /* FilesView.swift */; };
 		772CEA0822DDFC41000CD2BD /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */; };
 		772CEA0A22DDFC47000CD2BD /* FileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0922DDFC47000CD2BD /* FileRow.swift */; };
 		772CEA0C22DDFC4D000CD2BD /* FileRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0B22DDFC4D000CD2BD /* FileRowModel.swift */; };
@@ -74,7 +77,6 @@
 		7748DCCF24AE70A900AC5095 /* SearchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4CA0724AB747500C21354 /* SearchRow.swift */; };
 		7748DCD124AE70A900AC5095 /* TorrentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */; };
 		7748DCD324AE70A900AC5095 /* TorrentRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB222D8B38300D02566 /* TorrentRowModel.swift */; };
-		7748DCD424AE70A900AC5095 /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0522DDFC38000CD2BD /* FilesView.swift */; };
 		7748DCD524AE70A900AC5095 /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */; };
 		7748DCD624AE70A900AC5095 /* FileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0922DDFC47000CD2BD /* FileRow.swift */; };
 		7748DCD724AE70A900AC5095 /* FileRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0B22DDFC4D000CD2BD /* FileRowModel.swift */; };
@@ -846,7 +848,6 @@
 				7729BDB122D8B34D00D02566 /* TorrentsViewModel.swift in Sources */,
 				7729BDB322D8B38300D02566 /* TorrentRowModel.swift in Sources */,
 				774321E524AA5BBA00777C0A /* SearchView.swift in Sources */,
-				772CEA0622DDFC38000CD2BD /* FilesView.swift in Sources */,
 				7748DCA924AE3C9000AC5095 /* File+PreviewItem.swift in Sources */,
 				773A410424AFB8F8002E75CD /* ListViewController.swift in Sources */,
 				772CEA0822DDFC41000CD2BD /* FilesViewModel.swift in Sources */,
@@ -893,7 +894,6 @@
 			files = (
 				7748DCCE24AE70A900AC5095 /* SearchViewModel.swift in Sources */,
 				7748DCCD24AE70A900AC5095 /* SearchView.swift in Sources */,
-				7748DCD424AE70A900AC5095 /* FilesView.swift in Sources */,
 				7748DCC924AE70A900AC5095 /* File+UTI.swift in Sources */,
 				7748DCCF24AE70A900AC5095 /* SearchRow.swift in Sources */,
 				7748DCC524AE70A000AC5095 /* AppCoordinator.swift in Sources */,
@@ -905,11 +905,15 @@
 				7748DCC724AE70A900AC5095 /* File.swift in Sources */,
 				7748DCD524AE70A900AC5095 /* FilesViewModel.swift in Sources */,
 				7748DCC824AE70A900AC5095 /* File+PreviewItem.swift in Sources */,
+				772771C924C3814A00263BDF /* ListCell.swift in Sources */,
 				773A410524AFBF69002E75CD /* ListViewController.swift in Sources */,
+				772771C824C3814A00263BDF /* ListViewModel.swift in Sources */,
 				7748DCC624AE70A900AC5095 /* Torrent+Files.swift in Sources */,
 				7748DCB524AE702E00AC5095 /* AppDelegate.swift in Sources */,
+				772771CB24C3822400263BDF /* UITableView+TypeSafe.swift in Sources */,
 				7748DCCB24AE70A900AC5095 /* EZTVDataProvider.swift in Sources */,
 				7748DCD724AE70A900AC5095 /* FileRowModel.swift in Sources */,
+				772771CA24C381DF00263BDF /* ViewModelConfigurable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

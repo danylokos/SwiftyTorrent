@@ -47,7 +47,7 @@ final class AppCoordinator: ApplicationCoordinator {
     
     private func wrapInNavController(_ viewController: UIViewController) -> UINavigationController {
         let navController = UINavigationController(rootViewController: viewController)
-        navController.navigationBar.prefersLargeTitles = true
+//        navController.navigationBar.prefersLargeTitles = true
         return navController
     }
     
