@@ -12,12 +12,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class STTorrentManager, STTorrent;
+typedef NS_ENUM(NSUInteger, STErrorCode) {
+    STErrorCodeBadFile,
+    STErrorCodeUndefined
+} NS_SWIFT_NAME(STErrorCode);
+
+@class STTorrentManager, STTorrent, STFileEntry;
 
 NS_SWIFT_NAME(TorrentManagerDelegate)
 @protocol STTorrentManagerDelegate <NSObject>
 
-- (void)torrentManagerDidReceiveUpdate:(STTorrentManager *)manager;
+- (void)torrentManager:(STTorrentManager *)manager didAddTorrent:(STTorrent *)torrent;
+
+- (void)torrentManager:(STTorrentManager *)manager didRemoveTorrentWithHash:(NSData *)hashData;
+
+- (void)torrentManager:(STTorrentManager *)manager didReceiveUpdateForTorrent:(STTorrent *)torrent;
+
+- (void)torrentManager:(STTorrentManager *)manager didErrorOccur:(NSError *)error;
 
 @end
 
@@ -37,8 +48,6 @@ NS_SWIFT_NAME(addDelegate(_:));
 - (void)removeDelegate:(id<STTorrentManagerDelegate>)delegate
 NS_SWIFT_NAME(removeDelegate(_:));
 
-- (void)test;
-
 - (void)restoreSession;
 
 - (BOOL)addTorrent:(id<STDownloadable>)torrent
@@ -50,6 +59,10 @@ NS_SWIFT_NAME(remove(_:));
 - (NSArray<STTorrent *> *)torrents;
 
 - (void)openURL:(NSURL *)URL;
+
+- (NSArray<STFileEntry *> *)filesForTorrentWithHash:(NSData *)infoHash;
+
+- (NSURL *)downloadsDirectoryURL;
 
 @end
 

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TorrentKit
 
 protocol TorrentRowModel {
     
@@ -29,15 +30,15 @@ extension Torrent: TorrentRowModel {
         return "\(state.symbol) \(state), \(progressString), seeds: \(numberOfSeeds), peers: \(numberOfPeers)"
     }
     
-    private static var byteCountFromatter: ByteCountFormatter = {
+    private static var byteCountFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()
         formatter.countStyle = .binary
         return formatter
     }()
 
     var connectionDetails: String {
-        let downloadRateString = Torrent.byteCountFromatter.string(fromByteCount: Int64(downloadRate))
-        let uploadRateString = Torrent.byteCountFromatter.string(fromByteCount: Int64(uploadRate))
+        let downloadRateString = Torrent.byteCountFormatter.string(fromByteCount: Int64(downloadRate))
+        let uploadRateString = Torrent.byteCountFormatter.string(fromByteCount: Int64(uploadRate))
         return "↓ \(downloadRateString), ↑ \(uploadRateString)"
     }
 

@@ -8,6 +8,9 @@
 
 #import "STTorrent.h"
 
+#import "STFileEntry.h"
+#import "STTorrentManager.h"
+
 @interface STTorrent ()
 @property (readwrite, strong, nonatomic) NSData *infoHash;
 @property (readwrite, strong, nonatomic) NSString *name;
@@ -17,6 +20,7 @@
 @property (readwrite, nonatomic) NSUInteger numberOfSeeds;
 @property (readwrite, nonatomic) NSUInteger downloadRate;
 @property (readwrite, nonatomic) NSUInteger uploadRate;
+@property (readwrite, nonatomic) BOOL hasMetadata;
 @end
 
 @implementation STTorrent

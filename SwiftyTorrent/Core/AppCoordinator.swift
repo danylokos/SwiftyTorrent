@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import Combine
+import TorrentKit
 
 protocol ApplicationCoordinator {
 
@@ -19,12 +20,13 @@ protocol ApplicationCoordinator {
 final class AppCoordinator: ApplicationCoordinator {
     
     private var window: UIWindow!
-    private var cancellers = [Cancellable]()
+    private var torrentManager = TorrentManager.shared()
+    private var cancellables = [Cancellable]()
     
     init(window: UIWindow) {
         self.window = window
         
-        cancellers.append(contentsOf: [
+        cancellables.append(contentsOf: [
             NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
                 .sink { [unowned self] _ in
                     self.registerBackgroundTask()
@@ -33,20 +35,19 @@ final class AppCoordinator: ApplicationCoordinator {
     }
     
     deinit {
-        cancellers.forEach({ $0.cancel() })
+        cancellables.forEach({ $0.cancel() })
     }
 
     func handleOpenURLContexts(_ URLContexts: Set<UIOpenURLContext>) {
         guard let URLContext = URLContexts.first else { return }
-        TorrentManager.shared().open(URLContext.url)
+        torrentManager.open(URLContext.url)
     }
 
     // MARK: - ApplicationCoordinator
     
     func start() {
-        let model = TorrentsViewModel()
-        self.window.rootViewController = UIHostingController(rootView: TorrentsView(model: model))
-        self.window.makeKeyAndVisible()
+        window.rootViewController = UIHostingController(rootView: MainView())
+        window.makeKeyAndVisible()
         
         requestUserNotifications()
         
@@ -83,6 +84,7 @@ final class AppCoordinator: ApplicationCoordinator {
     }
     
     private func showLocalNotification() {
+        #if os(iOS)
         let content = UNMutableNotificationContent()
         content.title = "SwiftyTorrent"
         content.body = "Suspending session..."
@@ -94,6 +96,7 @@ final class AppCoordinator: ApplicationCoordinator {
                 print("\(error.localizedDescription)")
             }
         }
+        #endif
     }
 
 }

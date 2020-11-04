@@ -1,4 +1,5 @@
 disabled_rules:
   - trailing_whitespace
+  - identifier_name
 excluded:
   - Thirdparties

@@ -11,6 +11,7 @@
 #import "STTorrent.h"
 #import "STTorrentFile.h"
 #import "STMagnetURI.h"
+#import "STFileEntry.h"
 
 #import "NSData+Hex.h"
 
@@ -36,12 +37,20 @@
 @property (readwrite, nonatomic) NSUInteger numberOfSeeds;
 @property (readwrite, nonatomic) NSUInteger downloadRate;
 @property (readwrite, nonatomic) NSUInteger uploadRate;
+@property (readwrite, nonatomic) BOOL hasMetadata;
+@end
+
+@interface STFileEntry ()
+@property (readwrite, strong, nonatomic) NSString *name;
+@property (readwrite, strong, nonatomic) NSString *path;
+@property (readwrite, nonatomic) NSUInteger size;
 @end
 
 #pragma mark -
 
 static char const * const STEventsQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.events.queue";
-static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.files.queue";
+static char const * const STFileEntriesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.STTorrentManager.files.queue";
+static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentManager.error";
 
 @interface STTorrentManager () {
     lt::session *_session;
@@ -71,10 +80,10 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
         _session = new lt::session();
         _session->set_alert_mask(lt::alert::all_categories);
         _eventsQueue = dispatch_queue_create(STEventsQueueIdentifier, DISPATCH_QUEUE_SERIAL);
-        _filesQueue = dispatch_queue_create(STFilesQueueIdentifier, DISPATCH_QUEUE_SERIAL);
+        _filesQueue = dispatch_queue_create(STFileEntriesQueueIdentifier, DISPATCH_QUEUE_SERIAL);
         _delegates = [NSHashTable weakObjectsHashTable];
         
-        // resore session
+        // restore session
         [self restoreSession];
         
         // start alerts loop
@@ -93,6 +102,20 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
 
 - (BOOL)isSessionActive {
     return YES;
+}
+
+#pragma mark -
+
+- (void)notifyDelegatesAboutError:(NSError *)error {
+    for (id<STTorrentManagerDelegate>delegate in self.delegates) {
+        [delegate torrentManager:self didErrorOccur:error];
+    }
+}
+
+- (NSError *)errorWithCode:(STErrorCode)code message:(NSString *)message {
+    return [NSError errorWithDomain:STErrorDomain
+                               code:code
+                           userInfo:@{NSLocalizedDescriptionKey: message}];
 }
 
 #pragma mark - Alerts Loop
@@ -146,14 +169,36 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
                 
                 default: break;
             }
+            
+            if (dynamic_cast<lt::torrent_alert *>(alert) != nullptr) {
+                auto th = ((lt::torrent_alert *)alert)->handle;
+                if (!th.is_valid()) { break; }
+                [self notifyDelegatesWithUpdate:th];
+            }
         }
         
         alerts_queue.clear();
-        
-        // Notify delegates
-        for (id<STTorrentManagerDelegate>delegate in self.delegates) {
-            [delegate torrentManagerDidReceiveUpdate:self];
-        }
+    }
+}
+
+- (void)notifyDelegatesWithAdd:(lt::torrent_handle)th {
+    STTorrent *torrent = [self torrentFromHandle:th];
+    for (id<STTorrentManagerDelegate>delegate in self.delegates) {
+        [delegate torrentManager:self didAddTorrent:torrent];
+    }
+}
+
+- (void)notifyDelegatesWithRemove:(lt::torrent_handle)th {
+    NSData *hashData = [self hashDataFromInfoHash:th.info_hash()];
+    for (id<STTorrentManagerDelegate>delegate in self.delegates) {
+        [delegate torrentManager:self didRemoveTorrentWithHash:hashData];
+    }
+}
+
+- (void)notifyDelegatesWithUpdate:(lt::torrent_handle)th {
+    STTorrent *torrent = [self torrentFromHandle:th];
+    for (id<STTorrentManagerDelegate>delegate in self.delegates) {
+        [delegate torrentManager:self didReceiveUpdateForTorrent:torrent];
     }
 }
 
@@ -163,6 +208,7 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
 
 - (void)torrentAddedAlert:(lt::torrent_alert *)alert {
     auto th = alert->handle;
+    [self notifyDelegatesWithAdd:th];
     if (!th.is_valid()) {
         NSLog(@"%s: torrent_handle is invalid!", __FUNCTION__);
         return;
@@ -182,6 +228,7 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
 
 - (void)torrentRemovedAlert:(lt::torrent_alert *)alert {
     auto th = alert->handle;
+    [self notifyDelegatesWithRemove:th];
     if (!th.is_valid()) {
         NSLog(@"%s: torrent_handle is invalid!", __FUNCTION__);
         return;
@@ -196,6 +243,10 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
 }
 
 #pragma mark -
+
+- (NSURL *)downloadsDirectoryURL {
+    return [NSURL fileURLWithPath:[self downloadsDirPath] isDirectory:YES];
+}
 
 - (NSString *)downloadsDirPath {
     NSString *documentsDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
@@ -284,9 +335,14 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
     if (error) { NSLog(@"success: %d, %@", success, error); }
 }
 
+- (NSData *)hashDataFromInfoHash:(lt::sha1_hash)info_hash {
+    return [NSData dataWithBytes:info_hash.data()
+                          length:info_hash.size()];
+}
+
 - (void)removeMagnetURIWithHash:(lt::sha1_hash)info_hash {
-    NSData *data = [NSData dataWithBytes:info_hash.data() length:info_hash.size()];
-    [self removeFromFileStoreMagnetURIWithHash:data.hexString];
+    NSData *hashData = [self hashDataFromInfoHash:info_hash];
+    [self removeFromFileStoreMagnetURIWithHash:hashData.hexString];
 }
 
 - (void)removeFromFileStoreMagnetURIWithHash:(NSString *)hashString {
@@ -323,10 +379,6 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
 }
 
 #pragma mark - Public Methods
-
-- (void)test {
-    
-}
 
 - (void)restoreSession {
     NSString *torrentsDirPath = [self torrentsDirPath];
@@ -367,7 +419,14 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
 - (BOOL)addTorrent:(id<STDownloadable>)torrent {
     lt::add_torrent_params params;
     params.save_path = [[self downloadsDirPath] UTF8String];
-    [torrent configureAddTorrentParams:(void *)&params];
+    try {
+        [torrent configureAddTorrentParams:(void *)&params];
+    } catch (...) {
+        NSError *error = [self errorWithCode:STErrorCodeBadFile message:@"Failed to add torrent"];
+        NSLog(@"%@", error);
+        [self notifyDelegatesAboutError:error];
+        return NO;
+    }
     auto th = _session->add_torrent(params);
     return YES;
 }
@@ -375,6 +434,7 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
 - (BOOL)removeTorrentWithInfoHash:(NSData *)infoHash {
     lt::sha1_hash hash((const char *)infoHash.bytes);
     auto th = _session->find_torrent(hash);
+    if (!th.is_valid()) { return NO; }
     _session->remove_torrent(th);
     return YES;
 }
@@ -383,7 +443,7 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
     if (URL.isFileURL) {
         BOOL success = [URL startAccessingSecurityScopedResource];
         if (success) {
-           STTorrentFile *torrent = [[STTorrentFile alloc] initWithFileAtURL:URL];
+            STTorrentFile *torrent = [[STTorrentFile alloc] initWithFileAtURL:URL];
             [self addTorrent:torrent];
             [URL stopAccessingSecurityScopedResource];
         }
@@ -407,26 +467,58 @@ static char const * const STFilesQueueIdentifier = "org.kostyshyn.SwiftyTorrent.
     }
 }
 
+- (STTorrent *)torrentFromHandle:(lt::torrent_handle)th {
+    STTorrent *torrent = [[STTorrent alloc] init];
+    auto ih = th.info_hash();
+    torrent.infoHash = [NSData dataWithBytes:ih.data() length:ih.size()];
+    auto ts = th.status();
+    torrent.state = [self stateFromTorrentSatus:ts];
+    torrent.name = [NSString stringWithUTF8String:ts.name.c_str()];
+    torrent.progress = ts.progress;
+    torrent.numberOfPeers = ts.num_peers;
+    torrent.numberOfSeeds = ts.num_seeds;
+    torrent.uploadRate = ts.upload_payload_rate;
+    torrent.downloadRate = ts.download_payload_rate;
+    torrent.hasMetadata = ts.has_metadata;
+    return torrent;
+}
+
 - (NSArray<STTorrent *> *)torrents {
     auto handles = _session->get_torrents();
     NSMutableArray *torrents = [[NSMutableArray alloc] init];
     for (auto it = handles.begin(); it != handles.end(); ++it) {
         auto th = (*it);
-        auto ts = th.status();
-        auto ih = th.info_hash();
-
-        STTorrent *torrent = [[STTorrent alloc] init];
-        torrent.infoHash = [NSData dataWithBytes:ih.data() length:ih.size()];
-        torrent.state = [self stateFromTorrentSatus:ts];;
-        torrent.name = [NSString stringWithUTF8String:ts.name.c_str()];
-        torrent.progress = ts.progress;
-        torrent.numberOfPeers = ts.num_peers;
-        torrent.numberOfSeeds = ts.num_seeds;
-        torrent.uploadRate = ts.upload_payload_rate;
-        torrent.downloadRate = ts.download_payload_rate;
-        [torrents addObject:torrent];
+        [torrents addObject:[self torrentFromHandle:th]];
     }
     return [torrents copy];
+}
+
+- (NSArray<STFileEntry *> *)filesForTorrentWithHash:(NSData *)infoHash {
+    lt::sha1_hash ih = lt::sha1_hash((const char *)infoHash.bytes);
+    auto th = _session->find_torrent(ih);
+    if (!th.is_valid()) {
+        NSLog(@"No a valid torrent with hash: %@", infoHash.hexString);
+        return nil;
+    }
+    NSMutableArray *results = [[NSMutableArray alloc] init];
+    auto ti = th.torrent_file();
+    if (ti == nullptr) {
+        NSLog(@"No metadata for torrent with name: %s", th.status().name.c_str());
+        return nil;
+    }
+    auto files = ti.get()->files();
+    for (int i=0; i<files.num_files(); i++) {
+        auto name = std::string(files.file_name(i));
+        auto path = files.file_path(i);
+        auto size = files.file_size(i);
+        
+        STFileEntry *fileEntry = [[STFileEntry alloc] init];
+        fileEntry.name = [NSString stringWithUTF8String:name.c_str()];
+        fileEntry.path = [NSString stringWithUTF8String:path.c_str()];
+        fileEntry.size = size;
+        [results addObject:fileEntry];
+    }
+    return [results copy];
 }
 
 @end
