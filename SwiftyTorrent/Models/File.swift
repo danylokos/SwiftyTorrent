@@ -51,6 +51,12 @@ public class File: NSObject, FileProtocol {
     }
 }
 
+extension File: Identifiable {
+    
+    public var id: String { path }
+
+}
+
 public class Directory: FileProtocol, CustomStringConvertible {
     
 //    var id: String {

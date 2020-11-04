@@ -24,7 +24,7 @@ struct SearchView: View {
                             self.model.select(item)
                         }
                     }
-                }
+                }.listStyle(PlainListStyle())
             }.navigationBarTitle(Text("Search"))
         }
     }

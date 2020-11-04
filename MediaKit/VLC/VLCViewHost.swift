@@ -27,18 +27,18 @@ public struct VLCViewHost: UIViewControllerRepresentable {
     
     public typealias Context = UIViewControllerRepresentableContext<VLCViewHost>
     
-    public func makeUIViewController(context: Context) -> UIViewController {
-        let controller = UIViewController()
+    public func makeUIViewController(context: Context) -> VLCViewController {
+        let controller = VLCViewController()
         let player = context.coordinator.player
         player.drawable = controller.view
         player.play()
         return controller
     }
     
-    public func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+    public func updateUIViewController(_ uiViewController: VLCViewController, context: Context) {
     }
     
-    public static func dismantleUIViewController(_ uiViewController: UIViewController, coordinator: Coordinator) {
+    public static func dismantleUIViewController(_ uiViewController: VLCViewController, coordinator: Coordinator) {
         coordinator.player.stop()
     }
 
@@ -54,6 +54,23 @@ public struct VLCViewHost: UIViewControllerRepresentable {
                 player.media = VLCMedia(url: url)
             }
             super.init()
+        }
+        
+    }
+    
+    public class VLCViewController: UIViewController {
+        
+        public override func viewDidLoad() {
+            super.viewDidLoad()
+            
+            self.view.isUserInteractionEnabled = true
+            self.view.addGestureRecognizer(
+                UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
+            )
+        }
+        
+        @objc func didTap(_ sender: Any) {
+            dismiss(animated: true, completion: nil)
         }
         
     }
