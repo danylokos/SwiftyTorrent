@@ -41,7 +41,7 @@ struct SearchView: View {
                         }
                     }
                 }
-            }.navigationBarTitle(Text("Search"))
+            }
         }
     }
     #endif

@@ -15,15 +15,15 @@ struct FileRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(model.title)
-                .font(Font.system(size: 16))
+                .font(Font.headline)
                 .bold()
 //            Spacer(minLength: 5)
 //            Text(model.pathDetails)
-//                .font(Font.system(size: 10))
+//                .font(Font.subheadline)
 //                .foregroundColor(.gray)
 //            Spacer(minLength: 5)
 //            Text(model.sizeDetails)
-//                .font(Font.system(size: 14))
+//                .font(Font.subheadline)
         }
     }
     

@@ -25,14 +25,14 @@ struct SearchBarTV: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        uiViewController.searchController.searchBar.text = text
+//        uiViewController.searchController.searchBar.text = text
     }
 
     func makeCoordinator() -> SearchBarTV.Coordinator {
         return Coordinator(text: $text)
     }
 
-    class Coordinator: UIViewController, UISearchResultsUpdating {
+    class Coordinator: UIViewController {
         
         @Binding var text: String
 
@@ -44,14 +44,17 @@ struct SearchBarTV: UIViewControllerRepresentable {
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
-        
-        // MARK: - UISearchResultsUpdating
-        
-        func updateSearchResults(for searchController: UISearchController) {
-            guard let searchText = searchController.searchBar.text else { return }
-            text = searchText
-        }
-    
+
     }
 
 }
+
+extension SearchBarTV.Coordinator: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchText = searchController.searchBar.text else { return }
+        text = searchText
+    }
+
+}
+

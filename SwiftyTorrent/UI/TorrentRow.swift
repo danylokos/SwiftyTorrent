@@ -15,15 +15,15 @@ struct TorrentRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(model.title)
-                .font(Font.system(size: 16))
+                .font(Font.headline)
                 .bold()
             Spacer(minLength: 5)
             Text(model.statusDetails)
-                .font(Font.system(size: 14))
+                .font(Font.subheadline)
                 .bold()
             Spacer(minLength: 5)
             Text(model.connectionDetails)
-                .font(Font.system(size: 14))
+                .font(Font.subheadline)
         }
     }
     

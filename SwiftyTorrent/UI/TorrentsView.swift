@@ -26,6 +26,7 @@ struct TorrentsView: View {
     
     private let buttonTintColor = Color.blue
     
+    #if os(iOS)
     var body: some View {
         NavigationView {
             List {
@@ -59,7 +60,29 @@ struct TorrentsView: View {
             Alert(error: model.activeError!)
         }
     }
-    
+    #elseif os(tvOS)
+    var body: some View {
+        NavigationView {
+            List {
+                Section(header: Text("Downloads")) {
+                    ForEach(model.torrents, id: \.infoHash) { torrent in
+                        NavigationLink(destination: LazyView(FilesView(model: torrent.directory))) {
+                            TorrentRow(model: torrent)
+                        }
+                    }.onDelete { (indexSet) in
+                        for index in indexSet {
+                            let torrent = self.model.torrents[index]
+                            self.model.remove(torrent)
+                        }
+                    }
+                }
+            }
+        }.alert(isPresented: model.isPresentingAlert) { () -> Alert in
+            Alert(error: model.activeError!)
+        }
+    }
+    #endif
+
 }
 
 extension Alert {
