@@ -1,5 +1,6 @@
 disabled_rules:
   - trailing_whitespace
   - identifier_name
+  - comment_spacing
 excluded:
   - Thirdparties
