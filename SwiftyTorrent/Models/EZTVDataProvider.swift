@@ -6,6 +6,8 @@
 //  Copyright © 2020 Danylo Kostyshyn. All rights reserved.
 //
 
+//swiftlint:disable nesting
+
 import Foundation
 import Combine
 
@@ -70,7 +72,6 @@ extension EZTVDataProvider {
     
     struct Response: Decodable {
         
-        //swiftlint:disable:next nesting
         enum CodingKeys: String, CodingKey {
             case imdbId = "imdb_id"
             case torrentsCount = "torrents_count"
@@ -86,18 +87,17 @@ extension EZTVDataProvider {
         let torrents: [Torrent]
         
         init(from decoder: Decoder) throws {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            imdbId = try values.decode(String.self, forKey: .imdbId)
-            torrentsCount = try values.decode(Int.self, forKey: .torrentsCount)
-            limit = try values.decode(Int.self, forKey: .limit)
-            page = try values.decode(Int.self, forKey: .page)
-            torrents = try values.decode([Torrent].self, forKey: .torrents)
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            imdbId = try container.decode(String.self, forKey: .imdbId)
+            torrentsCount = try container.decode(Int.self, forKey: .torrentsCount)
+            limit = try container.decode(Int.self, forKey: .limit)
+            page = try container.decode(Int.self, forKey: .page)
+            var itemsContainer = try container.nestedUnkeyedContainer(forKey: .torrents)
+            torrents = try itemsContainer.deocdeItems(ofType: Torrent.self)
         }
-        
-        //swiftlint:disable:next nesting
+
         struct Torrent: Decodable, CustomDebugStringConvertible {
             
-            //swiftlint:disable:next nesting
             enum CodingKeys: String, CodingKey {
                 case id
                 case hash
@@ -143,21 +143,21 @@ extension EZTVDataProvider {
             }
             
             init(from decoder: Decoder) throws {
-                let values = try decoder.container(keyedBy: CodingKeys.self)
-                if let rawValue = try? values.decode(String.self, forKey: .torrentURL),
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                if let rawValue = try? container.decode(String.self, forKey: .torrentURL),
                     let encodedValue = rawValue.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
                     let URL = URL(string: encodedValue) {
                     torrentURL = URL
                 } else {
                     throw "Bad torrentURL"
                 }
-                magnetURL = try values.decode(URL.self, forKey: .magnetURL)
-                title = try values.decode(String.self, forKey: .title)
-                season = try values.decode(String.self, forKey: .season)
-                episode = try values.decode(String.self, forKey: .episode)
-                seeds = try values.decode(Int.self, forKey: .seeds)
-                peers = try values.decode(Int.self, forKey: .peers)
-                if let rawValue = try? values.decode(String.self, forKey: .sizeBytes),
+                magnetURL = try container.decode(URL.self, forKey: .magnetURL)
+                title = try container.decode(String.self, forKey: .title)
+                season = try container.decode(String.self, forKey: .season)
+                episode = try container.decode(String.self, forKey: .episode)
+                seeds = try container.decode(Int.self, forKey: .seeds)
+                peers = try container.decode(Int.self, forKey: .peers)
+                if let rawValue = try? container.decode(String.self, forKey: .sizeBytes),
                     let value = UInt64(rawValue) {
                     sizeBytes = value
                 } else {
@@ -167,4 +167,25 @@ extension EZTVDataProvider {
             
         }
     }
+}
+
+struct AnyDecodable: Decodable { }
+
+extension UnkeyedDecodingContainer {
+    
+    mutating func deocdeItems<T: Decodable>(ofType type: T.Type) throws -> [T] {
+        var items = [T]()
+        while !isAtEnd {
+            do {
+                let item = try decode(type)
+                items.append(item)
+            } catch let error {
+                print("Failed to decode item: \(error)")
+                // Skip item
+                _ = try decode(AnyDecodable.self)
+            }
+        }
+        return items
+    }
+    
 }

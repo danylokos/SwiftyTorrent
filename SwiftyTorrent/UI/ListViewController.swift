@@ -9,9 +9,9 @@
 import UIKit
 import Combine
 
-final class ListViewController: UIViewController {
+class ListViewController: UIViewController {
 
-    private let viewModel: ListViewModelProtocol
+    internal var viewModel: ListViewModelProtocol
     private let tableView = UITableView()
     private lazy var dataSource = makeDataSource()
     private var cancellables = [AnyCancellable]()
@@ -19,25 +19,68 @@ final class ListViewController: UIViewController {
     init(viewModel: ListViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.viewModel.presenter = self
         configUIKit()
-        registerObservers()
     }
     
     private func configUIKit() {
         title = viewModel.title
         tabBarItem.title = viewModel.title
         tabBarItem.image = viewModel.icon
-//        navigationItem.largeTitleDisplayMode = viewModel.largeTitleDisplayMode
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureTableView()
+        
+        registerObservers()
+        viewModel.start()
+    }
+    
+    private func configureTableView() {
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44.0
+        tableView.dataSource = dataSource
+        tableView.delegate = self
+        tableView.registerCell(ListCell.self)
+        view.addSubview(tableView)
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(contentsOf: [
+            tableView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor,
+                constant: 0.0
+            ),
+            tableView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor,
+                constant: 0.0
+            ),
+            tableView.topAnchor.constraint(
+                equalTo: view.topAnchor,
+                constant: 0.0
+            ),
+            tableView.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: 0.0
+            )
+        ])
+        constraints.forEach({ $0.isActive = true })
+    }
+
     private var isInitialReload = true
     
     private func registerObservers() {
         viewModel.sectionsPublisher?
             .sink { [weak self] sections in
                 guard let self = self else { return }
-                //swiftlint:disable:next force_cast
-                self.update(with: sections as! [ListViewModel.Section], animate: !self.isInitialReload)
+                self.update(with: sections, animate: !self.isInitialReload)
                 if self.isInitialReload { self.isInitialReload = false }
         }.store(in: &cancellables)
         
@@ -47,53 +90,35 @@ final class ListViewController: UIViewController {
         }.store(in: &cancellables)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44.0
-        tableView.backgroundColor = .white
-        tableView.dataSource = dataSource
-        tableView.delegate = self
-        tableView.registerCell(ListCell.self)
-        view.addSubview(tableView)
-        
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: 0.0).isActive = true
-        tableView.trailingAnchor.constraint(
-            equalTo: view.trailingAnchor,
-            constant: 0.0).isActive = true
-        tableView.topAnchor.constraint(
-            equalTo: view.topAnchor,
-            constant: 0.0).isActive = true
-        tableView.bottomAnchor.constraint(
-            equalTo: view.bottomAnchor,
-            constant: 0.0).isActive = true
-        
-        viewModel.start()
-    }
-    
-    private func makeDataSource() -> UITableViewDiffableDataSource<ListViewModel.Section, ListViewModel.Row> {
+    private func makeDataSource() -> UITableViewDiffableDataSource<Section, Row> {
         return DiffableDataSource(tableView: tableView, viewModel: viewModel)
     }
     
-    func update(with sections: [ListViewModel.Section], animate: Bool = true) {
-        var snapshot = NSDiffableDataSourceSnapshot<ListViewModel.Section, ListViewModel.Row>()
+    func update(with sections: [Section], animate: Bool = true) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Row>()
         snapshot.appendSections(sections)
         sections.forEach { (section) in
-            //swiftlint:disable:next force_cast
-            snapshot.appendItems(section.rows as! [ListViewModel.Row], toSection: section)
+            snapshot.appendItems(section.rows, toSection: section)
         }
         dataSource.apply(snapshot, animatingDifferences: animate)
     }
+
+}
+ 
+extension ListViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let rowModel = viewModel.row(at: indexPath)
+            else { fatalError("No row at indexPath: \(indexPath)") }
+        rowModel.action?()
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+}
+
+extension ListViewController {
     
-    private class DiffableDataSource: UITableViewDiffableDataSource<ListViewModel.Section, ListViewModel.Row> {
+    private class DiffableDataSource: UITableViewDiffableDataSource<Section, Row> {
         
         private let viewModel: ListViewModelProtocol
         
@@ -127,58 +152,7 @@ final class ListViewController: UIViewController {
         }
         
     }
-
-}
-
-/*
-extension ListViewController: UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.sections.count
-    }
-
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return viewModel.sections[section].title
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.sections[section].rows.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let rowModel = viewModel.row(at: indexPath)
-            else { fatalError("No row at indexPath: \(indexPath)") }
-        guard let cell = tableView.dequeueReusableCell(rowModel.viewType) as?
-            UITableViewCell & AnyViewModelConfigurable
-            else { fatalError("Bad viewType: \(rowModel.viewType) for rowModel: \(rowModel)") }
-        cell.configure(rowModel)
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView,
-                   commit editingStyle: UITableViewCell.EditingStyle,
-                   forRowAt indexPath: IndexPath) {
-        viewModel.removeItem(at: indexPath)
-    }
-
-}
-*/
- 
-extension ListViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let rowModel = viewModel.row(at: indexPath)
-            else { fatalError("No row at indexPath: \(indexPath)") }
-        rowModel.action?()
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
     
-//    func tableView(_ tableView: UITableView,
-//                   contextMenuConfigurationForRowAt indexPath: IndexPath,
-//                   point: CGPoint) -> UIContextMenuConfiguration? {
-//        return viewModel.contextMenuConfig(at: indexPath)
-//    }
-
 }
 
 extension ListViewController {
@@ -187,11 +161,30 @@ extension ListViewController {
         tableView.reloadData()
     }
     
-    func updateRow(at indexPath: IndexPath, rowModel: RowProtocol) {
+    func updateRow(at indexPath: IndexPath, rowModel: Row) {
         guard let cell = tableView.cellForRow(at: indexPath) as?
             UITableViewCell & AnyViewModelConfigurable
             else { return }
         cell.configure(rowModel)
+    }
+
+}
+
+protocol ControllerPresenter {
+    
+    func present(_ viewController: UIViewController)
+    func push(_ viewController: UIViewController)
+    
+}
+
+extension ListViewController: ControllerPresenter {
+    
+    func present(_ viewController: UIViewController) {
+        present(viewController, animated: true)
+    }
+    
+    func push(_ viewController: UIViewController) {
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
 }

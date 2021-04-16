@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FileProtocol: FileRowModel {
+protocol FileProtocol {
 
     var name: String { get }
     

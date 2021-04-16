@@ -6,38 +6,36 @@
 //  Copyright © 2019 Danylo Kostyshyn. All rights reserved.
 //
 
+import UIKit
 import Combine
-import SwiftUI
 import TorrentKit
 
 final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDelegate {
-    
-    weak var viewController: UIViewController?
-    
+
     var title: String { "Downloads" }
     var icon: UIImage? { UIImage(systemName: "arrow.up.arrow.down") }
-    var largeTitleDisplayMode: UINavigationItem.LargeTitleDisplayMode { .automatic }
 
-    var sections = [SectionProtocol]() {
+    var sections = [Section]() {
         didSet {
             sectionsSubject.send(sections)
         }
     }
 
-    private let sectionsSubject = PassthroughSubject<[SectionProtocol], Never>()
-    var sectionsPublisher: AnyPublisher<[SectionProtocol], Never>?
+    private let sectionsSubject = PassthroughSubject<[Section], Never>()
+    var sectionsPublisher: AnyPublisher<[Section], Never>?
 
-    private let rowSubject = PassthroughSubject<(RowProtocol, IndexPath), Never>()
-    var rowPublisher: AnyPublisher<(RowProtocol, IndexPath), Never>?
-
+    private let rowSubject = PassthroughSubject<(Row, IndexPath), Never>()
+    var rowPublisher: AnyPublisher<(Row, IndexPath), Never>?
+    
+    var presenter: ControllerPresenter?
+    
+    // MARK: -
+    
     private var torrentManager = TorrentManager.shared()
     private var torrents = [Torrent]()
 
     var activeError: Error?
     
-//    private let filesModelSubject = PassthroughSubject<FilesViewModel, Never>()
-//    var filesModelPublisher: AnyPublisher<FilesViewModel, Never>?
-
     override init() {
         sectionsPublisher = sectionsSubject
             .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
@@ -49,10 +47,6 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
             .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
         
-//        filesModelPublisher = filesModelSubject
-//            .receive(on: DispatchQueue.main)
-//            .eraseToAnyPublisher()
-
         super.init()
     }
     
@@ -71,25 +65,6 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
         remove(torrent)
     }
 
-//    func contextMenuConfig(at indexPath: IndexPath) -> UIContextMenuConfiguration? {
-//        if sections[indexPath.section].id == "sec0" {
-//            let delete = UIAction(
-//                title: "Delete", image: UIImage(systemName: "trash"),
-//                attributes: [.destructive]) { _ in
-//                    self.removeItem(at: indexPath)
-//            }
-//            let deleteData = UIAction(
-//                title: "Delete All Data", image: UIImage(systemName: "trash"),
-//                attributes: [.destructive]) { _ in
-//                    self.removeItem(at: indexPath)
-//            }
-//            return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-//                UIMenu(title: "Actions", children: [delete, deleteData])
-//            }
-//        }
-//        return nil
-//    }
-
     // MARK: - TorrentManagerDelegate
     
     func torrentManager(_ manager: TorrentManager, didAdd torrent: Torrent) {
@@ -104,7 +79,7 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
 
     func torrentManager(_ manager: TorrentManager, didReceiveUpdateFor torrent: Torrent) {
         if let idx = self.torrents.firstIndex(where: { $0.infoHash == torrent.infoHash }) {
-            let vm = ListViewModel.Row(torrent: torrent)
+            let vm = Row(torrent: torrent)
             let indexPath = IndexPath(row: idx, section: 0)
             rowSubject.send((vm, indexPath))
         }
@@ -116,27 +91,27 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
     
     // MARK: -
     
-    private func createSections(from torrents: [Torrent]) -> [ListViewModel.Section] {
-        var sections = [ListViewModel.Section]()
+    private func createSections(from torrents: [Torrent]) -> [Section] {
+        var sections = [Section]()
         sections.append(
-            ListViewModel.Section(id: "sec0", title: "Torrents", rows: torrents.map { torrent in
-                ListViewModel.Row(torrent: torrent, action: {
+            Section(title: "Torrents", rows: torrents.map { torrent in
+                Row(torrent: torrent, action: {
                     let filesVM = FilesViewModel(directory: torrent.directory)
-                    filesVM.viewController = self.viewController
+                    filesVM.presenter = self.presenter
                     let controller = ListViewController(viewModel: filesVM)
-                    self.viewController?.navigationController?.pushViewController(controller, animated: true)
+                    self.presenter?.push(controller)
                 })
             })
         )
         #if DEBUG
         sections.append(
-            ListViewModel.Section(id: "sec1", title: "Debug", rows: [
-                ListViewModel.Row(id: "row0", title: "Add test torrent files", subtitle: nil,
-                                  rowType: .button({ self.addTestTorrentFiles() })),
-                ListViewModel.Row(id: "row1", title: "Add test magnet links", subtitle: nil,
-                                  rowType: .button({ self.addTestMagnetLinks() })),
-                ListViewModel.Row(id: "row2", title: "Add all test torrents", subtitle: nil,
-                                  rowType: .button({ self.addTestTorrents() }))
+            Section(title: "Debug", rows: [
+                Row(id: "row0", title: "Add test torrent files", subtitle: nil,
+                    rowType: .button({ self.addTestTorrentFiles() })),
+                Row(id: "row1", title: "Add test magnet links", subtitle: nil,
+                    rowType: .button({ self.addTestMagnetLinks() })),
+                Row(id: "row2", title: "Add all test torrents", subtitle: nil,
+                    rowType: .button({ self.addTestTorrents() }))
             ])
         )
         #endif
@@ -165,7 +140,7 @@ extension TorrentsViewModel {
 }
 #endif
 
-extension ListViewModel.Row {
+extension Row {
     
     private static var byteCountFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()

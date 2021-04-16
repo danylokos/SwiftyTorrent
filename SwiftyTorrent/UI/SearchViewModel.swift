@@ -2,43 +2,54 @@
 //  SearchViewModel.swift
 //  SwiftyTorrent
 //
-//  Created by Danylo Kostyshyn on 29.06.2020.
-//  Copyright © 2020 Danylo Kostyshyn. All rights reserved.
+//  Created by Danylo Kostyshyn on 07.06.2021.
+//  Copyright © 2021 Danylo Kostyshyn. All rights reserved.
 //
 
+import UIKit
 import Combine
-import SwiftUI
-import TorrentKit
 
-final class SearchViewModel: ObservableObject {
+final class SearchViewModel: NSObject, ListViewModelProtocol {
     
-    @Published var searchText: String = ""
+    var title: String { "Search" }
+    var icon: UIImage? { UIImage(systemName: "magnifyingglass") }
     
-    @Published var data = [SearchDataItem]()
+    var sections: [Section]
+    
+    var sectionsPublisher: AnyPublisher<[Section], Never>?
+    var rowPublisher: AnyPublisher<(Row, IndexPath), Never>?
+
+    var presenter: ControllerPresenter?
+
+    // MARK: -
     
     private var imdbProvider = IMDBDataProvider.shared
     private var eztbProvider = EZTVDataProvider.shared
-    private var torrentManager = TorrentManager.shared()
+
+    internal var cancellables = [AnyCancellable]()
     
-    private var cancellables = [AnyCancellable]()
+    private var data = [SearchDataItem]()
     
-    init() {
-        $searchText
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
-            .removeDuplicates()
-            .filter({ !$0.isEmpty })
-            .sink(receiveValue: { value in
-                print("value: \(value)")
-                self.fetchData(value)
-            })
-            .store(in: &cancellables)
+    internal let searchBarTextSubject = PassthroughSubject<String, Never>()
+    var searchBarTextPublisher: AnyPublisher<String, Never> { searchBarTextSubject.eraseToAnyPublisher() }
+    
+    // MARK: -
+    
+    override init() {
+        sections = []
     }
     
-    deinit {
-        cancellables.forEach { $0.cancel() }
+    func start() {
+        
     }
 
-    private func fetchData(_ searchQuery: String) {
+    func removeItem(at indexPath: IndexPath) {
+        
+    }
+    
+    // MARK: -
+    
+    func fetchData(_ searchQuery: String, completion: @escaping ([SearchDataItem]) -> Void) {
         imdbProvider
             .fetchSuggestions(searchQuery)
             .flatMap({ (value) -> AnyPublisher<[SearchDataItem], Error> in
@@ -51,17 +62,46 @@ final class SearchViewModel: ObservableObject {
                     break
                 case .failure(let error):
                     print("error: \(error)")
-                    self.data = []
+                    completion([])
                 }
             }, receiveValue: { (response) in
-                self.data = response
+                completion(response)
             })
             .store(in: &cancellables)
     }
     
-    func select(_ item: SearchDataItem) {
-        let magnetURI = MagnetURI(magnetURI: item.magnetURL)
-        torrentManager.add(magnetURI)
+}
+
+extension SearchViewModel {
+    
+    func bind(_ searchController: UISearchController) {
+        searchBarTextPublisher
+            .compactMap({ $0 })
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .sink(receiveValue: { searchText in
+                self.fetchData(searchText) { data in
+                    let section = Section(
+                        title: "Results",
+                        rows: data.map({
+                            Row(id: UUID().uuidString, title: $0.title, subtitle: $0.size, rowType: .plain)
+                        })
+                    )
+                    //swiftlint:disable force_cast
+                    let resultsController = searchController.searchResultsController as! ListViewController
+                    let listVM = resultsController.viewModel as! ListViewModel
+                    listVM.sections = [section]
+                    resultsController.update(with: listVM.sections)
+                }
+            })
+            .store(in: &cancellables)
     }
-        
+    
+}
+
+extension SearchViewModel: UISearchResultsUpdating {
+
+    func updateSearchResults(for searchController: UISearchController) {
+        searchBarTextSubject.send(searchController.searchBar.text ?? "")
+    }
+
 }

@@ -32,28 +32,93 @@ final class ListCell: UITableViewCell {
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.leadingAnchor.constraint(
-            equalTo: contentView.leadingAnchor,
-            constant: LayoutConstants.contentInsets.left).isActive = true
-        titleLabel.trailingAnchor.constraint(
-            equalTo: contentView.trailingAnchor,
-            constant: LayoutConstants.contentInsets.right).isActive = true
-        titleLabel.topAnchor.constraint(
-            equalTo: contentView.topAnchor,
-            constant: LayoutConstants.contentInsets.top).isActive = true
-        titleLabel.bottomAnchor.constraint(
-            equalTo: subtitleLabel.topAnchor,
-            constant: -5.0).isActive = true
-        
-        subtitleLabel.leadingAnchor.constraint(
-            equalTo: contentView.leadingAnchor,
-            constant: LayoutConstants.contentInsets.left).isActive = true
-        subtitleLabel.trailingAnchor.constraint(
-            equalTo: contentView.trailingAnchor,
-            constant: LayoutConstants.contentInsets.right).isActive = true
-        subtitleLabel.bottomAnchor.constraint(
-            equalTo: contentView.bottomAnchor,
-            constant: LayoutConstants.contentInsets.bottom).isActive = true
+
+        var constraints = [NSLayoutConstraint]()
+        constraints.append(contentsOf: [
+            titleLabel.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: LayoutConstants.contentInsets.left
+            ),
+            titleLabel.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor,
+                constant: LayoutConstants.contentInsets.right
+            ),
+            titleLabel.topAnchor.constraint(
+                equalTo: contentView.topAnchor,
+                constant: LayoutConstants.contentInsets.top
+            ),
+            titleLabel.bottomAnchor.constraint(
+                equalTo: subtitleLabel.topAnchor,
+                constant: -5.0
+            )
+        ])        
+        constraints.append(contentsOf: [
+            subtitleLabel.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: LayoutConstants.contentInsets.left
+            ),
+            subtitleLabel.trailingAnchor.constraint(
+                equalTo: contentView.trailingAnchor,
+                constant: LayoutConstants.contentInsets.right
+            ),
+            subtitleLabel.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor,
+                constant: LayoutConstants.contentInsets.bottom
+            )
+        ])
+        constraints.forEach({ $0.isActive = true })
+    }
+
+    override func didUpdateFocus(in context: UIFocusUpdateContext, with coordinator: UIFocusAnimationCoordinator) {
+        if let cell = context.previouslyFocusedView as? ListCell {
+            coordinator.addCoordinatedAnimations {
+                cell.titleLabel.textColor = .label
+                cell.subtitleLabel.textColor = .systemGray
+            }
+        }
+        if let cell = context.nextFocusedView as? ListCell {
+            coordinator.addCoordinatedAnimations {
+                cell.titleLabel.textColor = .black
+                cell.subtitleLabel.textColor = .black
+            }
+        }
     }
 
 }
+
+extension ListCell: ViewModelConfigurable {
+    
+    typealias ViewModel = Row
+    
+    func configure(_ viewModel: Row) {
+        titleLabel.text = viewModel.title
+        subtitleLabel.numberOfLines = 0
+        subtitleLabel.text = viewModel.subtitle
+        switch viewModel.rowType {
+        case .plain:
+            selectionStyle = .none
+            accessoryType = .none
+            titleLabel.textColor = .label
+            subtitleLabel.textColor = .systemGray
+            titleLabel.font = .preferredFont(forTextStyle: .headline)
+            subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
+        case .button:
+            selectionStyle = .default
+            accessoryType = .none
+            titleLabel.textColor = tintColor
+            subtitleLabel.textColor = tintColor
+            titleLabel.font = .preferredFont(forTextStyle: .body)
+            subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
+        case .navigation:
+            selectionStyle = .default
+            accessoryType = .disclosureIndicator
+            titleLabel.textColor = .label
+            subtitleLabel.textColor = .systemGray
+            titleLabel.font = .preferredFont(forTextStyle: .headline)
+            subtitleLabel.font = .preferredFont(forTextStyle: .subheadline)
+        }
+    }
+    
+}
+
+extension ListCell: AnyViewModelConfigurable { }

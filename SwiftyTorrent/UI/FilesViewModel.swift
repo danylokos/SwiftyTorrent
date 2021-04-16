@@ -11,72 +11,50 @@ import Combine
 import MediaKit
 import TorrentKit
 
-//protocol FilesViewModel {
-//
-//    var title: String { get }
-//
-//    var directory: Directory { get }
-//
-//}
-//
-//extension Directory: FilesViewModel {
-//
-//    var title: String {
-//        return name
-//    }
-//
-//    var directory: Directory {
-//        return self
-//    }
-//
-//}
-
 final class FilesViewModel: NSObject, ListViewModelProtocol {
-    
-    weak var viewController: UIViewController?
-    
+
     var title: String { return "Files" }
     var icon: UIImage? { return nil }
-    var largeTitleDisplayMode: UINavigationItem.LargeTitleDisplayMode { .never }
     
-    var sections = [SectionProtocol]()
+    var sections = [Section]()
     
-    var sectionsPublisher: AnyPublisher<[SectionProtocol], Never>?
-    private let sectionsSubject = PassthroughSubject<[SectionProtocol], Never>()
+    var sectionsPublisher: AnyPublisher<[Section], Never>?
+    private let sectionsSubject = PassthroughSubject<[Section], Never>()
     
-    var rowPublisher: AnyPublisher<(RowProtocol, IndexPath), Never>?
-    private let rowSubject = PassthroughSubject<(RowProtocol, IndexPath), Never>()
+    var rowPublisher: AnyPublisher<(Row, IndexPath), Never>?
+    private let rowSubject = PassthroughSubject<(Row, IndexPath), Never>()
+    
+    var presenter: ControllerPresenter?
+    
+    // MARK: -
 
     init(directory: Directory) {
         super.init()
         let dirRows = directory.allSubDirectories.map({ file in
-            ListViewModel.Row(file: file, action: {
+            Row(file: file, action: {
                 let filesVM = FilesViewModel(directory: file)
-                filesVM.viewController = self.viewController
                 let controller = ListViewController(viewModel: filesVM)
-                self.viewController?.navigationController?.pushViewController(controller, animated: true)
+                self.presenter?.push(controller)
             })
         })
         let fileRows = directory.allFiles.map({ file in
-            ListViewModel.Row(file: file, action: {
+            Row(file: file, action: {
                 var controller: UIViewController!
                 if file.isVideo() {
                     controller = VLCPlayerViewController(previewItem: file)
                 } else {
-//                    controller = QuickLookViewController(previewItem: file)
+                    #if os(iOS)
+                    controller = QuickLookViewController(previewItem: file)
+                    #endif
                 }
-                self.viewController?.present(controller, animated: true, completion: nil)
+                self.presenter?.present(controller)
             })
         })
-        self.sections = [ListViewModel.Section(id: "sec0", title: nil, rows: dirRows + fileRows)]
+        self.sections = [Section(title: nil, rows: dirRows + fileRows)]
         self.sectionsPublisher = sectionsSubject.eraseToAnyPublisher()
     }
     
     func removeItem(at indexPath: IndexPath) { }
-    
-//    func contextMenuConfig(at indexPath: IndexPath) -> UIContextMenuConfiguration? {
-//        return nil
-//    }
     
     func start() {
         sectionsSubject.send(sections)
@@ -84,7 +62,7 @@ final class FilesViewModel: NSObject, ListViewModelProtocol {
 
 }
 
-extension ListViewModel.Row {
+extension Row {
     
     private static var byteCountFormatter: ByteCountFormatter = {
         let formatter = ByteCountFormatter()

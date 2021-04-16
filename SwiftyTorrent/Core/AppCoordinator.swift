@@ -17,15 +17,17 @@ protocol ApplicationCoordinator {
     
 }
 
-final class AppCoordinator: ApplicationCoordinator {
+final class AppCoordinator: NSObject, ApplicationCoordinator {
     
     private var window: UIWindow!
     private var torrentManager = TorrentManager.shared()
     private var cancellables = [Cancellable]()
+    private var strongReferences = [AnyObject]()
     
     init(window: UIWindow) {
         self.window = window
         
+        super.init()
         cancellables.append(contentsOf: [
             NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
                 .sink { [unowned self] _ in
@@ -47,20 +49,22 @@ final class AppCoordinator: ApplicationCoordinator {
     
     private func wrapInNavController(_ viewController: UIViewController) -> UINavigationController {
         let navController = UINavigationController(rootViewController: viewController)
-//        navController.navigationBar.prefersLargeTitles = true
         return navController
     }
-    
+        
     func start() {
         let tabBarController = UITabBarController()
         
         let torrentsVM = TorrentsViewModel()
         let torrentstVC = ListViewController(viewModel: torrentsVM)
-        torrentsVM.viewController = torrentstVC
+        
+        let searchProdiver = SearchProvider()
+        let (searchVM, searchVC) = searchProdiver.makeSearchController()
+        strongReferences.append(searchVM)
         
         tabBarController.viewControllers = [
             wrapInNavController(torrentstVC),
-            UIHostingController(rootView: SearchView(model: SearchViewModel()))
+            wrapInNavController(searchVC)
         ]
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
