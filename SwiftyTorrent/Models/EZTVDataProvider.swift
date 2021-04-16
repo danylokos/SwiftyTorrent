@@ -42,7 +42,7 @@ final class EZTVDataProvider {
     static let shared = EZTVDataProvider()
     
     private let urlSession: URLSession = URLSession.shared
-    private let endpointURL = URL(string: "https://eztv.ag/api/")!
+    private let endpointURL = URL(string: "https://eztv.re/api/")!
     
     func fetchTorrents(imdbId: String, limit: Int = 100, page: Int = 1) -> AnyPublisher<[SearchDataItem], Error> {
         let requestURL = URL(string: endpointURL.absoluteString +
