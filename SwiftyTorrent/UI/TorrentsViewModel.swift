@@ -22,10 +22,20 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
     }
 
     private let sectionsSubject = PassthroughSubject<[Section], Never>()
-    var sectionsPublisher: AnyPublisher<[Section], Never>?
+    var sectionsPublisher: AnyPublisher<[Section], Never>? {
+        sectionsSubject
+            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 
     private let rowSubject = PassthroughSubject<(Row, IndexPath), Never>()
-    var rowPublisher: AnyPublisher<(Row, IndexPath), Never>?
+    var rowPublisher: AnyPublisher<(Row, IndexPath), Never>? {
+        rowSubject
+            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
     
     var presenter: ControllerPresenter?
     
@@ -35,21 +45,7 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
     private var torrents = [Torrent]()
 
     var activeError: Error?
-    
-    override init() {
-        sectionsPublisher = sectionsSubject
-            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-
-        rowPublisher = rowSubject
-            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
         
-        super.init()
-    }
-    
     func start() {
         torrentManager.addDelegate(self)
         torrents = torrentManager.torrents()
@@ -78,7 +74,7 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
     }
 
     func torrentManager(_ manager: TorrentManager, didReceiveUpdateFor torrent: Torrent) {
-        if let idx = self.torrents.firstIndex(where: { $0.infoHash == torrent.infoHash }) {
+        if let idx = torrents.firstIndex(where: { $0.infoHash == torrent.infoHash }) {
             let vm = Row(torrent: torrent)
             let indexPath = IndexPath(row: idx, section: 0)
             rowSubject.send((vm, indexPath))
@@ -94,7 +90,7 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
     private func createSections(from torrents: [Torrent]) -> [Section] {
         var sections = [Section]()
         sections.append(
-            Section(title: "Torrents", rows: torrents.map { torrent in
+            Section(id: "torrents", title: "Torrents", rows: torrents.map { torrent in
                 Row(torrent: torrent, action: {
                     let filesVM = FilesViewModel(directory: torrent.directory)
                     filesVM.presenter = self.presenter
@@ -103,9 +99,9 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
                 })
             })
         )
-        #if DEBUG
+        #if DEBUG && targetEnvironment(simulator)
         sections.append(
-            Section(title: "Debug", rows: [
+            Section(id: "debug", title: "Debug", rows: [
                 Row(id: "row0", title: "Add test torrent files", subtitle: nil,
                     rowType: .button({ self.addTestTorrentFiles() })),
                 Row(id: "row1", title: "Add test magnet links", subtitle: nil,

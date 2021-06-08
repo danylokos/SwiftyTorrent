@@ -12,13 +12,14 @@ import Foundation
 import Combine
 
 protocol SearchDataItem {
-    
+    var id: String { get }
     var title: String { get }
     var sizeBytes: UInt64 { get }
     var size: String { get }
-    var status: String { get }
+    var episodeInfo: String? { get }
+    var peersStatus: String { get }
     var magnetURL: URL { get }
-    
+    var details: String { get }
 }
 
 extension EZTVDataProvider.Response.Torrent: SearchDataItem {
@@ -28,13 +29,24 @@ extension EZTVDataProvider.Response.Torrent: SearchDataItem {
         formatter.countStyle = .binary
         return formatter
     }()
+    
+    var id: String { magnetURL.absoluteString }
 
     var size: String {
-        return EZTVDataProvider.Response.Torrent.byteCountFormatter.string(fromByteCount: Int64(sizeBytes))
+        EZTVDataProvider.Response.Torrent.byteCountFormatter.string(fromByteCount: Int64(sizeBytes))
     }
 
-    var status: String {
-        return "seeds: \(seeds), peers: \(peers)"
+    var episodeInfo: String? {
+        guard let s = Int(season), let e = Int(episode) else { return nil }
+        return String(format: "s%02de%02d", s, e)
+    }
+
+    var peersStatus: String { "seeds: \(seeds), peers: \(peers)" }
+    
+    var details: String {
+        [episodeInfo, size, peersStatus]
+            .compactMap { $0 }
+            .joined(separator: ", ")
     }
     
 }
@@ -133,11 +145,7 @@ extension EZTVDataProvider {
             let peers: Int
 //            let releaseDate: TimeInterval
             let sizeBytes: UInt64
-            
-            var se: String {
-                return String(format: "s%2de%2d", Int(season) ?? 0, Int(episode) ?? 0)
-            }
-            
+
             var debugDescription: String {
                 return title
             }

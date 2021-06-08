@@ -12,8 +12,11 @@ import Combine
 class ListViewController: UIViewController {
 
     internal var viewModel: ListViewModelProtocol
+    
     private let tableView = UITableView()
-    private lazy var dataSource = makeDataSource()
+    private lazy var dataSource: UITableViewDiffableDataSource<Section, Row> = {
+        DiffableDataSource(tableView: tableView, viewModel: viewModel)
+    }()
     private var cancellables = [AnyCancellable]()
     
     init(viewModel: ListViewModelProtocol) {
@@ -88,10 +91,6 @@ class ListViewController: UIViewController {
             .sink { [weak self] (rowModel, indexPath) in
                 self?.updateRow(at: indexPath, rowModel: rowModel)
         }.store(in: &cancellables)
-    }
-    
-    private func makeDataSource() -> UITableViewDiffableDataSource<Section, Row> {
-        return DiffableDataSource(tableView: tableView, viewModel: viewModel)
     }
     
     func update(with sections: [Section], animate: Bool = true) {

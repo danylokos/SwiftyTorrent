@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		770C0FED2671634100138070 /* ListPrimitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770C0FEC2671634100138070 /* ListPrimitives.swift */; };
 		771B700622DA205D00132B5E /* uTorrent-320.png in Resources */ = {isa = PBXBuildFile; fileRef = 771B700522DA205D00132B5E /* uTorrent-320.png */; };
 		7723A22624AF8F1B007629A0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7723A22424AF8F1B007629A0 /* SystemConfiguration.framework */; };
 		772771C824C3814A00263BDF /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773A411924B38087002E75CD /* ListViewModel.swift */; };
@@ -94,6 +95,7 @@
 		77DC98D9266ED32B005ECCA2 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775B74B9266EA4C800AA5155 /* SearchViewModel.swift */; };
 		77DC98DF266FEC44005ECCA2 /* SearchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DC98DE266FEC44005ECCA2 /* SearchProvider.swift */; };
 		77DC98E0266FEC44005ECCA2 /* SearchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DC98DE266FEC44005ECCA2 /* SearchProvider.swift */; };
+		77F7E2FB2673F9CC000227F5 /* ListPrimitives.swift in Sources */ = {isa = PBXBuildFile; fileRef = 770C0FEC2671634100138070 /* ListPrimitives.swift */; };
 		77FC2AF422D896F100A544AA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC2AF322D896F100A544AA /* AppCoordinator.swift */; };
 /* End PBXBuildFile section */
 
@@ -163,6 +165,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		770C0FEC2671634100138070 /* ListPrimitives.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPrimitives.swift; sourceTree = "<group>"; };
 		771B700522DA205D00132B5E /* uTorrent-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uTorrent-320.png"; sourceTree = "<group>"; };
 		771B700E22DA247F00132B5E /* ubuntu-18.04.2-live-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-18.04.2-live-server-amd64.iso.torrent"; sourceTree = "<group>"; };
 		771B700F22DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-16.04.6-server-amd64.iso.torrent"; sourceTree = "<group>"; };
@@ -518,13 +521,14 @@
 			children = (
 				773A411B24B381B1002E75CD /* ViewModelConfigurable.swift */,
 				773A411524B37EED002E75CD /* UITableView+TypeSafe.swift */,
-				773A411924B38087002E75CD /* ListViewModel.swift */,
-				773A410324AFB8F8002E75CD /* ListViewController.swift */,
-				77DC98DE266FEC44005ECCA2 /* SearchProvider.swift */,
+				770C0FEC2671634100138070 /* ListPrimitives.swift */,
 				773A411724B3805C002E75CD /* ListCell.swift */,
+				773A410324AFB8F8002E75CD /* ListViewController.swift */,
+				773A411924B38087002E75CD /* ListViewModel.swift */,
 				7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */,
-				775B74B9266EA4C800AA5155 /* SearchViewModel.swift */,
 				772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */,
+				77DC98DE266FEC44005ECCA2 /* SearchProvider.swift */,
+				775B74B9266EA4C800AA5155 /* SearchViewModel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -816,6 +820,7 @@
 				774321EB24AA9A7000777C0A /* EZTVDataProvider.swift in Sources */,
 				7729BDB122D8B34D00D02566 /* TorrentsViewModel.swift in Sources */,
 				7748DCA924AE3C9000AC5095 /* File+PreviewItem.swift in Sources */,
+				770C0FED2671634100138070 /* ListPrimitives.swift in Sources */,
 				773A410424AFB8F8002E75CD /* ListViewController.swift in Sources */,
 				772CEA0822DDFC41000CD2BD /* FilesViewModel.swift in Sources */,
 				773A411824B3805C002E75CD /* ListCell.swift in Sources */,
@@ -866,6 +871,7 @@
 				7748DCC724AE70A900AC5095 /* File.swift in Sources */,
 				7748DCD524AE70A900AC5095 /* FilesViewModel.swift in Sources */,
 				7748DCC824AE70A900AC5095 /* File+PreviewItem.swift in Sources */,
+				77F7E2FB2673F9CC000227F5 /* ListPrimitives.swift in Sources */,
 				772771C924C3814A00263BDF /* ListCell.swift in Sources */,
 				773A410524AFBF69002E75CD /* ListViewController.swift in Sources */,
 				772771C824C3814A00263BDF /* ListViewModel.swift in Sources */,

@@ -18,11 +18,11 @@ final class FilesViewModel: NSObject, ListViewModelProtocol {
     
     var sections = [Section]()
     
-    var sectionsPublisher: AnyPublisher<[Section], Never>?
     private let sectionsSubject = PassthroughSubject<[Section], Never>()
+    var sectionsPublisher: AnyPublisher<[Section], Never>? { sectionsSubject.eraseToAnyPublisher() }
     
-    var rowPublisher: AnyPublisher<(Row, IndexPath), Never>?
     private let rowSubject = PassthroughSubject<(Row, IndexPath), Never>()
+    var rowPublisher: AnyPublisher<(Row, IndexPath), Never>?
     
     var presenter: ControllerPresenter?
     
@@ -51,7 +51,6 @@ final class FilesViewModel: NSObject, ListViewModelProtocol {
             })
         })
         self.sections = [Section(title: nil, rows: dirRows + fileRows)]
-        self.sectionsPublisher = sectionsSubject.eraseToAnyPublisher()
     }
     
     func removeItem(at indexPath: IndexPath) { }

@@ -8,6 +8,7 @@
 
 import UIKit
 import Combine
+import TorrentKit
 
 final class SearchViewModel: NSObject, ListViewModelProtocol {
     
@@ -30,8 +31,8 @@ final class SearchViewModel: NSObject, ListViewModelProtocol {
     
     private var data = [SearchDataItem]()
     
-    internal let searchBarTextSubject = PassthroughSubject<String, Never>()
-    var searchBarTextPublisher: AnyPublisher<String, Never> { searchBarTextSubject.eraseToAnyPublisher() }
+    internal let searchBarTextSubject = PassthroughSubject<String?, Never>()
+    var searchBarTextPublisher: AnyPublisher<String?, Never> { searchBarTextSubject.eraseToAnyPublisher() }
     
     // MARK: -
     
@@ -39,36 +40,9 @@ final class SearchViewModel: NSObject, ListViewModelProtocol {
         sections = []
     }
     
-    func start() {
-        
-    }
+    func start() { }
 
-    func removeItem(at indexPath: IndexPath) {
-        
-    }
-    
-    // MARK: -
-    
-    func fetchData(_ searchQuery: String, completion: @escaping ([SearchDataItem]) -> Void) {
-        imdbProvider
-            .fetchSuggestions(searchQuery)
-            .flatMap({ (value) -> AnyPublisher<[SearchDataItem], Error> in
-                self.eztbProvider.fetchTorrents(imdbId: value)
-            })
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("error: \(error)")
-                    completion([])
-                }
-            }, receiveValue: { (response) in
-                completion(response)
-            })
-            .store(in: &cancellables)
-    }
+    func removeItem(at indexPath: IndexPath) { }
     
 }
 
@@ -76,22 +50,36 @@ extension SearchViewModel {
     
     func bind(_ searchController: UISearchController) {
         searchBarTextPublisher
-            .compactMap({ $0 })
+            .compactMap { $0 }
+            .filter { !$0.isEmpty }
             .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
-            .sink(receiveValue: { searchText in
-                self.fetchData(searchText) { data in
-                    let section = Section(
-                        title: "Results",
-                        rows: data.map({
-                            Row(id: UUID().uuidString, title: $0.title, subtitle: $0.size, rowType: .plain)
+            .map {
+                self.imdbProvider.fetchSuggestions($0)
+                    .replaceError(with: "")
+            }
+            .switchToLatest()
+            .map {
+                self.eztbProvider.fetchTorrents(imdbId: $0)
+                    .replaceError(with: [])
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { data in
+                guard
+                    let resultsController = searchController.searchResultsController as? ListViewController,
+                    let listVM = resultsController.viewModel as? ListViewModel
+                else { return }
+
+                let section = Section(id: "results", title: "Results", rows: data.map { item in
+                    Row(id: item.id, title: item.title,
+                        subtitle: item.details, rowType: .plain {
+                            let magnet = MagnetURI(magnetURI: item.magnetURL)
+                            TorrentManager.shared().add(magnet)
                         })
-                    )
-                    //swiftlint:disable force_cast
-                    let resultsController = searchController.searchResultsController as! ListViewController
-                    let listVM = resultsController.viewModel as! ListViewModel
-                    listVM.sections = [section]
-                    resultsController.update(with: listVM.sections)
-                }
+                })
+
+                listVM.sections = [section]
+                resultsController.update(with: listVM.sections)
             })
             .store(in: &cancellables)
     }
@@ -101,7 +89,7 @@ extension SearchViewModel {
 extension SearchViewModel: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
-        searchBarTextSubject.send(searchController.searchBar.text ?? "")
+        searchBarTextSubject.send(searchController.searchBar.text)
     }
 
 }

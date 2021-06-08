@@ -9,47 +9,6 @@
 import UIKit
 import Combine
 
-typealias RowAction = () -> Void
-
-enum RowType {
-    case plain
-    case button(RowAction)
-    case navigation(RowAction)
-}
-
-struct Section: Hashable {
-    var id = UUID()
-    var title: String?
-    var rows: [Row]
-}
-
-struct Row: Equatable, Hashable {
-    var id: String
-    var viewType: UITableViewCell.Type { ListCell.self }
-    var title: String?
-    var subtitle: String?
-    var rowType: RowType = .plain
-
-    var action: RowAction? {
-        switch rowType {
-        case .plain: return nil
-        case .button(let action): return action
-        case .navigation(let action): return action
-        }
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: Row, rhs: Row) -> Bool {
-        return lhs.id == rhs.id
-    }
-
-}
-
-// MARK: -
-
 protocol ListViewModelProtocol {
     var title: String { get }
     var icon: UIImage? { get }
