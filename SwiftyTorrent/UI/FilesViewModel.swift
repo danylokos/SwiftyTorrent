@@ -42,6 +42,7 @@ final class FilesViewModel: NSObject, ListViewModelProtocol {
                 var controller: UIViewController!
                 if file.isVideo() {
                     controller = VLCPlayerViewController(previewItem: file)
+                    controller.modalPresentationStyle = .fullScreen
                 } else {
                     #if os(iOS)
                     controller = QuickLookViewController(previewItem: file)
