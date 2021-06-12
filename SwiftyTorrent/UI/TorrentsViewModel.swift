@@ -45,13 +45,13 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
                 title: "Remove torrent",
                 icon: UIImage(systemName: "trash"),
                 isDestructive: true) {
-                print("Remove torrent: \(indexPath)")
+                self.removeItem(at: indexPath)
             },
             ContextAction(
                 title: "Remove all data",
                 icon: UIImage(systemName: "trash"),
                 isDestructive: true) {
-                print("Remove all data: \(indexPath)")
+                self.removeAllData(at: indexPath)
             }
         ]
     }
@@ -69,13 +69,14 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
         sections = createSections(from: torrents)
     }
     
-    func remove(_ torrent: Torrent) {
-        torrentManager.remove(torrent.infoHash)        
-    }
-    
     func removeItem(at indexPath: IndexPath) {
         let torrent = torrents[indexPath.row]
-        remove(torrent)
+        torrentManager.removeTorrent(withInfoHash: torrent.infoHash, deleteFiles: false)
+    }
+    
+    func removeAllData(at indexPath: IndexPath) {
+        let torrent = torrents[indexPath.row]
+        torrentManager.removeTorrent(withInfoHash: torrent.infoHash, deleteFiles: true)
     }
 
     // MARK: - TorrentManagerDelegate
