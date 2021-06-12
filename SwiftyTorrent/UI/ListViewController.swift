@@ -75,6 +75,15 @@ class ListViewController: UIViewController {
             )
         ])
         constraints.forEach({ $0.isActive = true })
+        
+        #if os(tvOS)
+        tableView.addGestureRecognizer(
+            UILongPressGestureRecognizer(
+                target: self,
+                action: #selector(tableViewDidLongPress(_:))
+            )
+        )
+        #endif
     }
 
     private var isInitialReload = true
@@ -101,17 +110,47 @@ class ListViewController: UIViewController {
         }
         dataSource.apply(snapshot, animatingDifferences: animate)
     }
+    
+    #if os(tvOS)
+    @objc func tableViewDidLongPress(_ gesture: UILongPressGestureRecognizer) {
+        let point = gesture.location(in: tableView)
+        guard gesture.state == .began,
+              let indexPath = tableView.indexPathForRow(at: point),
+              let row = viewModel.row(at: indexPath)
+        else { return }
+        let actionController = UIAlertController(title: row.title, message: nil, preferredStyle: .actionSheet)
+        let actions = viewModel.contextActions(at: indexPath).map({ $0.makeUIAlertAction() })
+        actions.forEach({ actionController.addAction($0) })
+        actionController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(actionController)
+    }
+    #endif
 
 }
  
 extension ListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let rowModel = viewModel.row(at: indexPath)
-            else { fatalError("No row at indexPath: \(indexPath)") }
+        guard
+            let rowModel = viewModel.row(at: indexPath)
+        else { fatalError("No row at indexPath: \(indexPath)") }
         rowModel.action?()
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    #if os(iOS)
+    func tableView(_ tableView: UITableView,
+                   contextMenuConfigurationForRowAt indexPath: IndexPath,
+                   point: CGPoint) -> UIContextMenuConfiguration? {
+        let configuration = UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil) { _ in
+            let actions = self.viewModel.contextActions(at: indexPath).map({ $0.makeUIAction() })
+            return UIMenu(title: "", children: actions)
+        }
+        return configuration
+    }
+    #endif
 
 }
 

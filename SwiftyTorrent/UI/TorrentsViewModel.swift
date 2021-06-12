@@ -39,6 +39,23 @@ final class TorrentsViewModel: NSObject, ListViewModelProtocol, TorrentManagerDe
     
     var presenter: ControllerPresenter?
     
+    func contextActions(at indexPath: IndexPath) -> [ContextAction] {
+        return [
+            ContextAction(
+                title: "Remove torrent",
+                icon: UIImage(systemName: "trash"),
+                isDestructive: true) {
+                print("Remove torrent: \(indexPath)")
+            },
+            ContextAction(
+                title: "Remove all data",
+                icon: UIImage(systemName: "trash"),
+                isDestructive: true) {
+                print("Remove all data: \(indexPath)")
+            }
+        ]
+    }
+    
     // MARK: -
     
     private var torrentManager = TorrentManager.shared()

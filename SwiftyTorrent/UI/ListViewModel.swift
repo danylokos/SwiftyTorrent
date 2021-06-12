@@ -9,6 +9,29 @@
 import UIKit
 import Combine
 
+struct ContextAction {
+    let title: String
+    let icon: UIImage?
+    let isDestructive: Bool
+    let handler: () -> Void
+
+    func makeUIAction() -> UIAction {
+        UIAction(
+            title: title, image: icon,
+            attributes: isDestructive ? [.destructive] : [],
+            state: .off
+        ) { _ in handler() }
+    }
+    
+    func makeUIAlertAction() -> UIAlertAction {
+        UIAlertAction(
+            title: title,
+            style: isDestructive ? .destructive : .default
+        ) { _ in handler() }
+    }
+
+}
+
 protocol ListViewModelProtocol {
     var title: String { get }
     var icon: UIImage? { get }
@@ -21,6 +44,8 @@ protocol ListViewModelProtocol {
     func removeItem(at indexPath: IndexPath)
     
     var presenter: ControllerPresenter? { get set }
+    
+    func contextActions(at indexPath: IndexPath) -> [ContextAction]
     
     func start()
 }
@@ -51,6 +76,8 @@ class ListViewModel: ListViewModelProtocol {
     func removeItem(at indexPath: IndexPath) { }
     
     var presenter: ControllerPresenter?
+    
+    func contextActions(at indexPath: IndexPath) -> [ContextAction] { [] }
     
     // MARK: -
     

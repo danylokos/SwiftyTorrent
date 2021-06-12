@@ -21,6 +21,8 @@ final class SearchViewModel: NSObject, ListViewModelProtocol {
     var rowPublisher: AnyPublisher<(Row, IndexPath), Never>?
 
     var presenter: ControllerPresenter?
+    
+    func contextActions(at indexPath: IndexPath) -> [ContextAction] { [] }
 
     // MARK: -
     

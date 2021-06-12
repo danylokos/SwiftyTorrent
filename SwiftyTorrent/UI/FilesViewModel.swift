@@ -26,6 +26,8 @@ final class FilesViewModel: NSObject, ListViewModelProtocol {
     
     var presenter: ControllerPresenter?
     
+    func contextActions(at indexPath: IndexPath) -> [ContextAction] { [] }
+    
     // MARK: -
 
     init(directory: Directory) {
