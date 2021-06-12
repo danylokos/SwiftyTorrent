@@ -48,7 +48,7 @@ final class TorrentsViewModel: NSObject, ObservableObject, TorrentManagerDelegat
             torrentsWillChangeSubject.send()
             torrents.remove(at: idx)
         }
-        torrentManager.remove(torrent.infoHash)        
+        torrentManager.removeTorrent(withInfoHash: torrent.infoHash, deleteFiles: false)        
     }
     
     // MARK: - TorrentManagerDelegate

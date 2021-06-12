@@ -53,8 +53,7 @@ NS_SWIFT_NAME(removeDelegate(_:));
 - (BOOL)addTorrent:(id<STDownloadable>)torrent
 NS_SWIFT_NAME(add(_:));
 
-- (BOOL)removeTorrentWithInfoHash:(NSData *)infoHash
-NS_SWIFT_NAME(remove(_:));
+- (BOOL)removeTorrentWithInfoHash:(NSData *)infoHash deleteFiles:(BOOL)deleteFiles;
 
 - (NSArray<STTorrent *> *)torrents;
 
