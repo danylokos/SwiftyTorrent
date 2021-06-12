@@ -248,15 +248,21 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     return [NSURL fileURLWithPath:[self downloadsDirPath] isDirectory:YES];
 }
 
+- (NSString *)storageDirPath {
+#if TARGET_OS_IOS
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+#elif TARGET_OS_TV
+    return [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+#endif
+}
+
 - (NSString *)downloadsDirPath {
-    NSString *documentsDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *downloadsDirPath = [documentsDirPath stringByAppendingPathComponent:@"Downloads"];
+    NSString *downloadsDirPath = [[self storageDirPath] stringByAppendingPathComponent:@"Downloads"];
     return downloadsDirPath;
 }
 
 - (NSString *)torrentsDirPath {
-    NSString *documentsDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *torrentsDirPath = [documentsDirPath stringByAppendingPathComponent:@"torrents"];
+    NSString *torrentsDirPath = [[self storageDirPath] stringByAppendingPathComponent:@"torrents"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:torrentsDirPath];
     if (!fileExists) {
         NSError *error;
