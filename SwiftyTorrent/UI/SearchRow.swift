@@ -19,6 +19,7 @@ struct SearchRow: View {
                 Text(model.title)
                     .font(Font.headline)
                     .bold()
+                    .lineLimit(2)
                 Spacer(minLength: 5)
                 Text("\(model.size), \(model.status)")
                     .font(Font.subheadline)

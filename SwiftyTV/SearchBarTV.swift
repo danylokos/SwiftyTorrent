@@ -57,4 +57,3 @@ extension SearchBarTV.Coordinator: UISearchResultsUpdating {
     }
 
 }
-
