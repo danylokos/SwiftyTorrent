@@ -15,10 +15,19 @@ struct SearchView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(model.data, id: \.title) { item in
+                ForEach(model.items, id: \.title) { item in
                     SearchRow(model: item) {
                         print("select: \(item.title)")
-                        self.model.select(item)
+                        model.select(item)
+                    }.onAppear(perform: {
+                        model.loadMoreIfNeeded(currentItem: item)
+                    })
+                }
+                if model.isLoading {
+                    HStack {
+                        Spacer()
+                        ProgressView("Loading...")
+                        Spacer()
                     }
                 }
             }

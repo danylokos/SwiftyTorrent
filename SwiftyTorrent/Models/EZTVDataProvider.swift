@@ -58,7 +58,7 @@ final class EZTVDataProvider {
     private let urlSession: URLSession = URLSession.shared
     private let endpointURL = URL(string: "https://eztv.re/api/")!
     
-    func fetchTorrents(imdbId: String, limit: Int = 100, page: Int = 1) -> AnyPublisher<[SearchDataItem], Error> {
+    func fetchTorrents(imdbId: String, limit: Int = 20, page: Int = 1) -> AnyPublisher<[SearchDataItem], Error> {
         let requestURL = URL(string: endpointURL.absoluteString +
                              "get-torrents?" +
                              "limit=\(limit)&" +
@@ -77,6 +77,8 @@ final class EZTVDataProvider {
             .decode(type: Response.self, decoder: JSONDecoder())
             .map({ (response) -> [SearchDataItem] in
                 print("torrentsCount: \(response.torrentsCount)")
+                print("page: \(response.page)")
+                print("page: \(response.limit)")
                 return response.torrents
             })
             .eraseToAnyPublisher()
@@ -100,6 +102,8 @@ extension EZTVDataProvider {
         let limit: Int
         let page: Int
         let torrents: [Torrent]
+        
+        var hasMorePages: Bool { page * limit < torrentsCount }
         
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
