@@ -13,7 +13,6 @@ import TorrentKit
 final class SearchViewModel: ObservableObject {
     
     @Published var searchText: String = ""
-    
     @Published var data = [SearchDataItem]()
     
     private var imdbProvider = IMDBDataProvider.shared
@@ -24,44 +23,44 @@ final class SearchViewModel: ObservableObject {
     
     init() {
         $searchText
-            .debounce(for: 0.5, scheduler: DispatchQueue.main)
-            .removeDuplicates()
-            .filter({ !$0.isEmpty })
-            .sink(receiveValue: { value in
-                print("value: \(value)")
-                self.fetchData(value)
+            .compactMap { $0 }
+            .filter { !$0.isEmpty }
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .map {
+                self.imdbProvider.fetchSuggestions($0)
+                    .replaceError(with: "")
+            }
+            .switchToLatest()
+            .map {
+                self.eztbProvider.fetchTorrents(imdbId: $0)
+                    .replaceError(with: [])
+            }
+            .switchToLatest()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { data in
+                self.data = data
             })
+            .store(in: &cancellables)
+
+        // Clear results if `searchText` is empty
+        $searchText
+            .filter { $0.isEmpty }
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                self.data = []
+            }
             .store(in: &cancellables)
     }
     
     deinit {
         cancellables.forEach { $0.cancel() }
     }
-
-    private func fetchData(_ searchQuery: String) {
-        imdbProvider
-            .fetchSuggestions(searchQuery)
-            .flatMap({ (value) -> AnyPublisher<[SearchDataItem], Error> in
-                self.eztbProvider.fetchTorrents(imdbId: value)
-            })
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print("error: \(error)")
-                    self.data = []
-                }
-            }, receiveValue: { (response) in
-                self.data = response
-            })
-            .store(in: &cancellables)
-    }
     
+    // MARK: -
+
     func select(_ item: SearchDataItem) {
         let magnetURI = MagnetURI(magnetURI: item.magnetURL)
         torrentManager.add(magnetURI)
     }
-        
+    
 }
