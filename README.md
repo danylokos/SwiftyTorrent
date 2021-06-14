@@ -39,8 +39,8 @@ Downloads can be found at:
 - pieces prioritization logic for video streaming
 - option to remove downloaded files when removing torrent
 - proper event/error handling
-- quick look
-- integrate VLC player for video playback
+- ~~quick look~~
+- ~~integrate VLC player for video playback~~
 - session status header
 - app icon?
 

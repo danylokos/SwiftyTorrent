@@ -30,31 +30,19 @@ public struct VLCViewHost: UIViewControllerRepresentable {
     
     public func makeUIViewController(context: Context) -> Controller {
         let item = context.coordinator.previewItem
-        let controller = VLCPlayerViewController(previewItem: item)
-        let player = context.coordinator.player
-        player.drawable = controller.view
-        player.play()
-        return controller
+        return VLCPlayerViewController(previewItem: item)
     }
     
-    public func updateUIViewController(_ uiViewController: Controller, context: Context) {
-    }
+    public func updateUIViewController(_ uiViewController: Controller, context: Context) { }
     
-    public static func dismantleUIViewController(_ uiViewController: Controller, coordinator: Coordinator) {
-        coordinator.player.stop()
-    }
+    public static func dismantleUIViewController(_ uiViewController: Controller, coordinator: Coordinator) { }
 
     public class Coordinator: NSObject {
         
-        var previewItem: PreviewItem
-        var player: VLCMediaPlayer
+        let previewItem: PreviewItem
         
         init(previewItem: PreviewItem) {
             self.previewItem = previewItem
-            self.player = VLCMediaPlayer()
-            if let url = previewItem.previewItemURL {
-                player.media = VLCMedia(url: url)
-            }
             super.init()
         }
         
@@ -95,7 +83,6 @@ public final class VLCPlayerViewController: UIViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
 
         player.delegate = self
         player.drawable = view
@@ -139,7 +126,7 @@ public final class VLCPlayerViewController: UIViewController {
         }
     }
     
-    var hideTimer: Timer?
+    private var hideTimer: Timer?
     
     private func hidePlaybackControlsAfterDelay() {
         hideTimer?.invalidate()
