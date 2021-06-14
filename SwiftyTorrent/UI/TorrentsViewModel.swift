@@ -14,11 +14,16 @@ final class TorrentsViewModel: NSObject, ObservableObject, TorrentManagerDelegat
     
     private var torrentManager = TorrentManager.shared()
 
-    var torrents = [Torrent]()
+    private(set) var torrents = [Torrent]()
 
     private let torrentsWillChangeSubject = PassthroughSubject<Void, Never>()
     
-    var objectWillChange: AnyPublisher<Void, Never>
+    var objectWillChange: AnyPublisher<Void, Never> {
+        torrentsWillChangeSubject
+            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
 
     @Published private(set) var activeError: Error?
     
@@ -32,10 +37,6 @@ final class TorrentsViewModel: NSObject, ObservableObject, TorrentManagerDelegat
     }
     
     override init() {
-        objectWillChange = torrentsWillChangeSubject
-            .throttle(for: .milliseconds(100), scheduler: DispatchQueue.main, latest: true)
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
         super.init()
         torrentsWillChangeSubject.send()
         torrents = torrentManager.torrents()
@@ -43,12 +44,12 @@ final class TorrentsViewModel: NSObject, ObservableObject, TorrentManagerDelegat
         torrentManager.addDelegate(self)
     }
     
-    func remove(_ torrent: Torrent) {
-        if let idx = self.torrents.firstIndex(where: { $0.infoHash == torrent.infoHash }) {
+    func remove(_ torrent: Torrent, deleteFiles: Bool = false) {
+        if let idx = torrents.firstIndex(where: { $0.infoHash == torrent.infoHash }) {
             torrentsWillChangeSubject.send()
             torrents.remove(at: idx)
         }
-        torrentManager.remove(torrent.infoHash)        
+        torrentManager.removeTorrent(withInfoHash: torrent.infoHash, deleteFiles: deleteFiles)        
     }
     
     // MARK: - TorrentManagerDelegate
@@ -60,14 +61,14 @@ final class TorrentsViewModel: NSObject, ObservableObject, TorrentManagerDelegat
     }
     
     func torrentManager(_ manager: TorrentManager, didRemoveTorrentWithHash hashData: Data) {
-        if let idx = self.torrents.firstIndex(where: { $0.infoHash == hashData }) {
+        if let idx = torrents.firstIndex(where: { $0.infoHash == hashData }) {
             torrentsWillChangeSubject.send()
             torrents.remove(at: idx)
         }
     }
     
     func torrentManager(_ manager: TorrentManager, didReceiveUpdateFor torrent: Torrent) {
-        if let idx = self.torrents.firstIndex(where: { $0.infoHash == torrent.infoHash }) {
+        if let idx = torrents.firstIndex(where: { $0.infoHash == torrent.infoHash }) {
             torrentsWillChangeSubject.send()
             torrents.remove(at: idx)
             torrents.insert(torrent, at: idx)

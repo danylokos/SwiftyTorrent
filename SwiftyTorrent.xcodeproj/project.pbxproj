@@ -49,7 +49,6 @@
 		774321E724AA705A00777C0A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774321E624AA705A00777C0A /* SearchViewModel.swift */; };
 		774321E924AA9A0E00777C0A /* IMDBDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774321E824AA9A0E00777C0A /* IMDBDataProvider.swift */; };
 		774321EB24AA9A7000777C0A /* EZTVDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774321EA24AA9A7000777C0A /* EZTVDataProvider.swift */; };
-		774321ED24AB3C4600777C0A /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774321EC24AB3C4600777C0A /* SearchBar.swift */; };
 		7748DC7824AE38EA00AC5095 /* MediaKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7748DC7624AE38EA00AC5095 /* MediaKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7748DC7C24AE38EA00AC5095 /* MediaKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7748DC7424AE38EA00AC5095 /* MediaKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7748DC8124AE392100AC5095 /* VLCViewHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77ED893224AD277900D499DD /* VLCViewHost.swift */; };
@@ -82,7 +81,6 @@
 		7748DCDD24AE713500AC5095 /* TorrentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 774321A724AA37ED00777C0A /* TorrentKit.framework */; };
 		7748DCDE24AE713500AC5095 /* TorrentKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 774321A724AA37ED00777C0A /* TorrentKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7748DCE324AE728700AC5095 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748DCE224AE728700AC5095 /* PreviewItem.swift */; };
-		7748DCEC24AF768700AC5095 /* SearchBarTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748DCEB24AF768700AC5095 /* SearchBarTV.swift */; };
 		777A0E4E24AF8D8C00713146 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E4D24AF8D8C00713146 /* libxml2.tbd */; };
 		777A0E5024AF8D9300713146 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E4F24AF8D9300713146 /* libiconv.tbd */; };
 		777A0E5224AF8D9A00713146 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E5124AF8D9A00713146 /* libc++.tbd */; };
@@ -215,7 +213,6 @@
 		774321E624AA705A00777C0A /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		774321E824AA9A0E00777C0A /* IMDBDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IMDBDataProvider.swift; sourceTree = "<group>"; };
 		774321EA24AA9A7000777C0A /* EZTVDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EZTVDataProvider.swift; sourceTree = "<group>"; };
-		774321EC24AB3C4600777C0A /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		7748DC7424AE38EA00AC5095 /* MediaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MediaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7748DC7624AE38EA00AC5095 /* MediaKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaKit.h; sourceTree = "<group>"; };
 		7748DC7724AE38EA00AC5095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -228,7 +225,6 @@
 		7748DCE224AE728700AC5095 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
 		7748DCE924AE7EF600AC5095 /* output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
 		7748DCEA24AE7EF600AC5095 /* input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
-		7748DCEB24AF768700AC5095 /* SearchBarTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarTV.swift; sourceTree = "<group>"; };
 		776FD9F622C3B43800CD7CEB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		777A0E4D24AF8D8C00713146 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libxml2.tbd; sourceTree = DEVELOPER_DIR; };
 		777A0E4F24AF8D9300713146 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
@@ -520,7 +516,6 @@
 			isa = PBXGroup;
 			children = (
 				7748DCB424AE702E00AC5095 /* AppDelegate.swift */,
-				7748DCEB24AF768700AC5095 /* SearchBarTV.swift */,
 				773A410124AF9462002E75CD /* Resources */,
 				7748DCC024AE703000AC5095 /* Info.plist */,
 			);
@@ -542,7 +537,6 @@
 				772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */,
 				772CEA0922DDFC47000CD2BD /* FileRow.swift */,
 				772CEA0B22DDFC4D000CD2BD /* FileRowModel.swift */,
-				774321EC24AB3C4600777C0A /* SearchBar.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -823,7 +817,6 @@
 				772CEA0622DDFC38000CD2BD /* FilesView.swift in Sources */,
 				7748DCA924AE3C9000AC5095 /* File+PreviewItem.swift in Sources */,
 				772CEA0822DDFC41000CD2BD /* FilesViewModel.swift in Sources */,
-				774321ED24AB3C4600777C0A /* SearchBar.swift in Sources */,
 				77E4CA0824AB747500C21354 /* SearchRow.swift in Sources */,
 				7748DCAB24AE4E1900AC5095 /* File+UTI.swift in Sources */,
 				772CEA0A22DDFC47000CD2BD /* FileRow.swift in Sources */,
@@ -871,7 +864,6 @@
 				7748DCD324AE70A900AC5095 /* TorrentRowModel.swift in Sources */,
 				7748DCD124AE70A900AC5095 /* TorrentsViewModel.swift in Sources */,
 				7748DCD624AE70A900AC5095 /* FileRow.swift in Sources */,
-				7748DCEC24AF768700AC5095 /* SearchBarTV.swift in Sources */,
 				7748DCC724AE70A900AC5095 /* File.swift in Sources */,
 				7748DCD024AE70A900AC5095 /* TorrentsView.swift in Sources */,
 				7748DCD524AE70A900AC5095 /* FilesViewModel.swift in Sources */,
@@ -981,14 +973,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TVOS_DEPLOYMENT_TARGET = 14.0;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 			};
 			name = Debug;
 		};
@@ -1038,13 +1030,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				TVOS_DEPLOYMENT_TARGET = 14.0;
+				TVOS_DEPLOYMENT_TARGET = 15.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

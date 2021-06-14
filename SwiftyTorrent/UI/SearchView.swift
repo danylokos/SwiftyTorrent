@@ -12,39 +12,21 @@ struct SearchView: View {
     
     @ObservedObject var model: SearchViewModel
     
-    #if os(iOS)
     var body: some View {
         NavigationView {
-            VStack {
-                SearchBar(text: $model.searchText, placeholder: "Seach EZTV...")
-                List {
-                    ForEach(model.data, id: \.title) { item in
-                        SearchRow(model: item) {
-                            print("select: \(item.title)")
-                            self.model.select(item)
-                        }
-                    }
-                }.listStyle(PlainListStyle())
-            }.navigationBarTitle(Text("Search"))
-        }
-    }
-    #elseif os(tvOS)
-    var body: some View {
-        NavigationView {
-            VStack {
-                SearchBarTV(text: $model.searchText, placeholder: "Seach EZTV...")
-                List {
-                    ForEach(model.data, id: \.title) { item in
-                        SearchRow(model: item) {
-                            print("select: \(item.title)")
-                            self.model.select(item)
-                        }
+            List {
+                ForEach(model.data, id: \.title) { item in
+                    SearchRow(model: item) {
+                        print("select: \(item.title)")
+                        self.model.select(item)
                     }
                 }
-            }.navigationBarTitle(Text("Search"))
+            }
+            .listStyle(PlainListStyle())
+            .searchable("Search...", text: $model.searchText)
+            .navigationBarTitle("Search")
         }
     }
-    #endif
 
 }
 

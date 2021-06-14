@@ -17,11 +17,12 @@ struct SearchRow: View {
         Button(action: action) {
             VStack(alignment: .leading) {
                 Text(model.title)
-                    .font(Font.system(size: 16))
+                    .font(Font.headline)
                     .bold()
+                    .lineLimit(2)
                 Spacer(minLength: 5)
-                Text("\(model.size), \(model.status)")
-                    .font(Font.system(size: 14))
+                Text("\(model.size), \(model.details)")
+                    .font(Font.subheadline)
             }
         }
     }

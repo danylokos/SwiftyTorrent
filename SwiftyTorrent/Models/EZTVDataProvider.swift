@@ -6,17 +6,20 @@
 //  Copyright © 2020 Danylo Kostyshyn. All rights reserved.
 //
 
+//swiftlint:disable nesting
+
 import Foundation
 import Combine
 
 protocol SearchDataItem {
-    
+    var id: String { get }
     var title: String { get }
     var sizeBytes: UInt64 { get }
     var size: String { get }
-    var status: String { get }
+    var episodeInfo: String? { get }
+    var peersStatus: String { get }
     var magnetURL: URL { get }
-    
+    var details: String { get }
 }
 
 extension EZTVDataProvider.Response.Torrent: SearchDataItem {
@@ -26,13 +29,24 @@ extension EZTVDataProvider.Response.Torrent: SearchDataItem {
         formatter.countStyle = .binary
         return formatter
     }()
-
+    
+    var id: String { magnetURL.absoluteString }
+    
     var size: String {
-        return EZTVDataProvider.Response.Torrent.byteCountFormatter.string(fromByteCount: Int64(sizeBytes))
+        EZTVDataProvider.Response.Torrent.byteCountFormatter.string(fromByteCount: Int64(sizeBytes))
     }
-
-    var status: String {
-        return "seeds: \(seeds), peers: \(peers)"
+    
+    var episodeInfo: String? {
+        guard let s = Int(season), let e = Int(episode) else { return nil }
+        return String(format: "s%02de%02d", s, e)
+    }
+    
+    var peersStatus: String { "seeds: \(seeds), peers: \(peers)" }
+    
+    var details: String {
+        [episodeInfo, size, peersStatus]
+            .compactMap { $0 }
+            .joined(separator: ", ")
     }
     
 }
@@ -42,19 +56,22 @@ final class EZTVDataProvider {
     static let shared = EZTVDataProvider()
     
     private let urlSession: URLSession = URLSession.shared
-    private let endpointURL = URL(string: "https://eztv.io/api/")!
+    private let endpointURL = URL(string: "https://eztv.re/api/")!
     
     func fetchTorrents(imdbId: String, limit: Int = 100, page: Int = 1) -> AnyPublisher<[SearchDataItem], Error> {
         let requestURL = URL(string: endpointURL.absoluteString +
-            "get-torrents?limit=\(limit)&page=\(page)&imdb_id=\(imdbId)"
-            )!
+                             "get-torrents?" +
+                             "limit=\(limit)&" +
+                             "page=\(page)&" +
+                             "imdb_id=\(imdbId)"
+        )!
         return urlSession
             .dataTaskPublisher(for: requestURL)
             .tryMap({ data, response -> Data in
                 guard let httpResponse = response as? HTTPURLResponse,
-                    httpResponse.statusCode == 200 else {
-                        throw URLError(.badServerResponse)
-                }
+                      httpResponse.statusCode == 200 else {
+                          throw URLError(.badServerResponse)
+                      }
                 return data
             })
             .decode(type: Response.self, decoder: JSONDecoder())
@@ -70,7 +87,6 @@ extension EZTVDataProvider {
     
     struct Response: Decodable {
         
-        //swiftlint:disable:next nesting
         enum CodingKeys: String, CodingKey {
             case imdbId = "imdb_id"
             case torrentsCount = "torrents_count"
@@ -86,18 +102,17 @@ extension EZTVDataProvider {
         let torrents: [Torrent]
         
         init(from decoder: Decoder) throws {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            imdbId = try values.decode(String.self, forKey: .imdbId)
-            torrentsCount = try values.decode(Int.self, forKey: .torrentsCount)
-            limit = try values.decode(Int.self, forKey: .limit)
-            page = try values.decode(Int.self, forKey: .page)
-            torrents = try values.decode([Torrent].self, forKey: .torrents)
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            imdbId = try container.decode(String.self, forKey: .imdbId)
+            torrentsCount = try container.decode(Int.self, forKey: .torrentsCount)
+            limit = try container.decode(Int.self, forKey: .limit)
+            page = try container.decode(Int.self, forKey: .page)
+            var itemsContainer = try container.nestedUnkeyedContainer(forKey: .torrents)
+            torrents = try itemsContainer.deocdeItems(ofType: Torrent.self)
         }
         
-        //swiftlint:disable:next nesting
         struct Torrent: Decodable, CustomDebugStringConvertible {
             
-            //swiftlint:disable:next nesting
             enum CodingKeys: String, CodingKey {
                 case id
                 case hash
@@ -134,31 +149,27 @@ extension EZTVDataProvider {
 //            let releaseDate: TimeInterval
             let sizeBytes: UInt64
             
-            var se: String {
-                return String(format: "s%2de%2d", Int(season) ?? 0, Int(episode) ?? 0)
-            }
-            
             var debugDescription: String {
                 return title
             }
             
             init(from decoder: Decoder) throws {
-                let values = try decoder.container(keyedBy: CodingKeys.self)
-                if let rawValue = try? values.decode(String.self, forKey: .torrentURL),
-                    let encodedValue = rawValue.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
-                    let URL = URL(string: encodedValue) {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                if let rawValue = try? container.decode(String.self, forKey: .torrentURL),
+                   let encodedValue = rawValue.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed),
+                   let URL = URL(string: encodedValue) {
                     torrentURL = URL
                 } else {
                     throw "Bad torrentURL"
                 }
-                magnetURL = try values.decode(URL.self, forKey: .magnetURL)
-                title = try values.decode(String.self, forKey: .title)
-                season = try values.decode(String.self, forKey: .season)
-                episode = try values.decode(String.self, forKey: .episode)
-                seeds = try values.decode(Int.self, forKey: .seeds)
-                peers = try values.decode(Int.self, forKey: .peers)
-                if let rawValue = try? values.decode(String.self, forKey: .sizeBytes),
-                    let value = UInt64(rawValue) {
+                magnetURL = try container.decode(URL.self, forKey: .magnetURL)
+                title = try container.decode(String.self, forKey: .title)
+                season = try container.decode(String.self, forKey: .season)
+                episode = try container.decode(String.self, forKey: .episode)
+                seeds = try container.decode(Int.self, forKey: .seeds)
+                peers = try container.decode(Int.self, forKey: .peers)
+                if let rawValue = try? container.decode(String.self, forKey: .sizeBytes),
+                   let value = UInt64(rawValue) {
                     sizeBytes = value
                 } else {
                     throw "Bad sizeBytes"
@@ -167,4 +178,25 @@ extension EZTVDataProvider {
             
         }
     }
+}
+
+struct AnyDecodable: Decodable { }
+
+extension UnkeyedDecodingContainer {
+    
+    mutating func deocdeItems<T: Decodable>(ofType type: T.Type) throws -> [T] {
+        var items = [T]()
+        while !isAtEnd {
+            do {
+                let item = try decode(type)
+                items.append(item)
+            } catch let error {
+                print("Failed to decode item: \(error)")
+                // Skip item
+                _ = try decode(AnyDecodable.self)
+            }
+        }
+        return items
+    }
+    
 }

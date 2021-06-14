@@ -77,7 +77,6 @@
 		77F5049A22C0D2A400CF042B /* assert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F5040522C0D2A400CF042B /* assert.cpp */; };
 		77F5049B22C0D2A400CF042B /* disk_buffer_holder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F5040622C0D2A400CF042B /* disk_buffer_holder.cpp */; };
 		77F5049C22C0D2A400CF042B /* proxy_settings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F5040722C0D2A400CF042B /* proxy_settings.cpp */; };
-		77F5049D22C0D2A400CF042B /* ConvertUTF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F5040822C0D2A400CF042B /* ConvertUTF.cpp */; };
 		77F5049E22C0D2A400CF042B /* disk_job_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F5040922C0D2A400CF042B /* disk_job_pool.cpp */; };
 		77F5049F22C0D2A400CF042B /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F5040A22C0D2A400CF042B /* sha1.cpp */; };
 		77F504A022C0D2A400CF042B /* ffs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 77F5040B22C0D2A400CF042B /* ffs.cpp */; };
@@ -247,7 +246,6 @@
 		77F5040522C0D2A400CF042B /* assert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = assert.cpp; sourceTree = "<group>"; };
 		77F5040622C0D2A400CF042B /* disk_buffer_holder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = disk_buffer_holder.cpp; sourceTree = "<group>"; };
 		77F5040722C0D2A400CF042B /* proxy_settings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = proxy_settings.cpp; sourceTree = "<group>"; };
-		77F5040822C0D2A400CF042B /* ConvertUTF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvertUTF.cpp; sourceTree = "<group>"; };
 		77F5040922C0D2A400CF042B /* disk_job_pool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = disk_job_pool.cpp; sourceTree = "<group>"; };
 		77F5040A22C0D2A400CF042B /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sha1.cpp; sourceTree = "<group>"; };
 		77F5040B22C0D2A400CF042B /* ffs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ffs.cpp; sourceTree = "<group>"; };
@@ -383,7 +381,6 @@
 				77F503E222C0D2A400CF042B /* chained_buffer.cpp */,
 				77F503C222C0D2A400CF042B /* choker.cpp */,
 				77F5041F22C0D2A400CF042B /* close_reason.cpp */,
-				77F5040822C0D2A400CF042B /* ConvertUTF.cpp */,
 				77F5045122C0D2A400CF042B /* cpuid.cpp */,
 				77F5045322C0D2A400CF042B /* crc32c.cpp */,
 				77F503D422C0D2A400CF042B /* create_torrent.cpp */,
@@ -760,7 +757,6 @@
 				77F5049722C0D2A400CF042B /* routing_table.cpp in Sources */,
 				77F5046F22C0D2A400CF042B /* sha1_hash.cpp in Sources */,
 				77F5045622C0D2A400CF042B /* request_blocks.cpp in Sources */,
-				77F5049D22C0D2A400CF042B /* ConvertUTF.cpp in Sources */,
 				77F504AF22C0D2A400CF042B /* web_connection_base.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

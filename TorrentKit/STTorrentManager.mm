@@ -55,7 +55,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
 @interface STTorrentManager () {
     lt::session *_session;
 }
-@property (strong, nonatomic) dispatch_queue_t eventsQueue;
+@property (strong, nonatomic) NSThread *eventsThread;
 @property (strong, nonatomic) dispatch_queue_t filesQueue;
 @property (strong, nonatomic) NSHashTable *delegates;
 
@@ -79,7 +79,6 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     if (self) {
         _session = new lt::session();
         _session->set_alert_mask(lt::alert::all_categories);
-        _eventsQueue = dispatch_queue_create(STEventsQueueIdentifier, DISPATCH_QUEUE_SERIAL);
         _filesQueue = dispatch_queue_create(STFileEntriesQueueIdentifier, DISPATCH_QUEUE_SERIAL);
         _delegates = [NSHashTable weakObjectsHashTable];
         
@@ -87,9 +86,10 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
         [self restoreSession];
         
         // start alerts loop
-        dispatch_async(_eventsQueue, ^{
-            [self alertsLoop];
-        });
+        _eventsThread = [[NSThread alloc] initWithTarget:self selector:@selector(alertsLoop) object:nil];
+        [_eventsThread setName:[NSString stringWithUTF8String:STEventsQueueIdentifier]];
+        [_eventsThread setQualityOfService:NSQualityOfServiceDefault];
+        [_eventsThread start];
     }
     return self;
 }
@@ -248,15 +248,21 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     return [NSURL fileURLWithPath:[self downloadsDirPath] isDirectory:YES];
 }
 
+- (NSString *)storageDirPath {
+#if TARGET_OS_IOS
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+#elif TARGET_OS_TV
+    return [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+#endif
+}
+
 - (NSString *)downloadsDirPath {
-    NSString *documentsDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *downloadsDirPath = [documentsDirPath stringByAppendingPathComponent:@"Downloads"];
+    NSString *downloadsDirPath = [[self storageDirPath] stringByAppendingPathComponent:@"Downloads"];
     return downloadsDirPath;
 }
 
 - (NSString *)torrentsDirPath {
-    NSString *documentsDirPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSString *torrentsDirPath = [documentsDirPath stringByAppendingPathComponent:@"torrents"];
+    NSString *torrentsDirPath = [[self storageDirPath] stringByAppendingPathComponent:@"torrents"];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:torrentsDirPath];
     if (!fileExists) {
         NSError *error;
@@ -431,11 +437,15 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     return YES;
 }
 
-- (BOOL)removeTorrentWithInfoHash:(NSData *)infoHash {
+- (BOOL)removeTorrentWithInfoHash:(NSData *)infoHash deleteFiles:(BOOL)deleteFiles {
     lt::sha1_hash hash((const char *)infoHash.bytes);
     auto th = _session->find_torrent(hash);
     if (!th.is_valid()) { return NO; }
-    _session->remove_torrent(th);
+    if (deleteFiles) {
+        _session->remove_torrent(th, lt::session::delete_files);
+    } else {
+        _session->remove_torrent(th);
+    }
     return YES;
 }
 

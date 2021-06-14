@@ -7,8 +7,8 @@ Basic torrent client for iOS based on `libtorrent`, built using `SwiftUI` and `C
 
 ## Requirements
 
-- `Xcode 12.0`
-- `iOS 14.0`
+- `Xcode 13.0b1`
+- `iOS 15.0`
 
 ## Build
 

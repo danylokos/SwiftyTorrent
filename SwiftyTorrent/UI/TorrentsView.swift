@@ -23,9 +23,7 @@ struct LazyView<Content: View>: View {
 struct TorrentsView: View {
     
     @ObservedObject var model: TorrentsViewModel
-    
-    private let buttonTintColor = Color.blue
-    
+
     var body: some View {
         NavigationView {
             List {
@@ -33,40 +31,53 @@ struct TorrentsView: View {
                     ForEach(model.torrents, id: \.infoHash) { torrent in
                         NavigationLink(destination: LazyView(FilesView(model: torrent.directory))) {
                             TorrentRow(model: torrent)
-                        }
-                    }.onDelete { (indexSet) in
-                        for index in indexSet {
-                            let torrent = self.model.torrents[index]
-                            self.model.remove(torrent)
+                        }.contextMenu {
+                            Button(role: .destructive) { model.remove(torrent) } label: {
+                                Label("Remove torrent", systemImage: "trash")
+                            }
+                            Button(role: .destructive) { model.remove(torrent, deleteFiles: true) } label: {
+                                Label("Remove all data", systemImage: "trash")
+                            }
                         }
                     }
                 }
-                #if DEBUG
+                #if DEBUG && targetEnvironment(simulator)
                 Section(header: Text("Debug")) {
                     Button("Add test torrent files") {
-                        self.model.addTestTorrentFiles()
-                    }.foregroundColor(buttonTintColor)
+                        model.addTestTorrentFiles()
+                    }
                     Button("Add test magnet links") {
-                        self.model.addTestMagnetLinks()
-                    }.foregroundColor(buttonTintColor)
+                        model.addTestMagnetLinks()
+                    }
                     Button("Add all test torrents") {
-                        self.model.addTestTorrents()
-                    }.foregroundColor(buttonTintColor)
-                }
+                        model.addTestTorrents()
+                    }
+                }.buttonStyle(BlueButton())
                 #endif
-            }.navigationBarTitle(Text("Torrents"))
-        }.alert(isPresented: model.isPresentingAlert) { () -> Alert in
+            }.listStyle(PlainListStyle())
+                .navigationBarTitle("Torrents")
+        }
+        .alert(isPresented: model.isPresentingAlert) { () -> Alert in
             Alert(error: model.activeError!)
         }
     }
-    
+
+}
+
+struct BlueButton: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .foregroundColor(.blue)
+    }
 }
 
 extension Alert {
     init(error: Error) {
-        self = Alert(title: Text("Error"),
-                     message: Text(error.localizedDescription),
-                     dismissButton: .default(Text("OK")))
+        self = Alert(
+            title: Text("Error"),
+            message: Text(error.localizedDescription),
+            dismissButton: .default(Text("OK"))
+        )
     }
 }
 
