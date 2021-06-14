@@ -6,6 +6,8 @@
 //  Copyright © 2020 Danylo Kostyshyn. All rights reserved.
 //
 
+//swiftlint:disable nesting
+
 import Foundation
 import Combine
 
@@ -58,7 +60,6 @@ extension IMDBDataProvider {
     
     struct Response: Decodable {
         
-        //swiftlint:disable:next nesting
         enum CodingKeys: String, CodingKey {
             case version = "v"
             case query = "q"
@@ -76,10 +77,8 @@ extension IMDBDataProvider {
             data = try values.decode([DataItem].self, forKey: .data)
         }
         
-        //swiftlint:disable:next nesting
         struct DataItem: Decodable {
             
-            //swiftlint:disable:next nesting
             enum CodingKeys: String, CodingKey {
                 case label = "l"
                 case id = "id"
