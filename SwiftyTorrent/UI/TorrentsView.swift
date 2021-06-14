@@ -38,7 +38,7 @@ struct TorrentsView: View {
                             Button(role: .destructive) { model.remove(torrent, deleteFiles: true) } label: {
                                 Label("Remove all data", systemImage: "trash")
                             }
-                        }
+                        }.disabled(!torrent.hasMetadata)
                     }
                 }
                 #if DEBUG && targetEnvironment(simulator)
