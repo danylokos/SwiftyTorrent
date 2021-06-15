@@ -54,8 +54,10 @@ struct TorrentsView: View {
                     }
                 }.buttonStyle(BlueButton())
                 #endif
-            }.listStyle(PlainListStyle())
-                .navigationBarTitle("Torrents")
+            }
+            .refreshable { model.reloadData() }
+            .listStyle(PlainListStyle())
+            .navigationBarTitle("Torrents")
         }
         .alert(isPresented: model.isPresentingAlert) { () -> Alert in
             Alert(error: model.activeError!)

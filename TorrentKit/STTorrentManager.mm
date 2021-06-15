@@ -437,10 +437,22 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     return YES;
 }
 
+- (void)removeStoredTorrentOrMagnet:(lt::torrent_handle)th {
+    // Remove stored torrent
+    auto ti = th.torrent_file();
+    [self removeTorrentFileWithInfo:ti];
+    auto ih = th.info_hash();
+    [self removeMagnetURIWithHash:ih];
+}
+
 - (BOOL)removeTorrentWithInfoHash:(NSData *)infoHash deleteFiles:(BOOL)deleteFiles {
     lt::sha1_hash hash((const char *)infoHash.bytes);
     auto th = _session->find_torrent(hash);
     if (!th.is_valid()) { return NO; }
+    
+    [self removeStoredTorrentOrMagnet:th];
+    
+    // Remove torrrent from session
     if (deleteFiles) {
         _session->remove_torrent(th, lt::session::delete_files);
     } else {
@@ -453,13 +465,17 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     auto handles = _session->get_torrents();
     for (auto it = handles.begin(); it != handles.end(); ++it) {
         auto th = (*it);
+        
+        [self removeStoredTorrentOrMagnet:th];
+        
+        // Remove torrrent from session
         if (deleteFiles) {
             _session->remove_torrent(th, lt::session::delete_files);
         } else {
             _session->remove_torrent(th);
         }
     }
-    return YES;;
+    return YES;
 }
 
 - (void)openURL:(NSURL *)URL {
