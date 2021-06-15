@@ -98,6 +98,10 @@
 		777A0E6A24AF8DF500713146 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E6924AF8DF500713146 /* CFNetwork.framework */; };
 		777A0E6C24AF8DFC00713146 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E6B24AF8DFC00713146 /* AudioToolbox.framework */; };
 		777A0E6E24AF8E0200713146 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E6D24AF8E0200713146 /* AVFoundation.framework */; };
+		77AD95432678CAEF00B57B0B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95422678CAEF00B57B0B /* SettingsView.swift */; };
+		77AD95442678CAEF00B57B0B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95422678CAEF00B57B0B /* SettingsView.swift */; };
+		77AD95472678CAFB00B57B0B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95462678CAFB00B57B0B /* SettingsViewModel.swift */; };
+		77AD95482678CAFB00B57B0B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95462678CAFB00B57B0B /* SettingsViewModel.swift */; };
 		77D8122522CA336A001CA13E /* TorrentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D8122422CA336A001CA13E /* TorrentsView.swift */; };
 		77E4CA0824AB747500C21354 /* SearchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4CA0724AB747500C21354 /* SearchRow.swift */; };
 		77FC2AF422D896F100A544AA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC2AF322D896F100A544AA /* AppCoordinator.swift */; };
@@ -243,6 +247,8 @@
 		777A0E6924AF8DF500713146 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		777A0E6B24AF8DFC00713146 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		777A0E6D24AF8E0200713146 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		77AD95422678CAEF00B57B0B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		77AD95462678CAFB00B57B0B /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		77D8122422CA336A001CA13E /* TorrentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentsView.swift; sourceTree = "<group>"; };
 		77E4CA0724AB747500C21354 /* SearchRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRow.swift; sourceTree = "<group>"; };
 		77ED892324ACE20700D499DD /* QLViewHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QLViewHost.swift; sourceTree = "<group>"; };
@@ -526,17 +532,19 @@
 			isa = PBXGroup;
 			children = (
 				774321E224AA58F600777C0A /* MainView.swift */,
-				774321E424AA5BBA00777C0A /* SearchView.swift */,
-				774321E624AA705A00777C0A /* SearchViewModel.swift */,
-				77E4CA0724AB747500C21354 /* SearchRow.swift */,
 				77D8122422CA336A001CA13E /* TorrentsView.swift */,
 				7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */,
 				7703512122DA513B00A9CC84 /* TorrentRow.swift */,
 				7729BDB222D8B38300D02566 /* TorrentRowModel.swift */,
+				774321E424AA5BBA00777C0A /* SearchView.swift */,
+				774321E624AA705A00777C0A /* SearchViewModel.swift */,
+				77E4CA0724AB747500C21354 /* SearchRow.swift */,
 				772CEA0522DDFC38000CD2BD /* FilesView.swift */,
 				772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */,
 				772CEA0922DDFC47000CD2BD /* FileRow.swift */,
 				772CEA0B22DDFC4D000CD2BD /* FileRowModel.swift */,
+				77AD95422678CAEF00B57B0B /* SettingsView.swift */,
+				77AD95462678CAFB00B57B0B /* SettingsViewModel.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -802,6 +810,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				773FF94E22C10278008D58E4 /* AppDelegate.swift in Sources */,
+				77AD95472678CAFB00B57B0B /* SettingsViewModel.swift in Sources */,
 				774321E324AA58F600777C0A /* MainView.swift in Sources */,
 				774321E724AA705A00777C0A /* SearchViewModel.swift in Sources */,
 				774321D624AA4A0E00777C0A /* File.swift in Sources */,
@@ -822,6 +831,7 @@
 				772CEA0A22DDFC47000CD2BD /* FileRow.swift in Sources */,
 				774321E924AA9A0E00777C0A /* IMDBDataProvider.swift in Sources */,
 				772CEA0C22DDFC4D000CD2BD /* FileRowModel.swift in Sources */,
+				77AD95432678CAEF00B57B0B /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -853,6 +863,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77AD95442678CAEF00B57B0B /* SettingsView.swift in Sources */,
 				7748DCCE24AE70A900AC5095 /* SearchViewModel.swift in Sources */,
 				7748DCCD24AE70A900AC5095 /* SearchView.swift in Sources */,
 				7748DCD424AE70A900AC5095 /* FilesView.swift in Sources */,
@@ -871,6 +882,7 @@
 				7748DCC624AE70A900AC5095 /* Torrent+Files.swift in Sources */,
 				7748DCB524AE702E00AC5095 /* AppDelegate.swift in Sources */,
 				7748DCCB24AE70A900AC5095 /* EZTVDataProvider.swift in Sources */,
+				77AD95482678CAFB00B57B0B /* SettingsViewModel.swift in Sources */,
 				7748DCD724AE70A900AC5095 /* FileRowModel.swift in Sources */,
 				7748DCD224AE70A900AC5095 /* TorrentRow.swift in Sources */,
 			);

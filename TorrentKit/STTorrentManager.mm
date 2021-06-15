@@ -449,6 +449,19 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     return YES;
 }
 
+- (BOOL)removeAllTorrentsWithFiles:(BOOL)deleteFiles {
+    auto handles = _session->get_torrents();
+    for (auto it = handles.begin(); it != handles.end(); ++it) {
+        auto th = (*it);
+        if (deleteFiles) {
+            _session->remove_torrent(th, lt::session::delete_files);
+        } else {
+            _session->remove_torrent(th);
+        }
+    }
+    return YES;;
+}
+
 - (void)openURL:(NSURL *)URL {
     if (URL.isFileURL) {
         BOOL success = [URL startAccessingSecurityScopedResource];
