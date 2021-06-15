@@ -14,7 +14,7 @@ NS_SWIFT_NAME(FileEntry)
 @interface STFileEntry : NSObject
 @property (readonly, strong, nonatomic) NSString *name;
 @property (readonly, strong, nonatomic) NSString *path;
-@property (readonly, nonatomic) NSUInteger size;
+@property (readonly, nonatomic) uint64_t size;
 @end
 
 NS_ASSUME_NONNULL_END

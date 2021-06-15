@@ -35,7 +35,7 @@ struct FilesView: View {
         #endif
         .fullScreenCover(item: $selectedItem) { item in
             Group {
-                if item.isVideo() {
+                if item.isVideo {
                     VLCViewHost(previewItem: item)
                 } else {
                     #if os(iOS)

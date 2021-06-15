@@ -15,7 +15,7 @@ extension File {
         return URL(fileURLWithPath: path).pathExtension
     }
         
-    func isVideo() -> Bool {
+    var isVideo: Bool {
         // Special handling for 'mkv' container
         switch fileExtension {
         case "mkv": return true

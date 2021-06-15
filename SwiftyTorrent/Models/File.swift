@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TorrentKit
 
 protocol FileProtocol: FileRowModel {
 
@@ -20,25 +21,20 @@ protocol FileProtocol: FileRowModel {
 
 extension FileProtocol {
     
-    var title: String {
-        return name
-    }
+    var title: String { name }
 
 }
 
 public class File: NSObject, FileProtocol {
-    
-//    var id: String {
-//        return path
-//    }
 
     let name: String
-    
     let path: String
+    var sizeDetails: String?
     
-    init(name: String, path: String) {
+    init(name: String, path: String, size: UInt64) {
         self.name = name
         self.path = path
+        self.sizeDetails = ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
     }
     
     public override var description: String {
@@ -59,14 +55,10 @@ extension File: Identifiable {
 
 public class Directory: FileProtocol, CustomStringConvertible {
     
-//    var id: String {
-//        return path
-//    }
-
     let name: String
-    
     let path: String
-    
+    var sizeDetails: String?
+
     var files: [FileProtocol]
     
     var allSubDirectories: [Directory] {
@@ -108,16 +100,17 @@ public class Directory: FileProtocol, CustomStringConvertible {
         }
     }
     
-    class func directory(from filePaths: [String]) -> Directory {
+    class func directory(from fileEntries: [FileEntry]) -> Directory {
         let rootDir = Directory(name: "/", path: "")
-        for filePath in filePaths {
+        for fileEntry in fileEntries {
             var lastDir = rootDir
+            let filePath = fileEntry.path
             let components = filePath.components(separatedBy: "/")
             for (idx, component) in components.enumerated() {
                 let isLast = (idx == components.count - 1)
                 let path = lastDir.path + "/" + component
                 if isLast {
-                    let file = File(name: component, path: path)
+                    let file = File(name: component, path: path, size: fileEntry.size)
                     lastDir.files.append(file)
                 } else {
                     var dir: Directory! = lastDir.files.first(where: { $0.name == component }) as? Directory
