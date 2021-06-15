@@ -29,14 +29,8 @@ extension FileEntry: FileRowModel {
         return path
     }
     
-    private static var byteCountFormatter: ByteCountFormatter = {
-        let formatter = ByteCountFormatter()
-        formatter.countStyle = .file
-        return formatter
-    }()
-    
     var sizeDetails: String {
-        return FileEntry.byteCountFormatter.string(fromByteCount: Int64(size))
+        return ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
     }
     
 }

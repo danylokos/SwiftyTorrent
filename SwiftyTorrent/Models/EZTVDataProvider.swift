@@ -24,16 +24,10 @@ protocol SearchDataItem {
 
 extension EZTVDataProvider.Response.Torrent: SearchDataItem {
     
-    private static var byteCountFormatter: ByteCountFormatter = {
-        let formatter = ByteCountFormatter()
-        formatter.countStyle = .binary
-        return formatter
-    }()
-    
     var id: String { magnetURL.absoluteString }
     
     var size: String {
-        EZTVDataProvider.Response.Torrent.byteCountFormatter.string(fromByteCount: Int64(sizeBytes))
+        ByteCountFormatter.string(fromByteCount: Int64(sizeBytes), countStyle: .binary)
     }
     
     var episodeInfo: String? {
