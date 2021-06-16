@@ -38,7 +38,7 @@ Downloads can be found at:
 
 - file details screen
 - per file prioritization
-- pieces prioritization logic for video streaming
+- ~~pieces prioritization logic for video streaming~~
 - ~~option to remove downloaded files when removing torrent~~
 - proper event/error handling
 - ~~quick look~~

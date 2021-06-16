@@ -35,6 +35,7 @@
 
 - (void)configureAddTorrentParams:(void *)params {
     lt::add_torrent_params *_params = (lt::add_torrent_params *)params;
+    _params->flags |= libtorrent::torrent_flags::sequential_download;
     lt::error_code ec;
     lt::string_view uri = lt::string_view([self.magnetURI.absoluteString UTF8String]);
     lt::parse_magnet_uri(uri, (*_params), ec);

@@ -37,6 +37,7 @@
     lt::add_torrent_params *_params = (lt::add_torrent_params *)params;
     lt::torrent_info ti = [self torrent_info];
     _params->ti = std::make_shared<lt::torrent_info>(ti);
+    _params->flags |= libtorrent::torrent_flags::sequential_download;
 }
 
 #pragma mark - Test torrents
