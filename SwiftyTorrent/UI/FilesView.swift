@@ -50,7 +50,9 @@ struct FilesView: View {
                     #endif
                 }
                 .navigationBarItems(leading: Button("Done") { selectedItem = nil })
+                #if os(iOS)
                 .navigationBarTitle(item.name, displayMode: .inline)
+                #endif
             }
         }
         .fullScreenCover(item: $selectedVideo) { item in
