@@ -38,15 +38,16 @@ public struct QLViewHost: UIViewControllerRepresentable {
     }
     
     public typealias Context = UIViewControllerRepresentableContext<QLViewHost>
+    public typealias Controller = QLPreviewController
     
-    public func makeUIViewController(context: Context) -> QLPreviewController {
+    public func makeUIViewController(context: Context) -> Controller {
         let controller = QLPreviewController()
         controller.dataSource = context.coordinator
         controller.delegate = context.coordinator
         return controller
     }
     
-    public func updateUIViewController(_ uiViewController: QLPreviewController, context: Context) {
+    public func updateUIViewController(_ uiViewController: Controller, context: Context) {
         uiViewController.dataSource = context.coordinator
         uiViewController.delegate = context.coordinator
     }
