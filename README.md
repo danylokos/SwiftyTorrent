@@ -3,6 +3,8 @@
 
 Basic torrent client for iOS based on `libtorrent`, built using `SwiftUI` and `Combine`.
 
+List of public domain torrents can be found [here](https://webtorrent.io/free-torrents) (by WebTorrent)
+
 ![1](Screenshots/1.png)
 
 ## Requirements
@@ -37,7 +39,7 @@ Downloads can be found at:
 - file details screen
 - per file prioritization
 - pieces prioritization logic for video streaming
-- option to remove downloaded files when removing torrent
+- ~~option to remove downloaded files when removing torrent~~
 - proper event/error handling
 - ~~quick look~~
 - ~~integrate VLC player for video playback~~

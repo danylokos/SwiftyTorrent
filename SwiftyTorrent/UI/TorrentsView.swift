@@ -41,7 +41,7 @@ struct TorrentsView: View {
                         }.disabled(!torrent.hasMetadata)
                     }
                 }
-                #if DEBUG && targetEnvironment(simulator)
+                #if DEBUG
                 Section(header: Text("Debug")) {
                     Button("Add test torrent files") {
                         model.addTestTorrentFiles()

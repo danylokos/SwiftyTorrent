@@ -18,7 +18,9 @@ NS_SWIFT_NAME(MagnetURI)
 
 - (instancetype)initWithMagnetURI:(NSURL *)magnetURI;
 
+#if DEBUG
 + (STMagnetURI *)test_1;
+#endif
 
 @end
 

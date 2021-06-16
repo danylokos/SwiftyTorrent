@@ -12,6 +12,7 @@
 		7723A22624AF8F1B007629A0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7723A22424AF8F1B007629A0 /* SystemConfiguration.framework */; };
 		7729BDB122D8B34D00D02566 /* TorrentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */; };
 		7729BDB322D8B38300D02566 /* TorrentRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7729BDB222D8B38300D02566 /* TorrentRowModel.swift */; };
+		772A28CB267A5EAC00F02174 /* Torrents.plist in Resources */ = {isa = PBXBuildFile; fileRef = 772A28CA267A5EAC00F02174 /* Torrents.plist */; };
 		772CEA0622DDFC38000CD2BD /* FilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0522DDFC38000CD2BD /* FilesView.swift */; };
 		772CEA0822DDFC41000CD2BD /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */; };
 		772CEA0A22DDFC47000CD2BD /* FileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0922DDFC47000CD2BD /* FileRow.swift */; };
@@ -41,9 +42,6 @@
 		774321D624AA4A0E00777C0A /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774321B624AA495700777C0A /* File.swift */; };
 		774321D724AA4A2300777C0A /* Torrent+Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774321B824AA495700777C0A /* Torrent+Files.swift */; };
 		774321D824AA4A4000777C0A /* libtorrent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 773FF97E22C10D06008D58E4 /* libtorrent.a */; };
-		774321DE24AA4E1D00777C0A /* ubuntu-16.04.6-server-amd64.iso.torrent in Resources */ = {isa = PBXBuildFile; fileRef = 771B700F22DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent */; };
-		774321DF24AA4E1D00777C0A /* ubuntu-18.04.2-live-server-amd64.iso.torrent in Resources */ = {isa = PBXBuildFile; fileRef = 771B700E22DA247F00132B5E /* ubuntu-18.04.2-live-server-amd64.iso.torrent */; };
-		774321E024AA4E1D00777C0A /* ubuntu-19.04-live-server-amd64.iso.torrent in Resources */ = {isa = PBXBuildFile; fileRef = 771B701022DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent */; };
 		774321E324AA58F600777C0A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774321E224AA58F600777C0A /* MainView.swift */; };
 		774321E524AA5BBA00777C0A /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774321E424AA5BBA00777C0A /* SearchView.swift */; };
 		774321E724AA705A00777C0A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 774321E624AA705A00777C0A /* SearchViewModel.swift */; };
@@ -175,12 +173,10 @@
 /* Begin PBXFileReference section */
 		7703512122DA513B00A9CC84 /* TorrentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentRow.swift; sourceTree = "<group>"; };
 		771B700522DA205D00132B5E /* uTorrent-320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uTorrent-320.png"; sourceTree = "<group>"; };
-		771B700E22DA247F00132B5E /* ubuntu-18.04.2-live-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-18.04.2-live-server-amd64.iso.torrent"; sourceTree = "<group>"; };
-		771B700F22DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-16.04.6-server-amd64.iso.torrent"; sourceTree = "<group>"; };
-		771B701022DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ubuntu-19.04-live-server-amd64.iso.torrent"; sourceTree = "<group>"; };
 		7723A22424AF8F1B007629A0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		7729BDB022D8B34D00D02566 /* TorrentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentsViewModel.swift; sourceTree = "<group>"; };
 		7729BDB222D8B38300D02566 /* TorrentRowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorrentRowModel.swift; sourceTree = "<group>"; };
+		772A28CA267A5EAC00F02174 /* Torrents.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Torrents.plist; sourceTree = "<group>"; };
 		772CEA0522DDFC38000CD2BD /* FilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesView.swift; sourceTree = "<group>"; };
 		772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewModel.swift; sourceTree = "<group>"; };
 		772CEA0922DDFC47000CD2BD /* FileRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRow.swift; sourceTree = "<group>"; };
@@ -310,16 +306,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		771B700722DA23BA00132B5E /* torrents */ = {
-			isa = PBXGroup;
-			children = (
-				771B700F22DA247F00132B5E /* ubuntu-16.04.6-server-amd64.iso.torrent */,
-				771B700E22DA247F00132B5E /* ubuntu-18.04.2-live-server-amd64.iso.torrent */,
-				771B701022DA247F00132B5E /* ubuntu-19.04-live-server-amd64.iso.torrent */,
-			);
-			path = torrents;
-			sourceTree = "<group>";
-		};
 		7723376322DB9331008ECD5F /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,7 +448,7 @@
 		774321DD24AA4C5F00777C0A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				771B700722DA23BA00132B5E /* torrents */,
+				772A28CA267A5EAC00F02174 /* Torrents.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -740,9 +726,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				774321E024AA4E1D00777C0A /* ubuntu-19.04-live-server-amd64.iso.torrent in Resources */,
-				774321DF24AA4E1D00777C0A /* ubuntu-18.04.2-live-server-amd64.iso.torrent in Resources */,
-				774321DE24AA4E1D00777C0A /* ubuntu-16.04.6-server-amd64.iso.torrent in Resources */,
+				772A28CB267A5EAC00F02174 /* Torrents.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
