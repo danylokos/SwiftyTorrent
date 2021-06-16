@@ -52,7 +52,10 @@ struct TorrentsView: View {
                     Button("Add all test torrents") {
                         model.addTestTorrents()
                     }
-                }.buttonStyle(BlueButton())
+                }
+                #if os(iOS)
+                .buttonStyle(BlueButton())
+                #endif
                 #endif
             }
             .refreshable { model.reloadData() }
