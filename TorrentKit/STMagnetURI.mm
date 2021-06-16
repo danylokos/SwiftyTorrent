@@ -13,6 +13,10 @@
 #import "libtorrent/magnet_uri.hpp"
 #import "libtorrent/string_view.hpp"
 
+#if DEBUG
+#import "STTorrentFile.h"
+#endif
+
 @interface STMagnetURI ()
 @property (readwrite, strong, nonatomic) NSURL *magnetURI;
 @end
@@ -31,6 +35,7 @@
 
 - (void)configureAddTorrentParams:(void *)params {
     lt::add_torrent_params *_params = (lt::add_torrent_params *)params;
+    _params->flags |= libtorrent::torrent_flags::sequential_download;
     lt::error_code ec;
     lt::string_view uri = lt::string_view([self.magnetURI.absoluteString UTF8String]);
     lt::parse_magnet_uri(uri, (*_params), ec);
@@ -41,9 +46,20 @@
 
 #pragma mark - Test magnet links
 
-+ (STMagnetURI *)test_1 {
-    NSURL *magentURI = [NSURL URLWithString:@"magnet:?xt=urn:btih:EC7E6E737992B0DDE17AA201F5F59128D1A1BDBA&dn=ubuntu-16.04.6-server-amd64.iso&tr=http%3a%2f%2ftorrent.ubuntu.com%3a6969%2fannounce&tr=http%3a%2f%2fipv6.torrent.ubuntu.com%3a6969%2fannounce"];
+#if DEBUG
++ (STMagnetURI *)testMagnetAtIndex:(NSUInteger)index {
+    NSArray *torrents = [STTorrentFile torrentsFromPlist];
+    NSArray *torrent = torrents[index];
+    
+    NSString *magnetLink = torrent[1];
+    NSURL *magentURI = [NSURL URLWithString:magnetLink];
     return [[STMagnetURI alloc] initWithMagnetURI:magentURI];
+
 }
+
++ (STMagnetURI *)test_1 {
+    return [self testMagnetAtIndex: 2];
+}
+#endif
 
 @end

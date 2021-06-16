@@ -38,10 +38,10 @@ struct TorrentsView: View {
                             Button(role: .destructive) { model.remove(torrent, deleteFiles: true) } label: {
                                 Label("Remove all data", systemImage: "trash")
                             }
-                        }
+                        }.disabled(!torrent.hasMetadata)
                     }
                 }
-                #if DEBUG && targetEnvironment(simulator)
+                #if DEBUG
                 Section(header: Text("Debug")) {
                     Button("Add test torrent files") {
                         model.addTestTorrentFiles()
@@ -54,8 +54,10 @@ struct TorrentsView: View {
                     }
                 }.buttonStyle(BlueButton())
                 #endif
-            }.listStyle(PlainListStyle())
-                .navigationBarTitle("Torrents")
+            }
+            .refreshable { model.reloadData() }
+            .listStyle(PlainListStyle())
+            .navigationBarTitle("Torrents")
         }
         .alert(isPresented: model.isPresentingAlert) { () -> Alert in
             Alert(error: model.activeError!)

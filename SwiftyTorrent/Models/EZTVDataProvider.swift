@@ -24,16 +24,10 @@ protocol SearchDataItem {
 
 extension EZTVDataProvider.Response.Torrent: SearchDataItem {
     
-    private static var byteCountFormatter: ByteCountFormatter = {
-        let formatter = ByteCountFormatter()
-        formatter.countStyle = .binary
-        return formatter
-    }()
-    
     var id: String { magnetURL.absoluteString }
     
     var size: String {
-        EZTVDataProvider.Response.Torrent.byteCountFormatter.string(fromByteCount: Int64(sizeBytes))
+        ByteCountFormatter.string(fromByteCount: Int64(sizeBytes), countStyle: .binary)
     }
     
     var episodeInfo: String? {
@@ -53,10 +47,12 @@ extension EZTVDataProvider.Response.Torrent: SearchDataItem {
 
 final class EZTVDataProvider {
     
-    static let shared = EZTVDataProvider()
+    static let endpoint = "https://eztv.re/api/"
     
+    static let shared = EZTVDataProvider()
+
     private let urlSession: URLSession = URLSession.shared
-    private let endpointURL = URL(string: "https://eztv.re/api/")!
+    private let endpointURL = URL(string: endpoint)!
     
     func fetchTorrents(imdbId: String, limit: Int = 20, page: Int = 1) -> AnyPublisher<[SearchDataItem], Error> {
         let requestURL = URL(string: endpointURL.absoluteString +

@@ -13,7 +13,7 @@ extension Torrent {
     private static var filesCache = [Data: [FileEntry]]()
     private static var dirsCache = [Data: Directory]()
     
-    var fileEntries: [FileEntry] {
+    private var fileEntries: [FileEntry] {
         if Torrent.filesCache[infoHash] == nil {
             Torrent.filesCache[infoHash] = TorrentManager.shared().filesForTorrent(withHash: infoHash)
         }
@@ -22,8 +22,7 @@ extension Torrent {
 
     var directory: Directory {
         if Torrent.dirsCache[infoHash] == nil {
-            let paths = fileEntries.map({ $0.path })
-            let dir = Directory.directory(from: paths)
+            let dir = Directory.directory(from: fileEntries)
            Torrent.dirsCache[infoHash] = dir
         }
         return Torrent.dirsCache[infoHash]!

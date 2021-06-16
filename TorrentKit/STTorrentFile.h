@@ -18,8 +18,11 @@ NS_SWIFT_NAME(TorrentFile)
 
 - (instancetype)initWithFileAtURL:(NSURL *)fileURL;
 
+#if DEBUG
++ (NSArray *)torrentsFromPlist;
 + (STTorrentFile *)test_1;
 + (STTorrentFile *)test_2;
+#endif
 
 @end
 

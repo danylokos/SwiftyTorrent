@@ -37,22 +37,42 @@
     lt::add_torrent_params *_params = (lt::add_torrent_params *)params;
     lt::torrent_info ti = [self torrent_info];
     _params->ti = std::make_shared<lt::torrent_info>(ti);
+    _params->flags |= libtorrent::torrent_flags::sequential_download;
 }
 
 #pragma mark - Test torrents
 
-+ (NSBundle *)currentBundle {
-    return [NSBundle bundleForClass:self];
+#if DEBUG
++ (NSArray *)torrentsFromPlist {
+    NSBundle *bundle = [NSBundle bundleForClass:self];
+    NSURL *plsitURL = [bundle URLForResource:@"Torrents.plist" withExtension:nil];
+    NSData *plistData = [NSData dataWithContentsOfURL:plsitURL options:0 error:nil];
+    NSDictionary *dict = [NSPropertyListSerialization propertyListWithData:plistData options:0 format:nil error:nil];
+    return dict[@"torrents"];
+}
+
++ (STTorrentFile *)testFileAtIndex:(NSUInteger)index {
+    NSArray *torrents = [self torrentsFromPlist];
+    NSArray *torrent = torrents[index];
+    
+    NSString *fileName = [torrent[0] stringByAppendingPathExtension:@"torrent"];
+    NSData *fileData = [[NSData alloc] initWithBase64EncodedString:torrent[2] options:0];
+
+    NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
+    NSString *filePath = [cacheDir stringByAppendingPathComponent:fileName];
+    [fileData writeToFile:filePath atomically:YES];
+    
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    return [[STTorrentFile alloc] initWithFileAtURL:fileURL];
 }
 
 + (STTorrentFile *)test_1 {
-    NSURL *fileURL = [[self currentBundle] URLForResource:@"ubuntu-18.04.2-live-server-amd64.iso" withExtension:@"torrent"];
-    return [[STTorrentFile alloc] initWithFileAtURL:fileURL];
+    return [self testFileAtIndex:0];
 }
 
 + (STTorrentFile *)test_2 {
-    NSURL *fileURL = [[self currentBundle] URLForResource:@"ubuntu-19.04-live-server-amd64.iso" withExtension:@"torrent"];
-    return [[STTorrentFile alloc] initWithFileAtURL:fileURL];
+    return [self testFileAtIndex:1];
 }
+#endif
 
 @end

@@ -13,6 +13,7 @@ struct FilesView: View {
     
     var model: FilesViewModel
     @State var selectedItem: File?
+    @State var selectedVideo: File?
 
     var body: some View {
         List {
@@ -21,11 +22,15 @@ struct FilesView: View {
                     FileRow(model: subDir)
                 }
             }
-            ForEach(model.directory.allFiles, id: \.path) { file in
+            ForEach(model.directory.allFiles, id: \.path) { item in
                 Button(action: {
-                    self.selectedItem = file
+                    if item.isVideo {
+                        self.selectedVideo = item
+                    } else {
+                        self.selectedItem = item
+                    }
                 }) {
-                    FileRow(model: file)
+                    FileRow(model: item)
                 }
             }
         }.listStyle(PlainListStyle())
@@ -33,11 +38,9 @@ struct FilesView: View {
         #if os(iOS)
         .navigationBarTitle(model.title, displayMode: .inline)
         #endif
-        .fullScreenCover(item: $selectedItem) { item in
-            Group {
-                if item.isVideo() {
-                    VLCViewHost(previewItem: item)
-                } else {
+        .sheet(item: $selectedItem) { item in
+            NavigationView {
+                Group {
                     #if os(iOS)
                     QLViewHost(previewItem: item)
                     #else
@@ -46,7 +49,13 @@ struct FilesView: View {
                     Text(item.name)
                     #endif
                 }
-            }.edgesIgnoringSafeArea(.all)
+                .navigationBarItems(leading: Button("Done") { selectedItem = nil })
+                .navigationBarTitle(item.name, displayMode: .inline)
+            }
+        }
+        .fullScreenCover(item: $selectedVideo) { item in
+            VLCViewHost(previewItem: item)
+                .edgesIgnoringSafeArea(.all)
         }
     }
     

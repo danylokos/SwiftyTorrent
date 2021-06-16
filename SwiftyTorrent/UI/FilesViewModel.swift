@@ -19,12 +19,8 @@ protocol FilesViewModel {
 
 extension Directory: FilesViewModel {
     
-    var title: String {
-        return name
-    }
+    var title: String { name }
     
-    var directory: Directory {
-        return self
-    }
+    var directory: Directory { self }
     
 }

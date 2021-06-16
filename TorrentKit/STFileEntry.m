@@ -11,7 +11,7 @@
 @interface STFileEntry ()
 @property (readwrite, strong, nonatomic) NSString *name;
 @property (readwrite, strong, nonatomic) NSString *path;
-@property (readwrite, nonatomic) NSUInteger size;
+@property (readwrite, nonatomic) uint64_t size;
 @end
 
 @implementation STFileEntry

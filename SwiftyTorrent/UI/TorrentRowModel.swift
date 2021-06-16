@@ -30,15 +30,9 @@ extension Torrent: TorrentRowModel {
         return "\(state.symbol) \(state), \(progressString), seeds: \(numberOfSeeds), peers: \(numberOfPeers)"
     }
     
-    private static var byteCountFormatter: ByteCountFormatter = {
-        let formatter = ByteCountFormatter()
-        formatter.countStyle = .binary
-        return formatter
-    }()
-
     var connectionDetails: String {
-        let downloadRateString = Torrent.byteCountFormatter.string(fromByteCount: Int64(downloadRate))
-        let uploadRateString = Torrent.byteCountFormatter.string(fromByteCount: Int64(uploadRate))
+        let downloadRateString = ByteCountFormatter.string(fromByteCount: Int64(downloadRate), countStyle: .binary)
+        let uploadRateString = ByteCountFormatter.string(fromByteCount: Int64(uploadRate), countStyle: .binary)
         return "↓ \(downloadRateString), ↑ \(uploadRateString)"
     }
 

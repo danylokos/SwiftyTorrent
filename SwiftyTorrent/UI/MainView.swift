@@ -16,13 +16,17 @@ struct MainView: View {
                 .tabItem {
                     Image(systemName: "square.and.arrow.down")
                     Text("Torrents")
-            }
-            
+                }
             SearchView(model: SearchViewModel())
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Search")
-            }
+                }
+            SettingsView(model: SettingsViewModel())
+                .tabItem {
+                    Image(systemName: "gear")
+                    Text("Settings")
+                }
         }
     }
     
