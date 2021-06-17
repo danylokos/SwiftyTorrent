@@ -12,8 +12,13 @@ import TorrentKit
 
 extension File: PreviewItem {
     
+    private var torrentManager: TorrentManagerProtocol {
+        resolveComponent(TorrentManagerProtocol.self)
+    }
+    
     public var previewItemURL: URL? {
-        return TorrentManager.shared().downloadsDirectoryURL()
+        return torrentManager
+            .downloadsDirectoryURL()
             .appendingPathComponent(path)
     }
     

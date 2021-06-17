@@ -19,9 +19,9 @@ final class SearchViewModel: ObservableObject {
     private var currentPage = 1
     private var hasMorePages = false
     
-    private var imdbProvider = IMDBDataProvider.shared
-    private var eztbProvider = EZTVDataProvider.shared
-    private var torrentManager = TorrentManager.shared()
+    private let imdbProvider = resolveComponent(IMDBDataProviderProtocol.self)
+    private let eztbProvider = resolveComponent(EZTVDataProviderProtocol.self)
+    private let torrentManager = resolveComponent(TorrentManagerProtocol.self)
     
     private var cancellables = [AnyCancellable]()
     
@@ -46,7 +46,7 @@ final class SearchViewModel: ObservableObject {
             }
             .switchToLatest()
             .map {
-                self.eztbProvider.fetchTorrents(imdbId: $0)
+                self.eztbProvider.fetchTorrents(imdbId: $0, page: 1)
                     .replaceError(with: [])
             }
             .switchToLatest()

@@ -45,8 +45,12 @@ extension EZTVDataProvider.Response.Torrent: SearchDataItem {
     
 }
 
-final class EZTVDataProvider {
-    
+protocol EZTVDataProviderProtocol {
+    func fetchTorrents(imdbId: String, page: Int) -> AnyPublisher<[SearchDataItem], Error>
+}
+
+final class EZTVDataProvider: EZTVDataProviderProtocol {
+
     static let endpoint = "https://eztv.re/api/"
     
     static let shared = EZTVDataProvider()
@@ -54,7 +58,11 @@ final class EZTVDataProvider {
     private let urlSession: URLSession = URLSession.shared
     private let endpointURL = URL(string: endpoint)!
     
-    func fetchTorrents(imdbId: String, limit: Int = 20, page: Int = 1) -> AnyPublisher<[SearchDataItem], Error> {
+    func fetchTorrents(imdbId: String, page: Int) -> AnyPublisher<[SearchDataItem], Error> {
+        fetchTorrents(imdbId: imdbId, limit: 20, page: page)
+    }
+    
+    private func fetchTorrents(imdbId: String, limit: Int, page: Int) -> AnyPublisher<[SearchDataItem], Error> {
         let requestURL = URL(string: endpointURL.absoluteString +
                              "get-torrents?" +
                              "limit=\(limit)&" +

@@ -20,7 +20,9 @@ protocol ApplicationCoordinator {
 final class AppCoordinator: ApplicationCoordinator {
     
     private var window: UIWindow!
-    private var torrentManager = TorrentManager.shared()
+    private var torrentManager: TorrentManagerProtocol {
+        resolveComponent(TorrentManagerProtocol.self)
+    }
     private var cancellables = [Cancellable]()
     
     init(window: UIWindow) {
@@ -46,6 +48,8 @@ final class AppCoordinator: ApplicationCoordinator {
     // MARK: - ApplicationCoordinator
     
     func start() {
+        registerDependencies()
+        
         window.rootViewController = UIHostingController(rootView: MainView())
         window.makeKeyAndVisible()
         

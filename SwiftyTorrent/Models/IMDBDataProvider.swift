@@ -13,7 +13,11 @@ import Combine
 
 extension String: Error { }
 
-final class IMDBDataProvider {
+protocol IMDBDataProviderProtocol {
+    func fetchSuggestions(_ query: String) -> AnyPublisher<String, Error>
+}
+
+final class IMDBDataProvider: IMDBDataProviderProtocol {
     
     static let shared = IMDBDataProvider()
     
