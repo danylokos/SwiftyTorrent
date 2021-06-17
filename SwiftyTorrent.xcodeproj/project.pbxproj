@@ -79,6 +79,13 @@
 		7748DCDD24AE713500AC5095 /* TorrentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 774321A724AA37ED00777C0A /* TorrentKit.framework */; };
 		7748DCDE24AE713500AC5095 /* TorrentKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 774321A724AA37ED00777C0A /* TorrentKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7748DCE324AE728700AC5095 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748DCE224AE728700AC5095 /* PreviewItem.swift */; };
+		7774227D267BA866008FAA57 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7774227B267BA866008FAA57 /* Swinject.framework */; };
+		7774227E267BA87A008FAA57 /* MediaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7748DC7424AE38EA00AC5095 /* MediaKit.framework */; };
+		77742280267BA89C008FAA57 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7774227F267BA89C008FAA57 /* Swinject.framework */; };
+		77742284267BA9CB008FAA57 /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 77742283267BA9CB008FAA57 /* input.xcfilelist */; };
+		77742286267BA9DF008FAA57 /* output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 77742285267BA9DF008FAA57 /* output.xcfilelist */; };
+		77742289267BAA38008FAA57 /* output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 77742287267BAA38008FAA57 /* output.xcfilelist */; };
+		7774228A267BAA38008FAA57 /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 77742288267BAA38008FAA57 /* input.xcfilelist */; };
 		777A0E4E24AF8D8C00713146 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E4D24AF8D8C00713146 /* libxml2.tbd */; };
 		777A0E5024AF8D9300713146 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E4F24AF8D9300713146 /* libiconv.tbd */; };
 		777A0E5224AF8D9A00713146 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E5124AF8D9A00713146 /* libc++.tbd */; };
@@ -226,6 +233,12 @@
 		7748DCE924AE7EF600AC5095 /* output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
 		7748DCEA24AE7EF600AC5095 /* input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
 		776FD9F622C3B43800CD7CEB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		7774227B267BA866008FAA57 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
+		7774227F267BA89C008FAA57 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/tvOS/Swinject.framework; sourceTree = "<group>"; };
+		77742283267BA9CB008FAA57 /* input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
+		77742285267BA9DF008FAA57 /* output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
+		77742287267BAA38008FAA57 /* output.xcfilelist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
+		77742288267BAA38008FAA57 /* input.xcfilelist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
 		777A0E4D24AF8D8C00713146 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libxml2.tbd; sourceTree = DEVELOPER_DIR; };
 		777A0E4F24AF8D9300713146 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
 		777A0E5124AF8D9A00713146 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
@@ -258,6 +271,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				774321AE24AA37EE00777C0A /* TorrentKit.framework in Frameworks */,
+				7774227E267BA87A008FAA57 /* MediaKit.framework in Frameworks */,
+				7774227D267BA866008FAA57 /* Swinject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +313,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77742280267BA89C008FAA57 /* Swinject.framework in Frameworks */,
 				7748DCDD24AE713500AC5095 /* TorrentKit.framework in Frameworks */,
 				7748DCD924AE713500AC5095 /* MediaKit.framework in Frameworks */,
 			);
@@ -352,6 +368,8 @@
 		773FF94C22C10278008D58E4 /* SwiftyTorrent */ = {
 			isa = PBXGroup;
 			children = (
+				77742283267BA9CB008FAA57 /* input.xcfilelist */,
+				77742285267BA9DF008FAA57 /* output.xcfilelist */,
 				7723376322DB9331008ECD5F /* Core */,
 				774321EE24AB43E500777C0A /* Models */,
 				77D8122322CA336A001CA13E /* UI */,
@@ -364,6 +382,8 @@
 		773FF96722C105CE008D58E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7774227B267BA866008FAA57 /* Swinject.framework */,
+				7774227F267BA89C008FAA57 /* Swinject.framework */,
 				7723A22424AF8F1B007629A0 /* SystemConfiguration.framework */,
 				777A0E6D24AF8E0200713146 /* AVFoundation.framework */,
 				777A0E6B24AF8DFC00713146 /* AudioToolbox.framework */,
@@ -507,6 +527,8 @@
 		7748DCB324AE702E00AC5095 /* SwiftyTV */ = {
 			isa = PBXGroup;
 			children = (
+				77742288267BAA38008FAA57 /* input.xcfilelist */,
+				77742287267BAA38008FAA57 /* output.xcfilelist */,
 				7748DCB424AE702E00AC5095 /* AppDelegate.swift */,
 				773A410124AF9462002E75CD /* Resources */,
 				7748DCC024AE703000AC5095 /* Info.plist */,
@@ -574,6 +596,7 @@
 				773FF94722C10278008D58E4 /* Frameworks */,
 				773FF94822C10278008D58E4 /* Resources */,
 				774321AF24AA37EE00777C0A /* Embed Frameworks */,
+				77742281267BA960008FAA57 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -633,6 +656,7 @@
 				7748DCAF24AE702E00AC5095 /* Frameworks */,
 				7748DCB024AE702E00AC5095 /* Resources */,
 				7748DCE124AE713500AC5095 /* Embed Frameworks */,
+				77742282267BA974008FAA57 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -717,6 +741,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				771B700622DA205D00132B5E /* uTorrent-320.png in Resources */,
+				77742286267BA9DF008FAA57 /* output.xcfilelist in Resources */,
+				77742284267BA9CB008FAA57 /* input.xcfilelist in Resources */,
 				773FF95A22C10279008D58E4 /* LaunchScreen.storyboard in Resources */,
 				773FF95422C10279008D58E4 /* Assets.xcassets in Resources */,
 			);
@@ -741,7 +767,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7774228A267BAA38008FAA57 /* input.xcfilelist in Resources */,
 				7748DCBF24AE703000AC5095 /* LaunchScreen.storyboard in Resources */,
+				77742289267BAA38008FAA57 /* output.xcfilelist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -779,6 +807,46 @@
 			name = Carthage;
 			outputFileListPaths = (
 				"$(SRCROOT)/MediaKit/output.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		77742281267BA960008FAA57 /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"$(SRCROOT)/SwiftyTorrent/input.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = Carthage;
+			outputFileListPaths = (
+				"$(SRCROOT)/SwiftyTorrent/output.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		77742282267BA974008FAA57 /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"$(SRCROOT)/SwiftyTV/input.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = Carthage;
+			outputFileListPaths = (
+				"$(SRCROOT)/SwiftyTV/output.xcfilelist",
 			);
 			outputPaths = (
 			);
@@ -1045,6 +1113,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SwiftyTorrent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1066,6 +1138,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = SwiftyTorrent/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1212,6 +1288,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = SwiftyTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1230,6 +1310,10 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = SwiftyTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

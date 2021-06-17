@@ -4,4 +4,6 @@ disabled_rules:
   - comment_spacing
   - multiple_closures_with_trailing_closure
 excluded:
+  - Carthage
   - Thirdparties
+  
