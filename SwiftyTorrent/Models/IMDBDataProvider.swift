@@ -18,9 +18,7 @@ protocol IMDBDataProviderProtocol {
 }
 
 final class IMDBDataProvider: IMDBDataProviderProtocol {
-    
-    static let shared = IMDBDataProvider()
-    
+
     private let urlSession: URLSession = URLSession.shared
     private let endpointURL = URL(string: "https://sg.media-imdb.com/")!
     

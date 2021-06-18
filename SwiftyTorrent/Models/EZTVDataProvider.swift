@@ -15,34 +15,37 @@ protocol SearchDataItem {
     var id: String { get }
     var title: String { get }
     var sizeBytes: UInt64 { get }
-    var size: String { get }
     var episodeInfo: String? { get }
     var peersStatus: String { get }
     var magnetURL: URL { get }
     var details: String { get }
 }
 
-extension EZTVDataProvider.Response.Torrent: SearchDataItem {
-    
-    var id: String { magnetURL.absoluteString }
+extension SearchDataItem {
     
     var size: String {
         ByteCountFormatter.string(fromByteCount: Int64(sizeBytes), countStyle: .binary)
     }
+
+    var details: String {
+        [episodeInfo, size, peersStatus]
+            .compactMap { $0 }
+            .joined(separator: ", ")
+    }
+
+}
+
+extension EZTVDataProvider.Response.Torrent: SearchDataItem {
     
+    var id: String { magnetURL.absoluteString }
+
     var episodeInfo: String? {
         guard let s = Int(season), let e = Int(episode) else { return nil }
         return String(format: "s%02de%02d", s, e)
     }
     
     var peersStatus: String { "seeds: \(seeds), peers: \(peers)" }
-    
-    var details: String {
-        [episodeInfo, size, peersStatus]
-            .compactMap { $0 }
-            .joined(separator: ", ")
-    }
-    
+
 }
 
 protocol EZTVDataProviderProtocol {
@@ -52,8 +55,6 @@ protocol EZTVDataProviderProtocol {
 final class EZTVDataProvider: EZTVDataProviderProtocol {
 
     static let endpoint = "https://eztv.re/api/"
-    
-    static let shared = EZTVDataProvider()
 
     private let urlSession: URLSession = URLSession.shared
     private let endpointURL = URL(string: endpoint)!

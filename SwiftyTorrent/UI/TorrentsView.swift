@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+import TorrentKit
 
 // https://medium.com/better-programming/swiftui-navigation-links-and-the-common-pitfalls-faced-505cbfd8029b
 struct LazyView<Content: View>: View {
@@ -89,6 +90,8 @@ extension Alert {
 #if DEBUG
 struct TorrentsView_Previews: PreviewProvider {
     static var previews: some View {
+        // Use stubs
+        registerStubs()
         let model = TorrentsViewModel()
         return TorrentsView(model: model).environment(\.colorScheme, .dark)
     }

@@ -13,15 +13,9 @@ import TorrentKit
 private let swinjectContiner = Container()
 
 func registerDependencies() {
-    swinjectContiner.register(IMDBDataProviderProtocol.self) { _ in
-        IMDBDataProvider.shared
-    }
-    swinjectContiner.register(EZTVDataProviderProtocol.self) { _ in
-        EZTVDataProvider.shared
-    }
-    swinjectContiner.register(TorrentManagerProtocol.self) { _ in
-        TorrentManager.shared()
-    }
+    swinjectContiner.register(TorrentManagerProtocol.self) { _ in TorrentManager.shared() }
+    swinjectContiner.register(IMDBDataProviderProtocol.self) { _ in IMDBDataProvider() }
+    swinjectContiner.register(EZTVDataProviderProtocol.self) { _ in EZTVDataProvider() }
 }
 
 func registerComponent<T>(_ type: T.Type, resolver: @escaping () -> T) {
@@ -34,3 +28,11 @@ func resolveComponent<T>(_ type: T.Type) -> T {
     }
     return service
 }
+
+#if DEBUG
+func registerStubs() {
+    registerComponent(TorrentManagerProtocol.self) { StubTorrentManager() }
+    registerComponent(IMDBDataProviderProtocol.self) { StubIMDBDataProvider() }
+    registerComponent(EZTVDataProviderProtocol.self) { StubEZTVDataProvider() }
+}
+#endif
