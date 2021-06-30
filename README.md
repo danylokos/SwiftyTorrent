@@ -17,6 +17,10 @@ List of public domain torrents can be found [here](https://webtorrent.io/free-to
     git clone https://github.com/danylokos/SwiftyTorrent
     cd SwiftyTorrent
 
+    # Install Carthage dependencies
+    ./carthage.sh bootstrap --platform ios,tvos
+
+    # Install boost and libtorrent
     cd Thirdparties/boost && ./bootstrap.sh
     cd ../..
     cd Thirdparties/libtorrent && ./bootstrap.sh
