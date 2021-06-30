@@ -13,10 +13,12 @@ import Combine
 
 extension String: Error { }
 
-final class IMDBDataProvider {
-    
-    static let shared = IMDBDataProvider()
-    
+protocol IMDBDataProviderProtocol {
+    func fetchSuggestions(_ query: String) -> AnyPublisher<String, Error>
+}
+
+final class IMDBDataProvider: IMDBDataProviderProtocol {
+
     private let urlSession: URLSession = URLSession.shared
     private let endpointURL = URL(string: "https://sg.media-imdb.com/")!
     

@@ -25,7 +25,7 @@ final class SettingsViewModel: ObservableObject {
         return "\(appVer) (\(buildVer))"
     }()
         
-    private let torrentManager = TorrentManager.shared()
+    private let torrentManager = resolveComponent(TorrentManagerProtocol.self)
     
     init() {
         availableDiskSpace = calcAvailableDiskSpace()
