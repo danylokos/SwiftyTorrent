@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,10 @@
 		772CEA0822DDFC41000CD2BD /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */; };
 		772CEA0A22DDFC47000CD2BD /* FileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0922DDFC47000CD2BD /* FileRow.swift */; };
 		772CEA0C22DDFC4D000CD2BD /* FileRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0B22DDFC4D000CD2BD /* FileRowModel.swift */; };
+		773EFD1A26B241D600DC35A4 /* MobileVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; platformFilters = (ios, maccatalyst, ); };
+		773EFD1B26B241D600DC35A4 /* MobileVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; platformFilters = (ios, maccatalyst, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		773EFD1F26B241D600DC35A4 /* TVVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; platformFilters = (tvos, ); };
+		773EFD2026B241D600DC35A4 /* TVVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; platformFilters = (tvos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		773FF94E22C10278008D58E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773FF94D22C10278008D58E4 /* AppDelegate.swift */; };
 		773FF95022C10278008D58E4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773FF94F22C10278008D58E4 /* SceneDelegate.swift */; };
 		773FF95422C10279008D58E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 773FF95322C10279008D58E4 /* Assets.xcassets */; };
@@ -160,6 +164,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		773EFD1C26B241D600DC35A4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				773EFD2026B241D600DC35A4 /* TVVLCKit.xcframework in Embed Frameworks */,
+				773EFD1B26B241D600DC35A4 /* MobileVLCKit.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		774321AF24AA37EE00777C0A /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,6 +213,8 @@
 		772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewModel.swift; sourceTree = "<group>"; };
 		772CEA0922DDFC47000CD2BD /* FileRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRow.swift; sourceTree = "<group>"; };
 		772CEA0B22DDFC4D000CD2BD /* FileRowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRowModel.swift; sourceTree = "<group>"; };
+		773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MobileVLCKit.xcframework; path = Carthage/Build/MobileVLCKit.xcframework; sourceTree = "<group>"; };
+		773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TVVLCKit.xcframework; path = Carthage/Build/TVVLCKit.xcframework; sourceTree = "<group>"; };
 		773FF94A22C10278008D58E4 /* SwiftyTorrent.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftyTorrent.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		773FF94D22C10278008D58E4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		773FF94F22C10278008D58E4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -240,8 +258,6 @@
 		7748DCBE24AE703000AC5095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7748DCC024AE703000AC5095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7748DCE224AE728700AC5095 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
-		7748DCE924AE7EF600AC5095 /* output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
-		7748DCEA24AE7EF600AC5095 /* input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
 		776FD9F622C3B43800CD7CEB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7774227B267BA866008FAA57 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
 		7774227F267BA89C008FAA57 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/tvOS/Swinject.framework; sourceTree = "<group>"; };
@@ -307,6 +323,7 @@
 				777A0E6C24AF8DFC00713146 /* AudioToolbox.framework in Frameworks */,
 				777A0E6A24AF8DF500713146 /* CFNetwork.framework in Frameworks */,
 				777A0E6824AF8DEF00713146 /* CoreFoundation.framework in Frameworks */,
+				773EFD1A26B241D600DC35A4 /* MobileVLCKit.xcframework in Frameworks */,
 				777A0E6624AF8DE800713146 /* CoreGraphics.framework in Frameworks */,
 				777A0E6424AF8DE000713146 /* CoreMedia.framework in Frameworks */,
 				777A0E6224AF8DDA00713146 /* CoreText.framework in Frameworks */,
@@ -318,6 +335,7 @@
 				777A0E5624AF8DA700713146 /* VideoToolbox.framework in Frameworks */,
 				777A0E5424AF8DA100713146 /* libbz2.tbd in Frameworks */,
 				777A0E5224AF8D9A00713146 /* libc++.tbd in Frameworks */,
+				773EFD1F26B241D600DC35A4 /* TVVLCKit.xcframework in Frameworks */,
 				777A0E5024AF8D9300713146 /* libiconv.tbd in Frameworks */,
 				777A0E4E24AF8D8C00713146 /* libxml2.tbd in Frameworks */,
 			);
@@ -398,6 +416,8 @@
 		773FF96722C105CE008D58E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */,
+				773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */,
 				7774227B267BA866008FAA57 /* Swinject.framework */,
 				7774227F267BA89C008FAA57 /* Swinject.framework */,
 				7723A22424AF8F1B007629A0 /* SystemConfiguration.framework */,
@@ -514,8 +534,6 @@
 		7748DC7524AE38EA00AC5095 /* MediaKit */ = {
 			isa = PBXGroup;
 			children = (
-				7748DCEA24AE7EF600AC5095 /* input.xcfilelist */,
-				7748DCE924AE7EF600AC5095 /* output.xcfilelist */,
 				7748DC7624AE38EA00AC5095 /* MediaKit.h */,
 				7748DCE224AE728700AC5095 /* PreviewItem.swift */,
 				7748DCA724AE3C0800AC5095 /* QuickLook */,
@@ -665,7 +683,7 @@
 				7748DC7024AE38EA00AC5095 /* Sources */,
 				7748DC7124AE38EA00AC5095 /* Frameworks */,
 				7748DC7224AE38EA00AC5095 /* Resources */,
-				7748DC8424AE3A4500AC5095 /* Carthage */,
+				773EFD1C26B241D600DC35A4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -821,26 +839,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-		7748DC8424AE3A4500AC5095 /* Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"$(SRCROOT)/MediaKit/input.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = Carthage;
-			outputFileListPaths = (
-				"$(SRCROOT)/MediaKit/output.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 		77742281267BA960008FAA57 /* Carthage */ = {
 			isa = PBXShellScriptBuildPhase;

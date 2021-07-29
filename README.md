@@ -9,7 +9,7 @@ List of public domain torrents can be found [here](https://webtorrent.io/free-to
 
 ## Requirements
 
-- `Xcode 13.0b1`
+- `Xcode 13.0b4`
 - `iOS 15.0`
 
 ## Build

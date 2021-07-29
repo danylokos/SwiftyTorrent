@@ -10,17 +10,6 @@ import SwiftUI
 import Combine
 import TorrentKit
 
-// https://medium.com/better-programming/swiftui-navigation-links-and-the-common-pitfalls-faced-505cbfd8029b
-struct LazyView<Content: View>: View {
-    let build: () -> Content
-    init(_ build: @autoclosure @escaping () -> Content) {
-        self.build = build
-    }
-    var body: Content {
-        build()
-    }
-}
-
 struct TorrentsView: View {
     
     @ObservedObject var model: TorrentsViewModel
@@ -30,7 +19,7 @@ struct TorrentsView: View {
             List {
                 Section(header: Text("Downloads")) {
                     ForEach(model.torrents, id: \.infoHash) { torrent in
-                        NavigationLink(destination: LazyView(FilesView(model: torrent.directory))) {
+                        NavigationLink(destination: FilesView(model: torrent.directory)) {
                             TorrentRow(model: torrent)
                         }.contextMenu {
                             Button(role: .destructive) { model.remove(torrent) } label: {
