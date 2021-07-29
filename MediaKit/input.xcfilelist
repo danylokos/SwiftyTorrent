@@ -1,2 +1,0 @@
-$(SRCROOT)/Carthage/Build/iOS/MobileVLCKit.framework
-$(SRCROOT)/Carthage/Build/tvOS/TVVLCKit.framework
