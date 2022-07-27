@@ -48,7 +48,7 @@ Downloads can be found at:
 - ~~quick look~~
 - ~~integrate VLC player for video playback~~
 - session status header
-- app icon?
+- ~~app icon~~
 
 ___
 [@danylo_kos](https://twitter.com/danylo_kos)
