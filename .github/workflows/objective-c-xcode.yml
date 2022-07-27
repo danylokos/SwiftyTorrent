@@ -1,0 +1,148 @@
+name: Xcode - Build and Analyze and Upload
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: Build and analyse default scheme using xcodebuild command
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install the Apple certificate and provisioning profile
+        env:
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+          # import certificate and provisioning profile from secrets
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+
+          # apply provisioning profile
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+      
+      - name: Cache dependencies (Carthage)
+        uses: actions/cache@v2
+        id: cache-dependecies-carthage
+        with:
+          path: ./Thirdparties
+          key: ${{ runner.OS }}-cache-carthage-${{ hashFiles('./Cartfile.resolved') }}
+          restore-keys: |
+            ${{ runner.OS }}-cache-carthage-
+      
+      - name: Bootstrap (Carthage)
+        if: steps.cache-dependecies-carthage.outputs.cache-hit != 'true'
+        run: ./carthage.sh bootstrap --platform ios
+        shell: bash       
+      
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        id: cache-dependecies
+        with:
+          path: ./Thirdparties
+          key: ${{ runner.OS }}-cache-${{ hashFiles('./bootstrap.sh') }}
+          restore-keys: |
+            ${{ runner.OS }}-cache-
+      
+      - name: Bootstrap
+        if: steps.cache-dependecies.outputs.cache-hit != 'true'
+        run: ./bootstrap.sh
+        shell: bash       
+      
+      - name: Set Default Scheme
+        run: |
+          scheme_list=$(xcodebuild -list -json | tr -d "\n")
+          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
+          echo $default | cat >default
+          echo Using default scheme: $default
+      
+      - name: Bump version
+        env:
+          build_number: ${{ github.run_number }}
+        run: |
+          agvtool new-version -all $build_number
+
+      - name: Build
+        env:
+          scheme: ${{ 'default' }}
+        run: |
+          if [ $scheme = default ]; then scheme=$(cat default); fi
+          if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
+          file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
+          archivePath=build/$scheme.xcarchive
+          
+          xcodebuild clean build analyze archive \
+            -scheme "$scheme" \
+            -archivePath "$archivePath" \
+            -"$filetype_parameter" "$file_to_build" | xcpretty && exit ${PIPESTATUS[0]}
+
+      - name: Archive
+        env:
+          ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}          
+          scheme: ${{ 'default' }} 
+        run: |
+          if [ $scheme = default ]; then scheme=$(cat default); fi
+          archivePath=build/$scheme.xcarchive
+          exportPath=build/ipa/
+          
+          apiPrivateKeyFilePath=$RUNNER_TEMP/AuthKey_$API_KEY_ID.p8
+          echo -n "$API_PRIVATE_KEY" > $apiPrivateKeyFilePath                    
+          
+          exportOptionsPlist=$RUNNER_TEMP/export.plist
+          cat > $exportOptionsPlist << EOL
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+          </dict>
+          </plist>
+          EOL
+          
+          xcodebuild \
+            -exportArchive \
+            -archivePath "$archivePath" \
+            -exportPath "$exportPath" \
+            -exportOptionsPlist "$exportOptionsPlist" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$apiPrivateKeyFilePath" \
+            -authenticationKeyID $API_KEY_ID \
+            -authenticationKeyIssuerID $ISSUER_ID | xcpretty && exit ${PIPESTATUS[0]} 
+
+      # - name: Upload
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: SwiftyTorrent-${{ github.run_number }}
+      #     path: build/
+
+      - name: Upload app to TestFlight
+        uses: apple-actions/upload-testflight-build@v1
+        with: 
+          app-path: build/ipa/SwiftyTorrent.ipa
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}          
