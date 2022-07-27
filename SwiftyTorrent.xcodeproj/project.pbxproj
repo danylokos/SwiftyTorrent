@@ -17,10 +17,12 @@
 		772CEA0822DDFC41000CD2BD /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */; };
 		772CEA0A22DDFC47000CD2BD /* FileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0922DDFC47000CD2BD /* FileRow.swift */; };
 		772CEA0C22DDFC4D000CD2BD /* FileRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0B22DDFC4D000CD2BD /* FileRowModel.swift */; };
+		773B2A342891DFC8004AFA46 /* MobileVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; };
+		773B2A352891DFC8004AFA46 /* MobileVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		773B2A362891DFCF004AFA46 /* TVVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; };
+		773B2A372891DFCF004AFA46 /* TVVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		773EFD1A26B241D600DC35A4 /* MobileVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; platformFilters = (ios, maccatalyst, ); };
-		773EFD1B26B241D600DC35A4 /* MobileVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; platformFilters = (ios, maccatalyst, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		773EFD1F26B241D600DC35A4 /* TVVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; platformFilters = (tvos, ); };
-		773EFD2026B241D600DC35A4 /* TVVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; platformFilters = (tvos, ); settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		773FF94E22C10278008D58E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773FF94D22C10278008D58E4 /* AppDelegate.swift */; };
 		773FF95022C10278008D58E4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773FF94F22C10278008D58E4 /* SceneDelegate.swift */; };
 		773FF95422C10279008D58E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 773FF95322C10279008D58E4 /* Assets.xcassets */; };
@@ -177,8 +179,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				773EFD2026B241D600DC35A4 /* TVVLCKit.xcframework in Embed Frameworks */,
-				773EFD1B26B241D600DC35A4 /* MobileVLCKit.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,6 +190,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				7748DC7C24AE38EA00AC5095 /* MediaKit.framework in Embed Frameworks */,
+				773B2A352891DFC8004AFA46 /* MobileVLCKit.xcframework in Embed Frameworks */,
 				774321B024AA37EE00777C0A /* TorrentKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -203,6 +204,7 @@
 			files = (
 				7748DCDE24AE713500AC5095 /* TorrentKit.framework in Embed Frameworks */,
 				7748DCDA24AE713500AC5095 /* MediaKit.framework in Embed Frameworks */,
+				773B2A372891DFCF004AFA46 /* TVVLCKit.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -307,6 +309,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				773B2A342891DFC8004AFA46 /* MobileVLCKit.xcframework in Frameworks */,
 				774321AE24AA37EE00777C0A /* TorrentKit.framework in Frameworks */,
 				7774227E267BA87A008FAA57 /* MediaKit.framework in Frameworks */,
 				7774227D267BA866008FAA57 /* Swinject.framework in Frameworks */,
@@ -354,6 +357,7 @@
 			files = (
 				77742280267BA89C008FAA57 /* Swinject.framework in Frameworks */,
 				7748DCDD24AE713500AC5095 /* TorrentKit.framework in Frameworks */,
+				773B2A362891DFCF004AFA46 /* TVVLCKit.xcframework in Frameworks */,
 				7748DCD924AE713500AC5095 /* MediaKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,7 +419,6 @@
 				77D8122322CA336A001CA13E /* UI */,
 				77742297267C0119008FAA57 /* Stubs */,
 				773FF97222C10B22008D58E4 /* Resources */,
-				773FF95B22C10279008D58E4 /* Info.plist */,
 			);
 			path = SwiftyTorrent;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 		773FF97222C10B22008D58E4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				773FF95B22C10279008D58E4 /* Info.plist */,
 				773FF95322C10279008D58E4 /* Assets.xcassets */,
 				774321E124AA516B00777C0A /* Icons */,
 				773FF95822C10279008D58E4 /* LaunchScreen.storyboard */,
@@ -1164,7 +1168,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = SwiftyTorrent/Info.plist;
+				INFOPLIST_FILE = SwiftyTorrent/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1189,7 +1193,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = SwiftyTorrent/Info.plist;
+				INFOPLIST_FILE = SwiftyTorrent/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

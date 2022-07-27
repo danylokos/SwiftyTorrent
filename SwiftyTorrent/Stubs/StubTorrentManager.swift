@@ -9,6 +9,7 @@
 import Foundation
 import TorrentKit
 
+#if DEBUG
 class StubTorrentManager: TorrentManagerProtocol {
     
     var isSessionActive = true
@@ -36,3 +37,4 @@ class StubTorrentManager: TorrentManagerProtocol {
     }
 
 }
+#endif
