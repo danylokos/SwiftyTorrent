@@ -494,7 +494,7 @@
 				77F5045522C0D2A400CF042B /* xml_parse.cpp */,
 			);
 			name = src;
-			path = ../../libtorrent/src/src;
+			path = ../Thirdparties/libtorrent/src/src;
 			sourceTree = "<group>";
 		};
 		77F503EF22C0D2A400CF042B /* kademlia */ = {
@@ -530,7 +530,7 @@
 				77F504F922C0D8CE00CF042B /* src */,
 			);
 			name = ed25519;
-			path = ../../libtorrent/src/ed25519;
+			path = ../Thirdparties/libtorrent/src/ed25519;
 			sourceTree = "<group>";
 		};
 		77F504F922C0D8CE00CF042B /* src */ = {
@@ -890,8 +890,8 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../libtorrent/src/include",
-					"$(SRCROOT)/../../boost/src",
+					"$(SRCROOT)/../Thirdparties/libtorrent/src/include",
+					"$(SRCROOT)/../Thirdparties/boost/src",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -908,8 +908,8 @@
 				EXECUTABLE_PREFIX = "";
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../libtorrent/src/include",
-					"$(SRCROOT)/../../boost/src",
+					"$(SRCROOT)/../Thirdparties/libtorrent/src/include",
+					"$(SRCROOT)/../Thirdparties/boost/src",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
