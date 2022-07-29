@@ -158,8 +158,4 @@ playground.xcworkspace
 
 # End of https://www.gitignore.io/api/swift,xcode,macos,objective-c
 
-Thirdparties/boost/boost.tar.gz
-Thirdparties/boost/src/
-
-Thirdparties/libtorrent/libtorrent.tar.gz
-Thirdparties/libtorrent/src/
+Thirdparties/
