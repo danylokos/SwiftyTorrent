@@ -118,7 +118,6 @@
 		777A0E6C24AF8DFC00713146 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E6B24AF8DFC00713146 /* AudioToolbox.framework */; };
 		777A0E6E24AF8E0200713146 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E6D24AF8E0200713146 /* AVFoundation.framework */; };
 		77810F7F28936C43008B7804 /* libtorrent.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77810F7E28936C43008B7804 /* libtorrent.xcframework */; };
-		77810F8028936C43008B7804 /* libtorrent.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 77810F7E28936C43008B7804 /* libtorrent.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		77AD95432678CAEF00B57B0B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95422678CAEF00B57B0B /* SettingsView.swift */; };
 		77AD95442678CAEF00B57B0B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95422678CAEF00B57B0B /* SettingsView.swift */; };
 		77AD95472678CAFB00B57B0B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95462678CAFB00B57B0B /* SettingsViewModel.swift */; };
@@ -202,7 +201,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				77810F8028936C43008B7804 /* libtorrent.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
