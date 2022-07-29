@@ -159,3 +159,4 @@ playground.xcworkspace
 # End of https://www.gitignore.io/api/swift,xcode,macos,objective-c
 
 Thirdparties/
+sketch/

@@ -9,24 +9,18 @@ List of public domain torrents can be found [here](https://webtorrent.io/free-to
 
 ## Requirements
 
-- `Xcode 13.0b4`
+- `Xcode 13.0`
 - `iOS 15.0`
 
 ## Build
 
-    git clone https://github.com/danylokos/SwiftyTorrent
-    cd SwiftyTorrent
-
     # Install Carthage dependencies
-    ./carthage.sh bootstrap --platform ios,tvos
+    $ ./carthage.sh bootstrap --platform ios,tvos
 
-    # Install boost and libtorrent
-    cd Thirdparties/boost && ./bootstrap.sh
-    cd ../..
-    cd Thirdparties/libtorrent && ./bootstrap.sh
-    cd ../..
+    # Install libtorrent
+    $ ./bootstrap.sh
     
-    open SwiftyTorrent.xcodeproj
+    $ open SwiftyTorrent.xcodeproj
 
 Downloads can be found at:
 

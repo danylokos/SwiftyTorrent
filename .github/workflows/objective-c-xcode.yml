@@ -46,7 +46,7 @@ jobs:
         uses: actions/cache@v2
         id: cache-dependecies-carthage
         with:
-          path: ./Thirdparties
+          path: ./Carthage
           key: ${{ runner.OS }}-cache-carthage-${{ hashFiles('./Cartfile.resolved') }}
           restore-keys: |
             ${{ runner.OS }}-cache-carthage-
@@ -54,7 +54,7 @@ jobs:
       - name: Bootstrap (Carthage)
         if: steps.cache-dependecies-carthage.outputs.cache-hit != 'true'
         run: ./carthage.sh bootstrap --platform ios
-        shell: bash       
+        shell: bash
       
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -68,26 +68,25 @@ jobs:
       - name: Bootstrap
         if: steps.cache-dependecies.outputs.cache-hit != 'true'
         run: ./bootstrap.sh
-        shell: bash       
+        shell: bash
       
       - name: Set Default Scheme
+        id: default-scheme
         run: |
           scheme_list=$(xcodebuild -list -json | tr -d "\n")
           default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-          echo $default | cat >default
+          echo "::set-output name=SCHEME::$default"
           echo Using default scheme: $default
       
       - name: Bump version
         env:
           build_number: ${{ github.run_number }}
-        run: |
-          agvtool new-version -all $build_number
+        run: xcrun agvtool new-version -all $build_number
 
       - name: Build
         env:
-          scheme: ${{ 'default' }}
+          scheme: ${{ steps.default-scheme.outputs.SCHEME }}
         run: |
-          if [ $scheme = default ]; then scheme=$(cat default); fi
           if [ "`ls -A | grep -i \\.xcworkspace\$`" ]; then filetype_parameter="workspace" && file_to_build="`ls -A | grep -i \\.xcworkspace\$`"; else filetype_parameter="project" && file_to_build="`ls -A | grep -i \\.xcodeproj\$`"; fi
           file_to_build=`echo $file_to_build | awk '{$1=$1;print}'`
           archivePath=build/$scheme.xcarchive
@@ -98,18 +97,20 @@ jobs:
             -"$filetype_parameter" "$file_to_build" | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: Archive
+        id: archive
         env:
+          scheme: ${{ steps.default-scheme.outputs.SCHEME }}
           ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
           API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
-          API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}          
-          scheme: ${{ 'default' }} 
+          API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
         run: |
-          if [ $scheme = default ]; then scheme=$(cat default); fi
           archivePath=build/$scheme.xcarchive
-          exportPath=build/ipa/
+          exportPath=build/ipa
+
+          echo "::set-output name=IPA_FILE::$exportPath/$scheme.ipa"
           
           apiPrivateKeyFilePath=$RUNNER_TEMP/AuthKey_$API_KEY_ID.p8
-          echo -n "$API_PRIVATE_KEY" > $apiPrivateKeyFilePath                    
+          echo -n "$API_PRIVATE_KEY" > $apiPrivateKeyFilePath
           
           exportOptionsPlist=$RUNNER_TEMP/export.plist
           cat > $exportOptionsPlist << EOL
@@ -139,10 +140,26 @@ jobs:
       #     name: SwiftyTorrent-${{ github.run_number }}
       #     path: build/
 
+      - name: Install App Store Connect private key
+        env:
+          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+        run: |
+          PRIV_KEY_DIR="$HOME/private_keys"
+          AUTH_KEY_FILE="$PRIV_KEY_DIR/AuthKey_$API_KEY_ID.p8"
+
+          mkdir -p $PRIV_KEY_DIR
+          echo "$API_PRIVATE_KEY" > "$AUTH_KEY_FILE"
+
       - name: Upload app to TestFlight
-        uses: apple-actions/upload-testflight-build@v1
-        with: 
-          app-path: build/ipa/SwiftyTorrent.ipa
-          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
-          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}          
+        env:
+          ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          IPA_FILE: ${{ steps.archive.outputs.IPA_FILE }}
+        run: |
+          xcrun altool \
+            --upload-app \
+            --file $IPA_FILE \
+            --type ios \
+            --apiKey $API_KEY_ID \
+            --apiIssuer $ISSUER_ID
