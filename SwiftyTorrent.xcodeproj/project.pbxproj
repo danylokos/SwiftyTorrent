@@ -117,7 +117,8 @@
 		777A0E6A24AF8DF500713146 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E6924AF8DF500713146 /* CFNetwork.framework */; };
 		777A0E6C24AF8DFC00713146 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E6B24AF8DFC00713146 /* AudioToolbox.framework */; };
 		777A0E6E24AF8E0200713146 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 777A0E6D24AF8E0200713146 /* AVFoundation.framework */; };
-		777B24822891CE4100E93FAC /* libtorrent.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 777B247F2891CD4100E93FAC /* libtorrent.a */; };
+		77810F7F28936C43008B7804 /* libtorrent.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77810F7E28936C43008B7804 /* libtorrent.xcframework */; };
+		77810F8028936C43008B7804 /* libtorrent.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 77810F7E28936C43008B7804 /* libtorrent.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		77AD95432678CAEF00B57B0B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95422678CAEF00B57B0B /* SettingsView.swift */; };
 		77AD95442678CAEF00B57B0B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95422678CAEF00B57B0B /* SettingsView.swift */; };
 		77AD95472678CAFB00B57B0B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95462678CAFB00B57B0B /* SettingsViewModel.swift */; };
@@ -156,20 +157,6 @@
 			remoteGlobalIDString = 774321A624AA37ED00777C0A;
 			remoteInfo = TorrentKit;
 		};
-		777B247E2891CD4100E93FAC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 777B247A2891CD4100E93FAC /* libtorrent.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 77000C2E22C0CD470037DABD;
-			remoteInfo = libtorrent;
-		};
-		777B24802891CD4D00E93FAC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 777B247A2891CD4100E93FAC /* libtorrent.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 77000C2D22C0CD470037DABD;
-			remoteInfo = libtorrent;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -205,6 +192,17 @@
 				7748DCDE24AE713500AC5095 /* TorrentKit.framework in Embed Frameworks */,
 				7748DCDA24AE713500AC5095 /* MediaKit.framework in Embed Frameworks */,
 				773B2A372891DFCF004AFA46 /* TVVLCKit.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		77810F8128936C43008B7804 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				77810F8028936C43008B7804 /* libtorrent.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,6 +254,7 @@
 		77438321267E924B00AB9F4D /* STTorrentState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STTorrentState.h; sourceTree = "<group>"; };
 		77438322267E924B00AB9F4D /* STTorrent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STTorrent.m; sourceTree = "<group>"; };
 		77438323267E924B00AB9F4D /* STTorrentManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = STTorrentManager.mm; sourceTree = "<group>"; };
+		7746A26F28931DD0002D7196 /* libtorrent.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libtorrent.xcframework; path = Thirdparties/libtorrent.xcframework; sourceTree = "<group>"; };
 		7748DC7424AE38EA00AC5095 /* MediaKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MediaKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7748DC7624AE38EA00AC5095 /* MediaKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MediaKit.h; sourceTree = "<group>"; };
 		7748DC7724AE38EA00AC5095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -294,7 +293,7 @@
 		777A0E6924AF8DF500713146 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/CFNetwork.framework; sourceTree = DEVELOPER_DIR; };
 		777A0E6B24AF8DFC00713146 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		777A0E6D24AF8E0200713146 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
-		777B247A2891CD4100E93FAC /* libtorrent.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libtorrent.xcodeproj; path = libtorrent/libtorrent.xcodeproj; sourceTree = "<group>"; };
+		77810F7E28936C43008B7804 /* libtorrent.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = libtorrent.xcframework; path = "Thirdparties/libtorrent-1.2.17/libtorrent.xcframework"; sourceTree = "<group>"; };
 		77AD95422678CAEF00B57B0B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		77AD95462678CAFB00B57B0B /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		77D8122422CA336A001CA13E /* TorrentsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorrentsView.swift; sourceTree = "<group>"; };
@@ -320,7 +319,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				777B24822891CE4100E93FAC /* libtorrent.a in Frameworks */,
+				77810F7F28936C43008B7804 /* libtorrent.xcframework in Frameworks */,
 				7723A22624AF8F1B007629A0 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,7 +387,6 @@
 			isa = PBXGroup;
 			children = (
 				776FD9F622C3B43800CD7CEB /* README.md */,
-				777B247A2891CD4100E93FAC /* libtorrent.xcodeproj */,
 				774321A824AA37EE00777C0A /* TorrentKit */,
 				7748DC7524AE38EA00AC5095 /* MediaKit */,
 				773FF94C22C10278008D58E4 /* SwiftyTorrent */,
@@ -426,6 +424,8 @@
 		773FF96722C105CE008D58E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7746A26F28931DD0002D7196 /* libtorrent.xcframework */,
+				77810F7E28936C43008B7804 /* libtorrent.xcframework */,
 				773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */,
 				773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */,
 				7774227B267BA866008FAA57 /* Swinject.framework */,
@@ -584,14 +584,6 @@
 			path = Stubs;
 			sourceTree = "<group>";
 		};
-		777B247B2891CD4100E93FAC /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				777B247F2891CD4100E93FAC /* libtorrent.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		77D8122322CA336A001CA13E /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -676,11 +668,11 @@
 				774321A324AA37ED00777C0A /* Sources */,
 				774321A424AA37ED00777C0A /* Frameworks */,
 				774321A524AA37ED00777C0A /* Resources */,
+				77810F8128936C43008B7804 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				777B24812891CD4D00E93FAC /* PBXTargetDependency */,
 			);
 			name = TorrentKit;
 			productName = TorrentKit;
@@ -767,12 +759,6 @@
 			);
 			productRefGroup = 773FF94B22C10278008D58E4 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 777B247B2891CD4100E93FAC /* Products */;
-					ProjectRef = 777B247A2891CD4100E93FAC /* libtorrent.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				773FF94922C10278008D58E4 /* SwiftyTorrent */,
@@ -782,16 +768,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		777B247F2891CD4100E93FAC /* libtorrent.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libtorrent.a;
-			remoteRef = 777B247E2891CD4100E93FAC /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		773FF94822C10278008D58E4 /* Resources */ = {
@@ -1009,11 +985,6 @@
 			target = 774321A624AA37ED00777C0A /* TorrentKit */;
 			targetProxy = 7748DCDF24AE713500AC5095 /* PBXContainerItemProxy */;
 		};
-		777B24812891CD4D00E93FAC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = libtorrent;
-			targetProxy = 777B24802891CD4D00E93FAC /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -1216,10 +1187,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Thirdparties/boost/src",
-					"$(SRCROOT)/Thirdparties/libtorrent/src/include",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Thirdparties/boost-1.69.0";
 				INFOPLIST_FILE = TorrentKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1251,10 +1219,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/Thirdparties/boost/src",
-					"$(SRCROOT)/Thirdparties/libtorrent/src/include",
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Thirdparties/boost-1.69.0";
 				INFOPLIST_FILE = TorrentKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
