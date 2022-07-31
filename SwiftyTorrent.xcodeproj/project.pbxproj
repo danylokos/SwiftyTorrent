@@ -85,6 +85,7 @@
 		7748DCDD24AE713500AC5095 /* TorrentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 774321A724AA37ED00777C0A /* TorrentKit.framework */; };
 		7748DCDE24AE713500AC5095 /* TorrentKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 774321A724AA37ED00777C0A /* TorrentKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7748DCE324AE728700AC5095 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748DCE224AE728700AC5095 /* PreviewItem.swift */; };
+		774FE51D289649FF0021A5DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 774FE51C289649FF0021A5DF /* Assets.xcassets */; };
 		7774227D267BA866008FAA57 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7774227B267BA866008FAA57 /* Swinject.framework */; };
 		7774227E267BA87A008FAA57 /* MediaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7748DC7424AE38EA00AC5095 /* MediaKit.framework */; };
 		77742280267BA89C008FAA57 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7774227F267BA89C008FAA57 /* Swinject.framework */; };
@@ -263,6 +264,7 @@
 		7748DCBE24AE703000AC5095 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7748DCC024AE703000AC5095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7748DCE224AE728700AC5095 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
+		774FE51C289649FF0021A5DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		776FD9F622C3B43800CD7CEB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7774227B267BA866008FAA57 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
 		7774227F267BA89C008FAA57 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/tvOS/Swinject.framework; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 		773A410124AF9462002E75CD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				774FE51C289649FF0021A5DF /* Assets.xcassets */,
 				7748DCBD24AE703000AC5095 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -801,6 +804,7 @@
 			files = (
 				7774228A267BAA38008FAA57 /* input.xcfilelist in Resources */,
 				7748DCBF24AE703000AC5095 /* LaunchScreen.storyboard in Resources */,
+				774FE51D289649FF0021A5DF /* Assets.xcassets in Resources */,
 				77742289267BAA38008FAA57 /* output.xcfilelist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1301,6 +1305,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1324,6 +1329,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "Brand Assets";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
 				FRAMEWORK_SEARCH_PATHS = (
