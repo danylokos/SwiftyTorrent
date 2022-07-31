@@ -378,6 +378,7 @@
 		773A410124AF9462002E75CD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7748DCC024AE703000AC5095 /* Info.plist */,
 				774FE51C289649FF0021A5DF /* Assets.xcassets */,
 				7748DCBD24AE703000AC5095 /* LaunchScreen.storyboard */,
 			);
@@ -570,7 +571,6 @@
 				77742287267BAA38008FAA57 /* output.xcfilelist */,
 				7748DCB424AE702E00AC5095 /* AppDelegate.swift */,
 				773A410124AF9462002E75CD /* Resources */,
-				7748DCC024AE703000AC5095 /* Info.plist */,
 			);
 			path = SwiftyTV;
 			sourceTree = "<group>";
@@ -1312,7 +1312,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = SwiftyTV/Info.plist;
+				INFOPLIST_FILE = SwiftyTV/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1336,7 +1336,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
-				INFOPLIST_FILE = SwiftyTV/Info.plist;
+				INFOPLIST_FILE = SwiftyTV/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
