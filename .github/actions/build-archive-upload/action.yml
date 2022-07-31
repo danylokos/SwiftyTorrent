@@ -1,0 +1,97 @@
+name: Build, archive and upload to TestFlight
+inputs:
+  scheme:
+    required: true
+    type: string
+  build_settings:
+    required: true
+    type: string
+  platform:
+    required: true
+    type: string
+  auth_key_issuer_id:
+    required: true
+    type: string
+  auth_key_id:
+    required: true
+    type: string
+  auth_key_path:
+    required: true
+    type: string
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build
+      id: build
+      env:
+        scheme: ${{ inputs.scheme }}
+        build_settings: ${{ inputs.build_settings }}
+      shell: bash
+      run: |
+        archive_file=build/$scheme.xcarchive
+
+        xcodebuild clean build archive \
+          -scheme "$scheme" \
+          -archivePath "$archive_file" \
+          "$build_settings" | xcpretty && exit ${PIPESTATUS[0]}
+
+    - name: Create export options plist
+      id: export-options-plist
+      env:
+        scheme: ${{ inputs.scheme }}
+      shell: bash
+      run: |
+        export_plist=$RUNNER_TEMP/export.plist
+        echo "::set-output name=EXPORT_OPTIONS_PLIST::$export_plist"
+
+        cat > $export_plist << EOL
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store</string>
+          </dict>
+        </plist>
+        EOL
+
+    - name: Archive
+      id: archive
+      env:
+        scheme: ${{ inputs.scheme }}
+        auth_key_issuer_id: ${{ inputs.auth_key_issuer_id }}
+        auth_key_id: ${{ inputs.auth_key_id }}
+        auth_key_path: ${{ inputs.auth_key_path }}
+        export_plist: ${{ steps.export-options-plist.outputs.EXPORT_OPTIONS_PLIST }}
+      shell: bash
+      run: |
+        archive_file=build/$scheme.xcarchive
+        export_dir=build/$scheme
+        echo "::set-output name=IPA_FILE::$export_dir/$scheme.ipa"
+
+        xcodebuild \
+          -exportArchive \
+          -archivePath "$archive_file" \
+          -exportPath "$export_dir" \
+          -exportOptionsPlist "$export_plist" \
+          -allowProvisioningUpdates \
+          -authenticationKeyPath "$auth_key_path" \
+          -authenticationKeyID $auth_key_id \
+          -authenticationKeyIssuerID $auth_key_issuer_id | xcpretty && exit ${PIPESTATUS[0]} 
+
+    - name: Upload app to TestFlight
+      id: upload
+      env:
+        ipa_file: ${{ steps.archive.outputs.IPA_FILE }}
+        platform: ${{ inputs.platform }}
+        auth_key_issuer_id: ${{ inputs.auth_key_issuer_id }}
+        auth_key_id: ${{ inputs.auth_key_id }}
+      shell: bash
+      run: |
+        xcrun altool \
+          --upload-app \
+          --file $ipa_file \
+          --type $platform \
+          --apiKey $auth_key_id \
+          --apiIssuer $auth_key_issuer_id

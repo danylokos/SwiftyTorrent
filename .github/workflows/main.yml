@@ -3,6 +3,7 @@ name: Xcode - Build and Upload
 on:
   push:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -57,9 +58,9 @@ jobs:
 
           echo "::set-output name=AUTH_KEY_PATH::$AUTH_KEY_FILE"
 
-          mkdir -p $PRIV_KEY_DIR
+          mkdir -p "$PRIV_KEY_DIR"
           echo "$API_PRIVATE_KEY" > "$AUTH_KEY_FILE"
-      
+
       - name: Cache dependencies (Carthage)
         uses: actions/cache@v2
         id: cache-dependecies-carthage
@@ -68,12 +69,12 @@ jobs:
           key: ${{ runner.OS }}-cache-carthage-${{ hashFiles('./Cartfile.resolved') }}
           restore-keys: |
             ${{ runner.OS }}-cache-carthage-
-      
+
       - name: Bootstrap (Carthage)
         if: steps.cache-dependecies-carthage.outputs.cache-hit != 'true'
         run: ./carthage.sh bootstrap --platform ios,tvos
         shell: bash
-      
+
       - name: Cache dependencies
         uses: actions/cache@v2
         id: cache-dependecies
@@ -82,137 +83,34 @@ jobs:
           key: ${{ runner.OS }}-cache-${{ hashFiles('./bootstrap.sh') }}
           restore-keys: |
             ${{ runner.OS }}-cache-
-      
+
       - name: Bootstrap
         if: steps.cache-dependecies.outputs.cache-hit != 'true'
         run: ./bootstrap.sh
         shell: bash
-            
+
       - name: Bump version
         env:
           build_number: ${{ github.run_number }}
-        run: xcrun agvtool new-version -all $((14+$build_number)) # temp fix
-
-      - name: Build (iOS)
-        id: build-ios
-        env:
-          SCHEME: ${{ 'SwiftyTorrent' }}
         run: |
-          archivePath=build/$SCHEME.xcarchive
+          xcrun agvtool new-version -all $((14+$build_number)) # temp fix
 
-          echo "::set-output name=SCHEME::$SCHEME"
+      - name: Build, acrhive and upload (SwiftyTorrent)
+        uses: ./.github/actions/build-archive-upload
+        with:
+          scheme: SwiftyTorrent
+          build_settings: 'ENABLE_BITCODE=NO'
+          platform: ios
+          auth_key_issuer_id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          auth_key_id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          auth_key_path: ${{ steps.appstore-private-key.outputs.AUTH_KEY_PATH }}
 
-          xcodebuild clean build archive \
-            -scheme "$SCHEME" \
-            -archivePath "$archivePath" | xcpretty && exit ${PIPESTATUS[0]}
-
-      - name: Archive (iOS)
-        id: archive-ios
-        env:
-          SCHEME: ${{ steps.build-ios.outputs.SCHEME }}
-          ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
-          AUTH_KEY_PATH: ${{ steps.appstore-private-key.outputs.AUTH_KEY_PATH }}
-        run: |
-          archivePath=build/$SCHEME.xcarchive
-          exportPath=build/$SCHEME
-
-          echo "::set-output name=IPA_FILE::$exportPath/$SCHEME.ipa"
-          
-          exportOptionsPlist=$RUNNER_TEMP/export.plist
-          cat > $exportOptionsPlist << EOL
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>method</key>
-            <string>app-store</string>
-          </dict>
-          </plist>
-          EOL
-          
-          xcodebuild \
-            -exportArchive \
-            -archivePath "$archivePath" \
-            -exportPath "$exportPath" \
-            -exportOptionsPlist "$exportOptionsPlist" \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath "$AUTH_KEY_PATH" \
-            -authenticationKeyID $API_KEY_ID \
-            -authenticationKeyIssuerID $ISSUER_ID | xcpretty && exit ${PIPESTATUS[0]} 
-
-      - name: Upload app to TestFlight (iOS)
-        env:
-          ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
-          IPA_FILE: ${{ steps.archive-ios.outputs.IPA_FILE }}
-        run: |
-          xcrun altool \
-            --upload-app \
-            --file $IPA_FILE \
-            --type ios \
-            --apiKey $API_KEY_ID \
-            --apiIssuer $ISSUER_ID
-
-      - name: Build (tvOS)
-        id: build-tvos
-        env:
-          SCHEME: ${{ 'SwiftyTV' }}
-        run: |
-          archivePath=build/$SCHEME.xcarchive
-
-          echo "::set-output name=SCHEME::$SCHEME"
-
-          xcodebuild clean build archive \
-            -scheme "$SCHEME" \
-            -archivePath "$archivePath" \
-            ENABLE_BITCODE=YES | xcpretty && exit ${PIPESTATUS[0]}
-
-      - name: Archive (tvOS)
-        id: archive-tvos
-        env:
-          SCHEME: ${{ steps.build-tvos.outputs.SCHEME }}
-          ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
-          AUTH_KEY_PATH: ${{ steps.appstore-private-key.outputs.AUTH_KEY_PATH }}
-        run: |
-          archivePath=build/$SCHEME.xcarchive
-          exportPath=build/$SCHEME
-
-          echo "::set-output name=IPA_FILE::$exportPath/$SCHEME.ipa"
-          
-          exportOptionsPlist=$RUNNER_TEMP/export.plist
-          cat > $exportOptionsPlist << EOL
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>method</key>
-            <string>app-store</string>
-          </dict>
-          </plist>
-          EOL
-          
-          xcodebuild \
-            -exportArchive \
-            -archivePath "$archivePath" \
-            -exportPath "$exportPath" \
-            -exportOptionsPlist "$exportOptionsPlist" \
-            -allowProvisioningUpdates \
-            -authenticationKeyPath "$AUTH_KEY_PATH" \
-            -authenticationKeyID $API_KEY_ID \
-            -authenticationKeyIssuerID $ISSUER_ID | xcpretty && exit ${PIPESTATUS[0]} 
-
-      - name: Upload app to TestFlight (tvOS)
-        env:
-          ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
-          IPA_FILE: ${{ steps.archive-tvos.outputs.IPA_FILE }}
-        run: |
-          xcrun altool \
-            --upload-app \
-            --file $IPA_FILE \
-            --type tvos \
-            --apiKey $API_KEY_ID \
-            --apiIssuer $ISSUER_ID
-
+      - name: Build, acrhive and upload (SwiftyTV)
+        uses: ./.github/actions/build-archive-upload
+        with:
+          scheme: SwiftyTV
+          build_settings: 'ENABLE_BITCODE=YES'
+          platform: tvos
+          auth_key_issuer_id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          auth_key_id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          auth_key_path: ${{ steps.appstore-private-key.outputs.AUTH_KEY_PATH }}
