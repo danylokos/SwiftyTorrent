@@ -15,7 +15,7 @@ List of public domain torrents can be found [here](https://webtorrent.io/free-to
 ## Build
 
     # Install Carthage dependencies
-    $ ./carthage.sh bootstrap --platform ios,tvos
+    $ ./carthage.sh bootstrap --platform ios,tvos --use-xcframeworks
 
     # Install libtorrent
     $ ./bootstrap.sh

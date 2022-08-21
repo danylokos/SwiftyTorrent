@@ -17,10 +17,6 @@
 		772CEA0822DDFC41000CD2BD /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0722DDFC41000CD2BD /* FilesViewModel.swift */; };
 		772CEA0A22DDFC47000CD2BD /* FileRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0922DDFC47000CD2BD /* FileRow.swift */; };
 		772CEA0C22DDFC4D000CD2BD /* FileRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772CEA0B22DDFC4D000CD2BD /* FileRowModel.swift */; };
-		773B2A342891DFC8004AFA46 /* MobileVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; };
-		773B2A352891DFC8004AFA46 /* MobileVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		773B2A362891DFCF004AFA46 /* TVVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; };
-		773B2A372891DFCF004AFA46 /* TVVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		773EFD1A26B241D600DC35A4 /* MobileVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; platformFilters = (ios, maccatalyst, ); };
 		773EFD1F26B241D600DC35A4 /* TVVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; platformFilters = (tvos, ); };
 		773FF94E22C10278008D58E4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773FF94D22C10278008D58E4 /* AppDelegate.swift */; };
@@ -86,13 +82,7 @@
 		7748DCDE24AE713500AC5095 /* TorrentKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 774321A724AA37ED00777C0A /* TorrentKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7748DCE324AE728700AC5095 /* PreviewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7748DCE224AE728700AC5095 /* PreviewItem.swift */; };
 		774FE51D289649FF0021A5DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 774FE51C289649FF0021A5DF /* Assets.xcassets */; };
-		7774227D267BA866008FAA57 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7774227B267BA866008FAA57 /* Swinject.framework */; };
 		7774227E267BA87A008FAA57 /* MediaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7748DC7424AE38EA00AC5095 /* MediaKit.framework */; };
-		77742280267BA89C008FAA57 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7774227F267BA89C008FAA57 /* Swinject.framework */; };
-		77742284267BA9CB008FAA57 /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 77742283267BA9CB008FAA57 /* input.xcfilelist */; };
-		77742286267BA9DF008FAA57 /* output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 77742285267BA9DF008FAA57 /* output.xcfilelist */; };
-		77742289267BAA38008FAA57 /* output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 77742287267BAA38008FAA57 /* output.xcfilelist */; };
-		7774228A267BAA38008FAA57 /* input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 77742288267BAA38008FAA57 /* input.xcfilelist */; };
 		7774228C267BB037008FAA57 /* AppAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7774228B267BB037008FAA57 /* AppAssembly.swift */; };
 		7774228D267BB037008FAA57 /* AppAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7774228B267BB037008FAA57 /* AppAssembly.swift */; };
 		77742295267C010F008FAA57 /* StubTorrentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77742294267C010F008FAA57 /* StubTorrentManager.swift */; };
@@ -123,6 +113,14 @@
 		77AD95442678CAEF00B57B0B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95422678CAEF00B57B0B /* SettingsView.swift */; };
 		77AD95472678CAFB00B57B0B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95462678CAFB00B57B0B /* SettingsViewModel.swift */; };
 		77AD95482678CAFB00B57B0B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77AD95462678CAFB00B57B0B /* SettingsViewModel.swift */; };
+		77C9039F28B2D70500C35FE6 /* MobileVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; };
+		77C903A028B2D70500C35FE6 /* MobileVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1626B2414100DC35A4 /* MobileVLCKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		77C903A128B2D70700C35FE6 /* Swinject.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7764455E28A34D780017E867 /* Swinject.xcframework */; };
+		77C903A228B2D70700C35FE6 /* Swinject.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7764455E28A34D780017E867 /* Swinject.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		77C903A328B2D71000C35FE6 /* Swinject.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7764455E28A34D780017E867 /* Swinject.xcframework */; };
+		77C903A428B2D71000C35FE6 /* Swinject.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7764455E28A34D780017E867 /* Swinject.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		77C903A528B2D71A00C35FE6 /* TVVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; };
+		77C903A628B2D71A00C35FE6 /* TVVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		77D8122522CA336A001CA13E /* TorrentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77D8122422CA336A001CA13E /* TorrentsView.swift */; };
 		77E4CA0824AB747500C21354 /* SearchRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E4CA0724AB747500C21354 /* SearchRow.swift */; };
 		77FC2AF422D896F100A544AA /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77FC2AF322D896F100A544AA /* AppCoordinator.swift */; };
@@ -177,7 +175,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				7748DC7C24AE38EA00AC5095 /* MediaKit.framework in Embed Frameworks */,
-				773B2A352891DFC8004AFA46 /* MobileVLCKit.xcframework in Embed Frameworks */,
+				77C903A028B2D70500C35FE6 /* MobileVLCKit.xcframework in Embed Frameworks */,
+				77C903A228B2D70700C35FE6 /* Swinject.xcframework in Embed Frameworks */,
 				774321B024AA37EE00777C0A /* TorrentKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -189,9 +188,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7748DCDE24AE713500AC5095 /* TorrentKit.framework in Embed Frameworks */,
 				7748DCDA24AE713500AC5095 /* MediaKit.framework in Embed Frameworks */,
-				773B2A372891DFCF004AFA46 /* TVVLCKit.xcframework in Embed Frameworks */,
+				77C903A428B2D71000C35FE6 /* Swinject.xcframework in Embed Frameworks */,
+				77C903A628B2D71A00C35FE6 /* TVVLCKit.xcframework in Embed Frameworks */,
+				7748DCDE24AE713500AC5095 /* TorrentKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,13 +265,10 @@
 		7748DCC024AE703000AC5095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7748DCE224AE728700AC5095 /* PreviewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewItem.swift; sourceTree = "<group>"; };
 		774FE51C289649FF0021A5DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7764455E28A34D780017E867 /* Swinject.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Swinject.xcframework; path = Carthage/Build/Swinject.xcframework; sourceTree = "<group>"; };
 		776FD9F622C3B43800CD7CEB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7774227B267BA866008FAA57 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
 		7774227F267BA89C008FAA57 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/tvOS/Swinject.framework; sourceTree = "<group>"; };
-		77742283267BA9CB008FAA57 /* input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
-		77742285267BA9DF008FAA57 /* output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
-		77742287267BAA38008FAA57 /* output.xcfilelist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcfilelist; path = output.xcfilelist; sourceTree = "<group>"; };
-		77742288267BAA38008FAA57 /* input.xcfilelist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcfilelist; path = input.xcfilelist; sourceTree = "<group>"; };
 		7774228B267BB037008FAA57 /* AppAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAssembly.swift; sourceTree = "<group>"; };
 		77742294267C010F008FAA57 /* StubTorrentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTorrentManager.swift; sourceTree = "<group>"; };
 		77742298267C0185008FAA57 /* StubIMDBDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubIMDBDataProvider.swift; sourceTree = "<group>"; };
@@ -308,10 +305,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				773B2A342891DFC8004AFA46 /* MobileVLCKit.xcframework in Frameworks */,
-				774321AE24AA37EE00777C0A /* TorrentKit.framework in Frameworks */,
+				77C9039F28B2D70500C35FE6 /* MobileVLCKit.xcframework in Frameworks */,
 				7774227E267BA87A008FAA57 /* MediaKit.framework in Frameworks */,
-				7774227D267BA866008FAA57 /* Swinject.framework in Frameworks */,
+				77C903A128B2D70700C35FE6 /* Swinject.xcframework in Frameworks */,
+				774321AE24AA37EE00777C0A /* TorrentKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,10 +351,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77742280267BA89C008FAA57 /* Swinject.framework in Frameworks */,
-				7748DCDD24AE713500AC5095 /* TorrentKit.framework in Frameworks */,
-				773B2A362891DFCF004AFA46 /* TVVLCKit.xcframework in Frameworks */,
 				7748DCD924AE713500AC5095 /* MediaKit.framework in Frameworks */,
+				77C903A328B2D71000C35FE6 /* Swinject.xcframework in Frameworks */,
+				77C903A528B2D71A00C35FE6 /* TVVLCKit.xcframework in Frameworks */,
+				7748DCDD24AE713500AC5095 /* TorrentKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,8 +409,6 @@
 		773FF94C22C10278008D58E4 /* SwiftyTorrent */ = {
 			isa = PBXGroup;
 			children = (
-				77742283267BA9CB008FAA57 /* input.xcfilelist */,
-				77742285267BA9DF008FAA57 /* output.xcfilelist */,
 				7723376322DB9331008ECD5F /* Core */,
 				774321EE24AB43E500777C0A /* Models */,
 				77D8122322CA336A001CA13E /* UI */,
@@ -426,6 +421,7 @@
 		773FF96722C105CE008D58E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7764455E28A34D780017E867 /* Swinject.xcframework */,
 				7746A26F28931DD0002D7196 /* libtorrent.xcframework */,
 				77810F7E28936C43008B7804 /* libtorrent.xcframework */,
 				773EFD1E26B241D600DC35A4 /* TVVLCKit.xcframework */,
@@ -567,8 +563,6 @@
 		7748DCB324AE702E00AC5095 /* SwiftyTV */ = {
 			isa = PBXGroup;
 			children = (
-				77742288267BAA38008FAA57 /* input.xcfilelist */,
-				77742287267BAA38008FAA57 /* output.xcfilelist */,
 				7748DCB424AE702E00AC5095 /* AppDelegate.swift */,
 				773A410124AF9462002E75CD /* Resources */,
 			);
@@ -646,7 +640,6 @@
 				773FF94722C10278008D58E4 /* Frameworks */,
 				773FF94822C10278008D58E4 /* Resources */,
 				774321AF24AA37EE00777C0A /* Embed Frameworks */,
-				77742281267BA960008FAA57 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -703,11 +696,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7748DCC424AE703100AC5095 /* Build configuration list for PBXNativeTarget "SwiftyTV" */;
 			buildPhases = (
+				77C9039628B2D47600C35FE6 /* Run SwiftLint */,
 				7748DCAE24AE702E00AC5095 /* Sources */,
 				7748DCAF24AE702E00AC5095 /* Frameworks */,
 				7748DCB024AE702E00AC5095 /* Resources */,
 				7748DCE124AE713500AC5095 /* Embed Frameworks */,
-				77742282267BA974008FAA57 /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -776,8 +769,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				771B700622DA205D00132B5E /* uTorrent-320.png in Resources */,
-				77742286267BA9DF008FAA57 /* output.xcfilelist in Resources */,
-				77742284267BA9CB008FAA57 /* input.xcfilelist in Resources */,
 				773FF95A22C10279008D58E4 /* LaunchScreen.storyboard in Resources */,
 				773FF95422C10279008D58E4 /* Assets.xcassets in Resources */,
 			);
@@ -802,10 +793,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7774228A267BAA38008FAA57 /* input.xcfilelist in Resources */,
 				7748DCBF24AE703000AC5095 /* LaunchScreen.storyboard in Resources */,
 				774FE51D289649FF0021A5DF /* Assets.xcassets in Resources */,
-				77742289267BAA38008FAA57 /* output.xcfilelist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -827,48 +816,26 @@
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellPath = /bin/zsh;
+			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		77742281267BA960008FAA57 /* Carthage */ = {
+		77C9039628B2D47600C35FE6 /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"$(SRCROOT)/SwiftyTorrent/input.xcfilelist",
 			);
 			inputPaths = (
 			);
-			name = Carthage;
+			name = "Run SwiftLint";
 			outputFileListPaths = (
-				"$(SRCROOT)/SwiftyTorrent/output.xcfilelist",
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-		77742282267BA974008FAA57 /* Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"$(SRCROOT)/SwiftyTV/input.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = Carthage;
-			outputFileListPaths = (
-				"$(SRCROOT)/SwiftyTV/output.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "PATH=/opt/homebrew/bin:$PATH\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1139,7 +1106,7 @@
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build",
 				);
 				INFOPLIST_FILE = SwiftyTorrent/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1164,7 +1131,7 @@
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build",
 				);
 				INFOPLIST_FILE = SwiftyTorrent/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1251,10 +1218,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletvos*]" = "$(SRCROOT)/Carthage/Build/tvOS";
-				"FRAMEWORK_SEARCH_PATHS[sdk=appletvsimulator*]" = "$(SRCROOT)/Carthage/Build/tvOS";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = "$(SRCROOT)/Carthage/Build/iOS";
-				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = "$(SRCROOT)/Carthage/Build/iOS";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
 				INFOPLIST_FILE = MediaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1283,6 +1247,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build";
 				INFOPLIST_FILE = MediaKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1310,7 +1275,7 @@
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+					"$(PROJECT_DIR)/Carthage/Build",
 				);
 				INFOPLIST_FILE = SwiftyTV/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1334,7 +1299,7 @@
 				DEVELOPMENT_TEAM = DBR2MMCRF5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+					"$(PROJECT_DIR)/Carthage/Build",
 				);
 				INFOPLIST_FILE = SwiftyTV/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

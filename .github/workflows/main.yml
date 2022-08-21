@@ -72,7 +72,7 @@ jobs:
 
       - name: Bootstrap (Carthage)
         if: steps.cache-dependecies-carthage.outputs.cache-hit != 'true'
-        run: ./carthage.sh bootstrap --platform ios,tvos
+        run: ./carthage.sh bootstrap --platform ios,tvos --use-xcframeworks
         shell: bash
 
       - name: Cache dependencies
