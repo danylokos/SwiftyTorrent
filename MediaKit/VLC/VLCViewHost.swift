@@ -161,7 +161,7 @@ public final class VLCPlayerViewController: UIViewController {
 
 extension VLCPlayerViewController: VLCMediaPlayerDelegate {
     
-    public func mediaPlayerStateChanged(_ aNotification: Notification!) {
+    public func mediaPlayerStateChanged(_ aNotification: Notification) {
         guard let player = aNotification.object as? VLCMediaPlayer else { return  }
         switch player.state {
         case .stopped: break
