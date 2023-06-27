@@ -27,7 +27,7 @@ extension Torrent: TorrentRowModel {
     
     var statusDetails: String {
         let progressString = String(format: "%0.2f %%", progress * 100)
-        return "\(state.symbol) \(state), \(progressString), seeds: \(numberOfSeeds), peers: \(numberOfPeers)"
+        return "\(state.symbol) \(paused ? "Paused" : state.description), \(progressString), seeds: \(numberOfSeeds), peers: \(numberOfPeers)"
     }
     
     var connectionDetails: String {

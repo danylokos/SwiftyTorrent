@@ -28,6 +28,10 @@ NS_SWIFT_NAME(add(_:));
 
 - (BOOL)removeTorrentWithInfoHash:(NSData *)infoHash deleteFiles:(BOOL)deleteFiles;
 
+- (BOOL)pauseTorrentWithInfoHash:(NSData *)infoHash;
+
+- (BOOL)resumeTorrentWithInfoHash:(NSData *)infoHash;
+
 - (BOOL)removeAllTorrentsWithFiles:(BOOL)deleteFiles;
 
 - (NSArray<STTorrent *> *)torrents;
