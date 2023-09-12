@@ -26,6 +26,10 @@ runs:
       id: build
       env:
         scheme: ${{ inputs.scheme }}
+        platform: ${{ inputs.platform }}
+        auth_key_issuer_id: ${{ inputs.auth_key_issuer_id }}
+        auth_key_id: ${{ inputs.auth_key_id }}
+        auth_key_path: ${{ inputs.auth_key_path }}
         build_settings: ${{ inputs.build_settings }}
       shell: bash
       run: |
@@ -34,7 +38,12 @@ runs:
         xcodebuild clean build archive \
           -scheme "$scheme" \
           -archivePath "$archive_file" \
-          "$build_settings" | xcpretty && exit ${PIPESTATUS[0]}
+          -destination "generic/platform=$platform" \
+          -allowProvisioningUpdates \
+          -authenticationKeyPath "$auth_key_path" \
+          -authenticationKeyID $auth_key_id \
+          -authenticationKeyIssuerID $auth_key_issuer_id \
+          "$build_settings" #| xcpretty && exit ${PIPESTATUS[0]}
 
     - name: Create export options plist
       id: export-options-plist
@@ -78,7 +87,7 @@ runs:
           -allowProvisioningUpdates \
           -authenticationKeyPath "$auth_key_path" \
           -authenticationKeyID $auth_key_id \
-          -authenticationKeyIssuerID $auth_key_issuer_id | xcpretty && exit ${PIPESTATUS[0]} 
+          -authenticationKeyIssuerID $auth_key_issuer_id #| xcpretty && exit ${PIPESTATUS[0]} 
 
     - name: Upload app to TestFlight
       id: upload
