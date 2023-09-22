@@ -24,6 +24,10 @@ class StubTorrentManager: TorrentManagerProtocol {
     
     func removeTorrent(withInfoHash infoHash: Data, deleteFiles: Bool) -> Bool { true }
     
+    func pauseTorrent(withInfoHash infoHash: Data) -> Bool { true }
+    
+    func resumeTorrent(withInfoHash infoHash: Data) -> Bool { true }
+    
     func removeAllTorrents(withFiles deleteFiles: Bool) -> Bool { true }
     
     func torrents() -> [Torrent] { (0..<10).map { _ in Torrent.randomStub() } }

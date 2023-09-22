@@ -58,6 +58,11 @@ NS_SWIFT_NAME(add(_:));
 
 - (BOOL)removeAllTorrentsWithFiles:(BOOL)deleteFiles;
 
+- (BOOL)pauseTorrentWithInfoHash:(NSData *)infoHash;
+
+- (BOOL)resumeTorrentWithInfoHash:(NSData *)infoHash;
+
+
 - (NSArray<STTorrent *> *)torrents;
 
 - (void)openURL:(NSURL *)URL;

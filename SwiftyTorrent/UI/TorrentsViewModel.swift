@@ -52,6 +52,14 @@ final class TorrentsViewModel: NSObject, ObservableObject, TorrentManagerDelegat
         torrentManager.removeTorrent(withInfoHash: torrent.infoHash, deleteFiles: deleteFiles)
     }
     
+    func pauseTorrent(_ torrent: Torrent) {
+        torrentManager.pauseTorrent(withInfoHash: torrent.infoHash)
+    }
+    
+    func resumeTorrent(_ torrent: Torrent) {
+        torrentManager.resumeTorrent(withInfoHash: torrent.infoHash)
+    }
+    
     // MARK: - TorrentManagerDelegate
     
     func torrentManager(_ manager: TorrentManager, didAdd torrent: Torrent) {

@@ -13,7 +13,31 @@ import TorrentKit
 struct TorrentsView: View {
     
     @ObservedObject var model: TorrentsViewModel
-
+    
+    func showAlert(_ title: String, _ message: String ,_ handler: @escaping (_ action: UIAlertAction) -> Void) {
+        let alertController = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alertController.addAction(.init(
+            title: "OK",
+            style: .destructive,
+            handler: handler
+        ))
+        
+        alertController.addAction(.init(
+            title: "Cancel", style: .default
+        ))
+        
+        guard let viewController = UIApplication.shared.windows.first?.rootViewController else {
+            return
+        }
+        
+        viewController.present(alertController, animated: true, completion: nil)
+    }
+    
     var body: some View {
         NavigationView {
             List {
@@ -22,16 +46,36 @@ struct TorrentsView: View {
                         NavigationLink(destination: FilesView(model: torrent.directory)) {
                             TorrentRow(model: torrent)
                         }.contextMenu {
-                            Button(role: .destructive) { model.remove(torrent) } label: {
+                            Button() {
+                                showAlert( "Are you sure", "Are you sure want to \(torrent.paused ? "Resume" : "pause")") {action in
+                                    if(torrent.paused) {
+                                        model.resumeTorrent(torrent)
+                                    } else {
+                                        model.pauseTorrent(torrent)
+                                    }
+                                }
+                            } label: {
+                                Label("\(torrent.paused ? "Resume": "Pause") torrent", systemImage: torrent.paused ? "play" : "pause")
+                            }
+                            Button(role: .destructive) {
+                                showAlert("Are you sure", "Are you sure want to remove") {action in
+                                    model.remove(torrent)
+                                }
+                            } label: {
                                 Label("Remove torrent", systemImage: "trash")
                             }
-                            Button(role: .destructive) { model.remove(torrent, deleteFiles: true) } label: {
+                            Button(role: .destructive) {
+                                showAlert("Are you sure", "Are you sure want to Remove all data ?") {action in
+                                    model.remove(torrent, deleteFiles: true)
+                                }
+                            } label: {
+                                
                                 Label("Remove all data", systemImage: "trash")
                             }
                         }.disabled(!torrent.hasMetadata)
                     }
                 }
-                #if DEBUG
+#if DEBUG
                 Section(header: Text("Debug")) {
                     Button("Add test torrent files") {
                         model.addTestTorrentFiles()
@@ -43,10 +87,10 @@ struct TorrentsView: View {
                         model.addTestTorrents()
                     }
                 }
-                #if os(iOS)
+#if os(iOS)
                 .buttonStyle(BlueButton())
-                #endif
-                #endif
+#endif
+#endif
             }
             .refreshable { model.reloadData() }
             .listStyle(PlainListStyle())
@@ -56,7 +100,7 @@ struct TorrentsView: View {
             Alert(error: model.activeError!)
         }
     }
-
+    
 }
 
 struct BlueButton: ButtonStyle {
