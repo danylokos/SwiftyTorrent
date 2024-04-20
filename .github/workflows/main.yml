@@ -98,7 +98,7 @@ jobs:
         uses: ./.github/actions/build-archive-upload
         with:
           scheme: SwiftyTV
-          build_settings: 'ENABLE_BITCODE=YES'
+          build_settings: 'ENABLE_BITCODE=NO'
           platform: tvos
           auth_key_issuer_id: ${{ secrets.APPSTORE_ISSUER_ID }}
           auth_key_id: ${{ secrets.APPSTORE_API_KEY_ID }}
