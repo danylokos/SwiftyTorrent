@@ -38,6 +38,7 @@
 @property (readwrite, nonatomic) NSUInteger downloadRate;
 @property (readwrite, nonatomic) NSUInteger uploadRate;
 @property (readwrite, nonatomic) BOOL hasMetadata;
+@property (readwrite, nonatomic) BOOL paused;
 @end
 
 @interface STFileEntry ()
@@ -445,6 +446,8 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     [self removeMagnetURIWithHash:ih];
 }
 
+
+
 - (BOOL)removeTorrentWithInfoHash:(NSData *)infoHash deleteFiles:(BOOL)deleteFiles {
     lt::sha1_hash hash((const char *)infoHash.bytes);
     auto th = _session->find_torrent(hash);
@@ -475,6 +478,24 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
             _session->remove_torrent(th);
         }
     }
+    return YES;
+}
+
+- (BOOL)pauseTorrentWithInfoHash:(NSData *)infoHash {
+    NSLog(@"Pause torrent");
+    lt::sha1_hash hash((const char *)infoHash.bytes);
+    auto th = _session->find_torrent(hash);
+    if (!th.is_valid()) { return NO; }
+    th.pause();
+    return YES;
+}
+
+- (BOOL)resumeTorrentWithInfoHash:(NSData *)infoHash {
+    NSLog(@"Pause torrent");
+    lt::sha1_hash hash((const char *)infoHash.bytes);
+    auto th = _session->find_torrent(hash);
+    if (!th.is_valid()) { return NO; }
+    th.resume();
     return YES;
 }
 
@@ -519,6 +540,7 @@ static NSErrorDomain STErrorDomain = @"org.kostyshyn.SwiftyTorrent.STTorrentMana
     torrent.uploadRate = ts.upload_payload_rate;
     torrent.downloadRate = ts.download_payload_rate;
     torrent.hasMetadata = ts.has_metadata;
+    torrent.paused = ts.paused;
     return torrent;
 }
 

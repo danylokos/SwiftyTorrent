@@ -20,6 +20,7 @@
 @property (readwrite, nonatomic) NSUInteger numberOfSeeds;
 @property (readwrite, nonatomic) NSUInteger downloadRate;
 @property (readwrite, nonatomic) NSUInteger uploadRate;
+@property (readwrite, nonatomic) BOOL paused;
 @property (readwrite, nonatomic) BOOL hasMetadata;
 @end
 
@@ -39,6 +40,7 @@ static NSUInteger stubIdx = 0;
     torrent.downloadRate = arc4random_uniform(1024 * 1024 * 1024);
     torrent.uploadRate = arc4random_uniform(1024 * 1024 * 1024);
     torrent.hasMetadata = torrent.state != STTorrentStateDownloadingMetadata;
+    torrent.paused = NO;
     stubIdx += 1;
     return torrent;
 }
